@@ -25,6 +25,9 @@
   --bordeaux: 91 15 26; /* #5B0F1A */
   --coral: 255 107 107; /* #FF6B6B */
   --orange: 249 115 22; /* #F97316 */
+  /* Orange lisible pour le TEXTE sur fond clair (4.9:1, AA).
+     L'orange pur #F97316 (3.0:1) est réservé au décor pur. */
+  --orange-text: 194 65 12; /* #C2410C */
 }
 
 html {
@@ -38,4 +41,166 @@ body {
 
 ::selection {
   background: rgb(var(--coral) / 0.25);
+}
+
+/* ============================================================
+   Habillage DA — 100 % CSS, zéro JavaScript.
+   Grammaire décorative unique héritée du logo :
+   filet dégradé corail→rouge→orange, barres inclinées -22°,
+   points orange/corail. Aucune animation en boucle infinie.
+   ============================================================ */
+
+/* ---------- Keyframe unique : montée + fondu ---------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer utilities {
+  /* --- Cascade d'entrée du hero (au chargement) ---
+     Visible par défaut : rien n'est masqué si l'animation ne joue pas.
+     Le H1 (LCP) n'est volontairement PAS animé. */
+  .rise {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .rise {
+      animation: rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .rise-1 {
+      animation-delay: 0.05s;
+    }
+    .rise-2 {
+      animation-delay: 0.12s;
+    }
+    .rise-3 {
+      animation-delay: 0.19s;
+    }
+    .rise-4 {
+      animation-delay: 0.26s;
+    }
+  }
+
+  /* --- Filet dégradé signature (header, footer, carte solution, panneau CTA) --- */
+  .brand-hairline {
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--coral)),
+      rgb(var(--accent)) 45%,
+      rgb(var(--orange))
+    );
+  }
+
+  /* --- Halo chaud très diffus derrière le mockup du hero --- */
+  .glow-warm {
+    background: radial-gradient(
+      closest-side,
+      rgb(var(--coral) / 0.16),
+      transparent 70%
+    );
+  }
+
+  /* --- Ombre chaude de la fenêtre mockup --- */
+  .shadow-window {
+    box-shadow: 0 32px 80px -32px rgb(var(--bordeaux) / 0.35);
+  }
+
+  /* --- CTA primaire : dégradé rouge + ombre chaude + micro-interaction --- */
+  .btn-cta {
+    background-image: linear-gradient(
+      180deg,
+      rgb(var(--accent)) 0%,
+      rgb(var(--accent-dark)) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      0 1px 2px rgb(var(--bordeaux) / 0.25),
+      0 10px 24px -10px rgb(var(--accent) / 0.5);
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  .btn-cta:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.22),
+      0 2px 4px rgb(var(--bordeaux) / 0.25),
+      0 14px 32px -10px rgb(var(--accent) / 0.6);
+  }
+  .btn-cta:active {
+    transform: translateY(0);
+    box-shadow:
+      0 1px 2px rgb(var(--bordeaux) / 0.25),
+      0 6px 16px -10px rgb(var(--accent) / 0.45);
+  }
+
+  /* --- CTA secondaire --- */
+  .btn-ghost {
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-1px);
+    border-color: rgb(var(--coral) / 0.7);
+    box-shadow: 0 8px 24px -12px rgb(var(--bordeaux) / 0.18);
+  }
+
+  /* --- Carte premium : ombre bordeaux chaude, très diffuse --- */
+  .card {
+    box-shadow:
+      0 1px 2px rgb(var(--bordeaux) / 0.04),
+      0 16px 40px -24px rgb(var(--bordeaux) / 0.12);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 2px 4px rgb(var(--bordeaux) / 0.05),
+      0 24px 56px -24px rgb(var(--bordeaux) / 0.2);
+  }
+
+  /* --- Lien de navigation : soulignement dégradé qui se déploie --- */
+  .nav-link {
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--accent)),
+      rgb(var(--orange))
+    );
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
+    padding-bottom: 2px;
+    transition:
+      background-size 0.25s ease,
+      color 0.18s ease;
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    background-size: 100% 2px;
+  }
+}
+
+/* ---------- Révélation au scroll : scroll-driven CSS pur ----------
+   Progressive enhancement : sans support (Firefox, vieux Safari)
+   ou avec prefers-reduced-motion, .reveal est inerte et le contenu
+   est visible d'office — zéro contenu masqué pour Googlebot, zéro CLS. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
 }

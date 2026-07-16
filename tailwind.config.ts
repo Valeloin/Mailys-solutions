@@ -17,6 +17,7 @@ const config: Config = {
         bordeaux: "rgb(var(--bordeaux) / <alpha-value>)",
         coral: "rgb(var(--coral) / <alpha-value>)",
         orange: "rgb(var(--orange) / <alpha-value>)",
+        "orange-text": "rgb(var(--orange-text) / <alpha-value>)",
       },
       maxWidth: {
         content: "72rem",
