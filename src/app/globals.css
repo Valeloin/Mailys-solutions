@@ -192,6 +192,84 @@ body {
   }
 }
 
+/* ---------- Typographie des articles de blog (contenu Markdown) ---------- */
+.article-content {
+  line-height: 1.75;
+}
+.article-content h2 {
+  margin-top: 2.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: rgb(var(--bordeaux));
+}
+.article-content h3 {
+  margin-top: 1.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgb(var(--bordeaux));
+}
+.article-content p {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+.article-content strong {
+  color: var(--foreground);
+}
+.article-content a {
+  color: rgb(var(--accent));
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article-content ul,
+.article-content ol {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+  color: var(--muted);
+}
+.article-content ul {
+  list-style: disc;
+}
+.article-content ol {
+  list-style: decimal;
+}
+.article-content li {
+  margin-top: 0.375rem;
+}
+.article-content blockquote {
+  margin-top: 1.25rem;
+  border-left: 3px solid rgb(var(--coral));
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted);
+}
+.article-content img {
+  margin-top: 1.5rem;
+  max-width: 100%;
+  border-radius: 0.75rem;
+}
+.article-content code {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.9em;
+}
+.article-content pre {
+  margin-top: 1.25rem;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  background: #241417;
+  color: #f5eaea;
+  padding: 1rem 1.25rem;
+}
+.article-content pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
 /* ---------- Révélation au scroll : scroll-driven CSS pur ----------
    Progressive enhancement : sans support (Firefox, vieux Safari)
    ou avec prefers-reduced-motion, .reveal est inerte et le contenu

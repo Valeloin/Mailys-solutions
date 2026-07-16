@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
+import { getPublishedPosts } from "@/lib/blog";
 
 // Sitemap généré automatiquement — soumis à Google Search Console.
-// /realisations et /blog seront ajoutés dès qu'ils auront du contenu
-// réel (ils sont noindex en attendant).
-export default function sitemap(): MetadataRoute.Sitemap {
+// Les articles de blog publiés y entrent automatiquement (ISR 1 h).
+// /realisations reste hors sitemap tant qu'il est noindex.
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = ["", "/services", "/a-propos", "/contact"].map((path) => ({
     url: `${SITE.url}${path}`,
     changeFrequency: "monthly" as const,
@@ -18,5 +21,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...servicePages];
+  const posts = await getPublishedPosts();
+  const blogPages =
+    posts.length > 0
+      ? [
+          {
+            url: `${SITE.url}/blog`,
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+          },
+          ...posts.map((p) => ({
+            url: `${SITE.url}/blog/${p.slug}`,
+            lastModified: p.updated_at,
+            changeFrequency: "monthly" as const,
+            priority: 0.6,
+          })),
+        ]
+      : [];
+
+  return [...staticPages, ...servicePages, ...blogPages];
 }

@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { SITE } from "@/lib/site";
+import { getColorOverridesCss } from "@/lib/colors";
 import "./globals.css";
 
-// Police unique auto-hébergée par Next (zéro requête externe, zéro CLS).
+// Layout racine : html/body, police, identité Schema.org et
+// palette éventuellement écrasée depuis l'admin (couleurs).
+// Le header/footer publics vivent dans (site)/layout.tsx —
+// l'admin a sa propre coque.
+
 const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
@@ -32,14 +35,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Couleurs personnalisées depuis /admin (null si palette d'origine).
+  const colorsCss = await getColorOverridesCss();
+
   return (
     <html lang="fr" className={manrope.className}>
-      <body className="flex min-h-screen flex-col antialiased">
+      <body className="antialiased">
+        {colorsCss && (
+          <style id="site-colors" dangerouslySetInnerHTML={{ __html: colorsCss }} />
+        )}
         {/* Schema.org : identité de l'entreprise (visible sur tout le site).
             À enrichir avec adresse + téléphone dès que le client les fournit. */}
         <JsonLd
@@ -54,9 +63,7 @@ export default function RootLayout({
             priceRange: "Sur devis",
           }}
         />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
