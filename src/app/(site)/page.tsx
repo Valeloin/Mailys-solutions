@@ -92,17 +92,19 @@ export default async function HomePage() {
           </div>
 
           {/* Vitrine décorative : les 4 scènes des services en boucle,
-              avec le titre du service synchronisé dessous */}
-          <div className="relative hidden lg:-mt-8 lg:block" aria-hidden="true">
+              avec le titre du service synchronisé dessous.
+              Visible aussi sur mobile : SVG inline pur, aucune image
+              à charger, ratio fixe = zéro décalage de mise en page. */}
+          <div className="relative lg:-mt-8" aria-hidden="true">
             <div className="glow-warm absolute -inset-12 rounded-full" />
             <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
               <HeroShowcase />
             </div>
-            <div className="relative mt-6 h-9">
+            <div className="relative mt-6 h-7 max-[374px]:h-12 sm:h-9">
               {services.map((s, i) => (
                 <span
                   key={s.slug}
-                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-2xl font-extrabold tracking-tight text-bordeaux`}
+                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-center text-lg font-extrabold leading-tight tracking-tight text-bordeaux sm:text-2xl`}
                 >
                   <span
                     className={`h-2.5 w-2.5 rounded-full ${
