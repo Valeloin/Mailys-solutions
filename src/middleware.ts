@@ -1,9 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { ADMIN_EMAILS } from "@/lib/site";
 
 // Garde d'accès de l'admin : toute URL /admin/* exige une session
-// Supabase valide, sauf la page de connexion. Rafraîchit aussi la
-// session (cookies) à chaque requête admin.
+// Supabase valide ET un email d'administrateur (un simple compte
+// inscrit ne suffit pas). Rafraîchit aussi la session (cookies).
 export async function middleware(request: NextRequest) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -35,11 +36,15 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const isAdmin = Boolean(
+    user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase())
+  );
+
   const path = request.nextUrl.pathname;
-  if (path.startsWith("/admin") && path !== "/admin/login" && !user) {
+  if (path.startsWith("/admin") && path !== "/admin/login" && !isAdmin) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
-  if (path === "/admin/login" && user) {
+  if (path === "/admin/login" && isAdmin) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
 
