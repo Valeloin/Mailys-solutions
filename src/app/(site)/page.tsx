@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
+import ServicePreview from "@/components/ServicePreview";
+import HeroShowcase from "@/components/HeroShowcase";
 import {
   getHomeContent,
   getMergedServices,
@@ -32,18 +34,6 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: { canonical: "/" },
   };
 }
-
-// Icônes décoratives des cartes services (traits SVG, couleur accent)
-const SERVICE_ICONS: Record<string, React.ReactNode> = {
-  "developpement-application-metier": <path d="M8 6 3 12l5 6M16 6l5 6-5 6" />,
-  "modernisation-application": <path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6" />,
-  "digitalisation-processus": (
-    <path d="M7 3h7l4 4v14H7zM14 3v4h4M10 14l2 2 4-4" />
-  ),
-  "maintenance-windev-webdev": (
-    <path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6L14 13l-3-3z" />
-  ),
-};
 
 export default async function HomePage() {
   const [c, services, methodSteps, whyUs] = await Promise.all([
@@ -101,54 +91,27 @@ export default async function HomePage() {
             </ul>
           </div>
 
-          {/* Mockup décoratif : une application métier, montrée plutôt que racontée */}
-          <div className="relative hidden lg:block" aria-hidden="true">
+          {/* Vitrine décorative : les 4 scènes des services en boucle,
+              avec le titre du service synchronisé au-dessus */}
+          <div className="relative hidden lg:-mt-8 lg:block" aria-hidden="true">
             <div className="glow-warm absolute -inset-12 rounded-full" />
+            <div className="relative mb-5 h-8">
+              {services.map((s, i) => (
+                <span
+                  key={s.slug}
+                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-xl font-extrabold tracking-tight text-bordeaux`}
+                >
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full ${
+                      ["bg-coral", "bg-orange", "bg-accent", "bg-bordeaux"][i]
+                    }`}
+                  ></span>
+                  {s.name}
+                </span>
+              ))}
+            </div>
             <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
-              <svg viewBox="0 0 520 380" className="h-auto w-full rounded-xl">
-                <rect width="520" height="380" rx="12" fill="#ffffff" />
-                <rect width="520" height="44" fill="rgb(var(--bordeaux) / 0.04)" />
-                <circle cx="24" cy="22" r="5" fill="rgb(var(--coral))" />
-                <circle cx="42" cy="22" r="5" fill="rgb(var(--orange))" />
-                <circle cx="60" cy="22" r="5" fill="rgb(var(--accent))" />
-                <rect x="200" y="14" width="120" height="16" rx="8" fill="rgb(var(--bordeaux) / 0.06)" />
-                <rect x="0" y="44" width="132" height="336" fill="rgb(var(--bordeaux) / 0.025)" />
-                <rect x="18" y="68" width="86" height="10" rx="5" fill="rgb(var(--bordeaux) / 0.55)" />
-                <rect x="18" y="96" width="96" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.12)" />
-                <rect x="18" y="118" width="72" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.12)" />
-                <rect x="18" y="140" width="88" height="8" rx="4" fill="rgb(var(--accent) / 0.55)" />
-                <rect x="18" y="162" width="64" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.12)" />
-                <g>
-                  <rect x="152" y="64" width="108" height="64" rx="10" fill="#fff" stroke="rgb(var(--bordeaux) / 0.08)" />
-                  <rect x="164" y="78" width="48" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.15)" />
-                  <rect x="164" y="96" width="64" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.7)" />
-                </g>
-                <g>
-                  <rect x="272" y="64" width="108" height="64" rx="10" fill="#fff" stroke="rgb(var(--bordeaux) / 0.08)" />
-                  <rect x="284" y="78" width="48" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.15)" />
-                  <rect x="284" y="96" width="56" height="12" rx="6" fill="rgb(var(--accent) / 0.8)" />
-                </g>
-                <g>
-                  <rect x="392" y="64" width="108" height="64" rx="10" fill="#fff" stroke="rgb(var(--bordeaux) / 0.08)" />
-                  <rect x="404" y="78" width="48" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.15)" />
-                  <rect x="404" y="96" width="60" height="12" rx="6" fill="rgb(var(--orange) / 0.8)" />
-                </g>
-                <rect x="152" y="148" width="228" height="152" rx="10" fill="#fff" stroke="rgb(var(--bordeaux) / 0.08)" />
-                <rect x="172" y="240" width="22" height="44" rx="4" fill="rgb(var(--coral) / 0.55)" />
-                <rect x="204" y="216" width="22" height="68" rx="4" fill="rgb(var(--coral) / 0.75)" />
-                <rect x="236" y="196" width="22" height="88" rx="4" fill="rgb(var(--orange) / 0.75)" />
-                <rect x="268" y="228" width="22" height="56" rx="4" fill="rgb(var(--orange) / 0.55)" />
-                <rect x="300" y="180" width="22" height="104" rx="4" fill="rgb(var(--accent) / 0.85)" />
-                <rect x="332" y="204" width="22" height="80" rx="4" fill="rgb(var(--accent) / 0.6)" />
-                <rect x="392" y="148" width="108" height="152" rx="10" fill="#fff" stroke="rgb(var(--bordeaux) / 0.08)" />
-                <rect x="404" y="166" width="72" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.35)" />
-                <rect x="404" y="188" width="84" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
-                <rect x="404" y="208" width="60" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
-                <rect x="404" y="228" width="78" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
-                <rect x="404" y="256" width="84" height="26" rx="13" fill="rgb(var(--accent))" />
-                <rect x="152" y="316" width="348" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.06)" />
-                <rect x="152" y="340" width="280" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.06)" />
-              </svg>
+              <HeroShowcase />
             </div>
           </div>
         </div>
@@ -169,23 +132,14 @@ export default async function HomePage() {
             {services.map((s) => (
               <article
                 key={s.slug}
-                className="group card reveal relative rounded-2xl border border-border bg-background p-7 hover:border-coral"
+                className="group card reveal relative overflow-hidden rounded-2xl border border-border bg-surface p-7 hover:border-coral"
               >
+                {/* Vignette animée : la maquette du service en action */}
                 <div
                   aria-hidden="true"
-                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10"
+                  className="mb-5 overflow-hidden rounded-xl border border-border shadow-[0_8px_24px_-16px_rgb(var(--bordeaux)/0.25)]"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-6 w-6"
-                    fill="none"
-                    stroke="rgb(var(--accent))"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    {SERVICE_ICONS[s.slug]}
-                  </svg>
+                  <ServicePreview slug={s.slug} />
                 </div>
                 <h3 className="text-lg font-bold transition-colors group-hover:text-accent">
                   {/* Lien « étendu » : le ::after se cale sur l'<article relative>

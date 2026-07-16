@@ -7,12 +7,16 @@ import Link from "next/link";
 // 100 % statiques — aucun JavaScript côté navigateur.
 // ============================================================
 
-/** Badge « kicker » système : pilule + les deux points du logo */
+/** Badge « kicker » système : pilule + les deux points du logo (pulsation douce) */
 export function Kicker({ children }: { children: React.ReactNode }) {
   return (
     <p className="inline-flex items-center gap-2 rounded-full border border-orange/25 bg-orange/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-text">
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-orange"></span>
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-coral"></span>
+      <span aria-hidden="true" className="pv-dot h-1.5 w-1.5 rounded-full bg-orange"></span>
+      <span
+        aria-hidden="true"
+        className="pv-dot h-1.5 w-1.5 rounded-full bg-coral"
+        style={{ animationDelay: "0.4s" }}
+      ></span>
       {children}
     </p>
   );
@@ -89,8 +93,8 @@ export function ProblemItem({ children }: { children: React.ReactNode }) {
 export function BrandDots() {
   return (
     <div aria-hidden="true" className="mb-4 flex gap-1.5">
-      <span className="h-2 w-2 rounded-full bg-orange" />
-      <span className="h-2 w-2 rounded-full bg-coral" />
+      <span className="pv-dot h-2 w-2 rounded-full bg-orange" />
+      <span className="pv-dot h-2 w-2 rounded-full bg-coral" style={{ animationDelay: "0.4s" }} />
     </div>
   );
 }
