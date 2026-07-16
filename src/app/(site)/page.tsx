@@ -92,14 +92,17 @@ export default async function HomePage() {
           </div>
 
           {/* Vitrine décorative : les 4 scènes des services en boucle,
-              avec le titre du service synchronisé au-dessus */}
+              avec le titre du service synchronisé dessous */}
           <div className="relative hidden lg:-mt-8 lg:block" aria-hidden="true">
             <div className="glow-warm absolute -inset-12 rounded-full" />
-            <div className="relative mb-5 h-8">
+            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
+              <HeroShowcase />
+            </div>
+            <div className="relative mt-6 h-9">
               {services.map((s, i) => (
                 <span
                   key={s.slug}
-                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-xl font-extrabold tracking-tight text-bordeaux`}
+                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-2xl font-extrabold tracking-tight text-bordeaux`}
                 >
                   <span
                     className={`h-2.5 w-2.5 rounded-full ${
@@ -109,9 +112,6 @@ export default async function HomePage() {
                   {s.name}
                 </span>
               ))}
-            </div>
-            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
-              <HeroShowcase />
             </div>
           </div>
         </div>

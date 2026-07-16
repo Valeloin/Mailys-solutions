@@ -161,9 +161,30 @@ export function Modernisation() {
           {/* Scintillement interne */}
           <rect className="pv-dot" x="264" y="58" width="60" height="8" rx="4" fill="rgb(var(--coral) / 0.8)" />
         </g>
-        <rect className="pv-in-4" x="40" y="146" width="104" height="44" rx="10" fill="rgb(var(--bordeaux) / 0.07)" />
-        <rect className="pv-in-4" x="154" y="146" width="104" height="44" rx="10" fill="rgb(var(--bordeaux) / 0.07)" />
-        <rect className="pv-in-4" x="268" y="146" width="104" height="44" rx="10" fill="rgb(var(--bordeaux) / 0.07)" />
+        {/* 3 cartes riches : icône colorée, contenu, micro-barre qui
+            se charge — le site modernisé est vivant et optimisé.
+            Apparition décalée (pv-in-4/5/6), jamais au-delà de 100 %. */}
+        {[
+          { x: 40, color: "--coral" },
+          { x: 154, color: "--orange" },
+          { x: 268, color: "--accent" },
+        ].map((card, i) => (
+          <g key={card.x} className={`pv-in-${4 + i}`}>
+            <rect x={card.x} y="146" width="104" height="40" rx="10" fill="rgb(var(--bordeaux) / 0.07)" />
+            <circle cx={card.x + 18} cy="160" r="5" fill={`rgb(var(${card.color}))`} />
+            <rect x={card.x + 30} y="152" width="48" height="6" rx="3" fill="rgb(var(--bordeaux) / 0.3)" />
+            <rect x={card.x + 30} y="162" width="34" height="4" rx="2" fill="rgb(var(--bordeaux) / 0.12)" />
+            <rect
+              className="pv-spark"
+              x={card.x + 12}
+              y="174"
+              width="80"
+              height="4"
+              rx="2"
+              fill={`rgb(var(${card.color}) / 0.55)`}
+            />
+          </g>
+        ))}
         {/* Étiquette en pastille, marge garantie avec le bord bas */}
         <g className="pv-in-3">
           <rect x="306" y="192" width="66" height="20" rx="10" fill="rgb(var(--accent) / 0.12)" />

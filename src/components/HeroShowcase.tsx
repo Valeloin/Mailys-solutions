@@ -34,6 +34,41 @@ export default function HeroShowcase() {
       <g className="pv-scene-4">
         <Maintenance />
       </g>
+      {/* Transition entre les scènes : voile blanc + spinner qui
+          tourne, puis coche validée — dans la fin de chaque quart */}
+      <g className="pv-trans">
+        <rect x="0" y="26" width="400" height="194" fill="#ffffff" opacity="0.94" />
+      </g>
+      <g className="pv-spin-vis">
+        <g className="pv-rotate">
+          <circle
+            cx="200"
+            cy="118"
+            r="16"
+            stroke="rgb(var(--bordeaux) / 0.12)"
+            strokeWidth="4"
+            fill="none"
+          />
+          <path
+            d="M200 102a16 16 0 0 1 16 16"
+            stroke="rgb(var(--accent))"
+            strokeWidth="4"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </g>
+      </g>
+      <g className="pv-ok">
+        <circle cx="200" cy="118" r="16" fill="rgb(var(--orange) / 0.15)" />
+        <path
+          d="M191 118l6 6 12 -12"
+          stroke="rgb(var(--orange))"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </g>
       <Chrome url="mailys-solutions.fr" />
     </svg>
   );
