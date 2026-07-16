@@ -32,6 +32,12 @@ export default async function AdminDashboard() {
 
   const cards = [
     {
+      href: "/admin/contenus",
+      title: "Contenus",
+      value: "Textes du site",
+      hint: "Modifier les textes de toutes les pages",
+    },
+    {
       href: "/admin/articles",
       title: "Articles",
       value: `${publishedCount} publié${publishedCount > 1 ? "s" : ""} / ${postCount}`,

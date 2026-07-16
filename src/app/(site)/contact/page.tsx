@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
+import Rich from "@/components/Rich";
 import { SITE } from "@/lib/site";
+import { getContactContent } from "@/lib/sections";
 import { StepNumber } from "@/components/ui";
 import { isSupabaseConfigured } from "@/lib/supabase/public";
 import { sendContactMessage } from "./actions";
@@ -12,12 +14,14 @@ import { sendContactMessage } from "./actions";
 // Le résultat s'affiche via ?sent=1 / ?error=… (redirection).
 // ============================================================
 
-export const metadata: Metadata = {
-  title: "Contact : parlons de votre projet d'application métier",
-  description:
-    "Décrivez-nous votre projet d'application métier ou votre besoin de maintenance WINDEV / WEBDEV : réponse rapide, devis gratuit et sans engagement.",
-  alternates: { canonical: "/contact" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContactContent();
+  return {
+    title: c.meta.title,
+    description: c.meta.description,
+    alternates: { canonical: "/contact" },
+  };
+}
 
 const ERRORS: Record<string, string> = {
   champs: "Merci de remplir au minimum votre nom, votre email et votre message.",
@@ -35,6 +39,7 @@ export default async function ContactPage({
   searchParams: Promise<{ sent?: string; error?: string }>;
 }) {
   const { sent, error } = await searchParams;
+  const c = await getContactContent();
   const formAvailable = isSupabaseConfigured();
 
   return (
@@ -47,17 +52,10 @@ export default async function ContactPage({
         <div className="grid gap-12 md:grid-cols-2">
           <div>
             <h1 className="text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
-              Parlons de votre projet
+              {c.h1}
             </h1>
             <p className="rise rise-2 mt-6 text-lg leading-relaxed text-muted">
-              Application métier à créer, logiciel à moderniser, processus à
-              digitaliser ou application WINDEV à reprendre : décrivez-nous
-              votre situation en quelques lignes. Nous revenons vers vous
-              rapidement avec un premier avis honnête —{" "}
-              <strong className="text-foreground">
-                gratuit et sans engagement
-              </strong>
-              .
+              <Rich text={c.intro} />
             </p>
 
             {/* ---------- Retour utilisateur ---------- */}
@@ -152,24 +150,9 @@ export default async function ContactPage({
 
           <div className="card relative overflow-hidden rounded-2xl border border-border bg-surface p-8">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
-            <h2 className="text-xl font-bold text-bordeaux">
-              Ce qui se passe ensuite
-            </h2>
+            <h2 className="text-xl font-bold text-bordeaux">{c.panelTitle}</h2>
             <ol className="mt-6 space-y-5">
-              {[
-                {
-                  title: "Un premier échange",
-                  text: "30 minutes par téléphone ou visio pour comprendre votre besoin, votre contexte et vos priorités.",
-                },
-                {
-                  title: "Un avis honnête",
-                  text: "Nous vous disons ce que nous ferions à votre place — même si la réponse est « pas besoin de développement ».",
-                },
-                {
-                  title: "Un devis clair et détaillé",
-                  text: "Périmètre, étapes, délais, budget : tout est écrit noir sur blanc, sans surprise en cours de route.",
-                },
-              ].map((step, i) => (
+              {c.steps.map((step, i) => (
                 <li key={step.title} className="flex gap-4">
                   <StepNumber size="sm">{i + 1}</StepNumber>
                   <div>

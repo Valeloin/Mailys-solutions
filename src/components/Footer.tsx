@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
-import { SERVICES } from "@/lib/services";
+import { getFooterContent, getMergedServices } from "@/lib/sections";
 import Logo from "@/components/Logo";
 
 // Footer : participe au maillage interne (liens vers toutes les pages clés).
-export default function Footer() {
+// Texte de présentation éditable dans /admin/contenus.
+export default async function Footer() {
+  const [c, SERVICES] = await Promise.all([
+    getFooterContent(),
+    getMergedServices(),
+  ]);
   return (
     <footer className="relative border-t border-border bg-surface">
       {/* Le filet d'ouverture du header est repris en fermeture : la page est encadrée. */}
@@ -13,9 +18,7 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-            Applications métier sur mesure pour PME : nous remplaçons les
-            fichiers Excel et les processus manuels par des outils simples,
-            rapides et adaptés à votre entreprise.
+            {c.tagline}
           </p>
         </div>
 
@@ -72,8 +75,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-border">
         <p className="mx-auto max-w-content px-4 py-5 text-xs text-muted sm:px-6">
-          © {new Date().getFullYear()} {SITE.name} — Développement
-          d&apos;applications métier sur mesure pour PME
+          © {new Date().getFullYear()} {SITE.name} — {c.copyrightSuffix}
         </p>
       </div>
     </footer>

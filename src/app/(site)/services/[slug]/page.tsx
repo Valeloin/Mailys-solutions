@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SERVICES, METHOD_STEPS, WHY_US, getService } from "@/lib/services";
+import { SERVICES } from "@/lib/services";
+import {
+  getMergedService,
+  getMergedServices,
+  getMethodSteps,
+  getWhyUs,
+} from "@/lib/sections";
 import { SITE } from "@/lib/site";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
@@ -31,7 +37,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getMergedService(slug);
   if (!service) return {};
   return {
     title: { absolute: service.metaTitle },
@@ -46,10 +52,15 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getMergedService(slug);
   if (!service) notFound();
 
-  const siblings = SERVICES.filter((s) => s.slug !== service.slug);
+  const [allServices, METHOD_STEPS, WHY_US] = await Promise.all([
+    getMergedServices(),
+    getMethodSteps(),
+    getWhyUs(),
+  ]);
+  const siblings = allServices.filter((s) => s.slug !== service.slug);
 
   return (
     <>

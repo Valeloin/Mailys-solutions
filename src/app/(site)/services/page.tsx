@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@/lib/services";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
+import { getServicesHubContent, getMergedServices } from "@/lib/sections";
 import { MobileCtaBar, StepNumber } from "@/components/ui";
 
 // ============================================================
 // HUB SERVICES — page carrefour du cocon sémantique :
 // elle distribue le jus SEO vers les 4 pages services.
+// Textes éditables dans /admin/contenus.
 // ============================================================
 
-export const metadata: Metadata = {
-  title: "Nos services : développement, modernisation, digitalisation",
-  description:
-    "Développement d'applications métier sur mesure, modernisation d'applications, digitalisation des processus et maintenance WINDEV / WEBDEV pour PME.",
-  alternates: { canonical: "/services" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getServicesHubContent();
+  return {
+    title: c.meta.title,
+    description: c.meta.description,
+    alternates: { canonical: "/services" },
+  };
+}
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const [c, SERVICES] = await Promise.all([
+    getServicesHubContent(),
+    getMergedServices(),
+  ]);
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
@@ -26,13 +33,10 @@ export default function ServicesPage() {
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
         <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
-          Nos services pour digitaliser votre PME
+          {c.h1}
         </h1>
         <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          Création d&apos;applications métier sur mesure, modernisation de
-          logiciels existants, digitalisation des processus et maintenance
-          WINDEV / WEBDEV : quatre expertises, une seule approche — comprendre
-          votre métier avant de développer.
+          {c.intro}
         </p>
 
         <div className="mt-12 space-y-8">
@@ -80,10 +84,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <CtaSection
-        title="Vous ne savez pas par où commencer ?"
-        text="Décrivez-nous simplement votre situation : nous vous orientons vers la bonne approche, même si elle est plus modeste que ce que vous imaginiez."
-      />
+      <CtaSection title={c.cta.title} text={c.cta.text} />
       <MobileCtaBar />
     </>
   );

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getPublicClient } from "@/lib/supabase/public";
 
 // Data layer du blog — lecture publique (articles publiés uniquement).
@@ -19,7 +20,8 @@ export type BlogPost = {
   updated_at: string;
 };
 
-export async function getPublishedPosts(): Promise<BlogPost[]> {
+// Mémoïsées par rendu (generateMetadata + page = une seule requête).
+export const getPublishedPosts = cache(async (): Promise<BlogPost[]> => {
   const db = getPublicClient();
   if (!db) return [];
   const { data, error } = await db
@@ -29,22 +31,22 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
     .order("published_at", { ascending: false });
   if (error || !data) return [];
   return data as BlogPost[];
-}
+});
 
-export async function getPublishedPostBySlug(
-  slug: string
-): Promise<BlogPost | null> {
-  const db = getPublicClient();
-  if (!db) return null;
-  const { data, error } = await db
-    .from("blog_posts")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  if (error || !data) return null;
-  return data as BlogPost;
-}
+export const getPublishedPostBySlug = cache(
+  async (slug: string): Promise<BlogPost | null> => {
+    const db = getPublicClient();
+    if (!db) return null;
+    const { data, error } = await db
+      .from("blog_posts")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
+    if (error || !data) return null;
+    return data as BlogPost;
+  }
+);
 
 /** Date lisible en français (ex. « 16 juillet 2026 ») */
 export function formatDate(iso: string | null): string {

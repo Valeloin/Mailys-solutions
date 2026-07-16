@@ -192,6 +192,19 @@ body {
   }
 }
 
+/* ---------- Liens dans les textes édités via l'admin ---------- */
+.rich-links a {
+  color: rgb(var(--accent));
+  font-weight: 600;
+  text-underline-offset: 2px;
+}
+.rich-links a:hover {
+  text-decoration: underline;
+}
+.rich-links strong {
+  color: var(--foreground);
+}
+
 /* ---------- Typographie des articles de blog (contenu Markdown) ---------- */
 .article-content {
   line-height: 1.75;

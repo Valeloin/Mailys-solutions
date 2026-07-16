@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import { getPublishedPosts, formatDate } from "@/lib/blog";
+import { getBlogContent } from "@/lib/sections";
 
 // ============================================================
 // BLOG — pilier SEO longue traîne. Les articles sont gérés
@@ -25,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BlogPage() {
-  const posts = await getPublishedPosts();
+  const [posts, c] = await Promise.all([getPublishedPosts(), getBlogContent()]);
 
   return (
     <>
@@ -35,24 +36,17 @@ export default async function BlogPage() {
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
         <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
-          Le blog de la digitalisation des PME
+          {c.h1}
         </h1>
         <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          Guides pratiques, retours d&apos;expérience et conseils concrets
-          pour digitaliser votre entreprise : applications métier,
-          automatisation des processus, modernisation de logiciels et
-          maintenance WINDEV / WEBDEV.
+          {c.intro}
         </p>
 
         {posts.length === 0 ? (
           <div className="mt-12 rounded-2xl border border-dashed border-coral bg-surface p-8 text-center">
-            <p className="font-semibold text-bordeaux">
-              Les premiers articles arrivent bientôt
-            </p>
+            <p className="font-semibold text-bordeaux">{c.placeholderTitle}</p>
             <p className="mx-auto mt-2 max-w-xl text-sm text-muted">
-              Nous préparons une série de guides pratiques répondant aux
-              questions que se posent les dirigeants de PME. Une question en
-              particulier ? Posez-la nous directement.
+              {c.placeholderText}
             </p>
           </div>
         ) : (
@@ -92,9 +86,9 @@ export default async function BlogPage() {
       </section>
 
       <CtaSection
-        title="Une question sur votre projet ?"
-        text="Inutile d'attendre l'article : posez-nous directement votre question, nous y répondons avec plaisir."
-        buttonLabel="Poser ma question"
+        title={c.cta.title}
+        text={c.cta.text}
+        buttonLabel={c.cta.buttonLabel}
       />
     </>
   );

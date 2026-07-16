@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES, METHOD_STEPS, WHY_US } from "@/lib/services";
 import CtaSection from "@/components/CtaSection";
+import Rich from "@/components/Rich";
+import {
+  getHomeContent,
+  getMergedServices,
+  getMethodSteps,
+  getWhyUs,
+} from "@/lib/sections";
 import {
   Kicker,
   Check,
@@ -14,16 +20,18 @@ import {
 // ============================================================
 // ACCUEIL — requête principale :
 // « développement d'application métier sur mesure » (PME)
-// Habillage 100 % CSS (aucun JavaScript envoyé au navigateur).
+// Textes éditables depuis /admin/contenus (défauts dans
+// src/lib/sections.ts). Habillage 100 % CSS, zéro JavaScript.
 // ============================================================
 
-export const metadata: Metadata = {
-  title:
-    "Développement d'application métier sur mesure pour PME | Mailys Solutions",
-  description:
-    "Mailys Solutions développe des applications métier sur mesure pour PME : fini Excel et les ressaisies. Digitalisation, modernisation, maintenance WINDEV / WEBDEV.",
-  alternates: { canonical: "/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getHomeContent();
+  return {
+    title: { absolute: c.meta.title },
+    description: c.meta.description,
+    alternates: { canonical: "/" },
+  };
+}
 
 // Icônes décoratives des cartes services (traits SVG, couleur accent)
 const SERVICE_ICONS: Record<string, React.ReactNode> = {
@@ -37,7 +45,14 @@ const SERVICE_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [c, services, methodSteps, whyUs] = await Promise.all([
+    getHomeContent(),
+    getMergedServices(),
+    getMethodSteps(),
+    getWhyUs(),
+  ]);
+
   return (
     <>
       {/* ================= HERO ================= */}
@@ -51,37 +66,30 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1fr_minmax(0,30rem)]">
           <div className="relative">
             <div className="rise rise-1">
-              <Kicker>Applications métier pour PME</Kicker>
+              <Kicker>{c.hero.kicker}</Kicker>
             </div>
             <h1 className="mt-6 max-w-3xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
-              Développement d&apos;applications métier sur mesure pour PME
+              {c.hero.h1}
             </h1>
             <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Remplacez les fichiers Excel, les ressaisies et les processus
-              manuels par un logiciel conçu pour <strong className="text-foreground">votre</strong> façon
-              de travailler. Nous concevons, modernisons et maintenons les
-              applications qui font tourner votre entreprise.
+              <Rich text={c.hero.subtitle} />
             </p>
             <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
               <Link
                 href="/contact"
                 className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
               >
-                Demander un devis gratuit
+                {c.hero.ctaPrimary}
               </Link>
               <Link
                 href="/services"
                 className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
               >
-                Découvrir nos services
+                {c.hero.ctaSecondary}
               </Link>
             </div>
             <ul className="rise rise-4 mt-10 flex flex-wrap gap-x-4 gap-y-3 text-sm font-medium text-muted">
-              {[
-                "Du vrai sur mesure",
-                "Un interlocuteur unique",
-                "Un suivi long terme",
-              ].map((item) => (
+              {c.hero.reassurance.map((item) => (
                 <li
                   key={item}
                   className="flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)]"
@@ -149,20 +157,16 @@ export default function HomePage() {
       {/* ================= SERVICES ================= */}
       <section aria-labelledby="services-title">
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
-          <Kicker>Nos services</Kicker>
+          <Kicker>{c.services.kicker}</Kicker>
           <h2
             id="services-title"
             className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
-            Quatre façons de simplifier le quotidien de votre entreprise
+            {c.services.title}
           </h2>
-          <p className="mt-4 max-w-2xl text-muted">
-            Que votre besoin soit de créer un outil, de sauver un logiciel
-            vieillissant ou d&apos;en finir avec le papier, nous partons
-            toujours du même point : comprendre votre métier.
-          </p>
+          <p className="mt-4 max-w-2xl text-muted">{c.services.intro}</p>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {SERVICES.map((s) => (
+            {services.map((s) => (
               <article
                 key={s.slug}
                 className="group card reveal relative rounded-2xl border border-border bg-background p-7 hover:border-coral"
@@ -219,16 +223,10 @@ export default function HomePage() {
               id="probleme-title"
               className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
             >
-              Vos outils vous ralentissent au lieu de vous aider ?
+              {c.probleme.title}
             </h2>
             <ul className="mt-6 space-y-3 text-muted">
-              {[
-                "Des fichiers Excel partout, jamais à jour",
-                "Les mêmes informations ressaisies plusieurs fois",
-                "Un logiciel vieillissant que plus personne n'ose toucher",
-                "Des processus qui ne tiennent que grâce aux habitudes",
-                "Aucune visibilité fiable pour piloter l'activité",
-              ].map((p) => (
+              {c.probleme.items.map((p) => (
                 <ProblemItem key={p}>{p}</ProblemItem>
               ))}
             </ul>
@@ -236,46 +234,13 @@ export default function HomePage() {
           <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
             <h3 className="text-xl font-bold text-bordeaux">
-              Un logiciel qui épouse vos processus — pas l&apos;inverse
+              {c.probleme.solutionTitle}
             </h3>
-            <p className="mt-4 leading-relaxed text-muted">
-              Les logiciels génériques imposent leur logique : c&apos;est à vos
-              équipes de s&apos;adapter, de contourner, de bricoler. Nous
-              faisons le chemin inverse : nous étudions votre fonctionnement
-              réel, puis nous développons{" "}
-              <Link
-                href="/services/developpement-application-metier"
-                className="font-semibold text-accent underline-offset-2 hover:underline"
-              >
-                l&apos;application métier
-              </Link>{" "}
-              qui l&apos;épouse exactement.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted">
-              Votre logiciel actuel a de la valeur mais vieillit mal ? Nous le{" "}
-              <Link
-                href="/services/modernisation-application"
-                className="font-semibold text-accent underline-offset-2 hover:underline"
-              >
-                modernisons
-              </Link>{" "}
-              sans perdre vos données. Vos équipes croulent sous le papier et
-              les e-mails ? Nous{" "}
-              <Link
-                href="/services/digitalisation-processus"
-                className="font-semibold text-accent underline-offset-2 hover:underline"
-              >
-                digitalisons vos processus
-              </Link>
-              . Votre application WINDEV n&apos;a plus de développeur ? Nous en{" "}
-              <Link
-                href="/services/maintenance-windev-webdev"
-                className="font-semibold text-accent underline-offset-2 hover:underline"
-              >
-                reprenons la maintenance
-              </Link>
-              .
-            </p>
+            {c.probleme.solutionParagraphs.map((p) => (
+              <p key={p.slice(0, 40)} className="mt-4 leading-relaxed text-muted">
+                <Rich text={p} />
+              </p>
+            ))}
           </div>
         </div>
       </section>
@@ -283,12 +248,12 @@ export default function HomePage() {
       {/* ================= MÉTHODE ================= */}
       <section aria-labelledby="methode-title">
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
-          <Kicker>Notre méthode</Kicker>
+          <Kicker>{c.methode.kicker}</Kicker>
           <h2
             id="methode-title"
             className="mt-4 text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
-            Un projet mené en 7 étapes, sans jargon et sans surprise
+            {c.methode.title}
           </h2>
           {/* Fil conducteur : dégradé corail → orange → rouge */}
           <div
@@ -296,7 +261,7 @@ export default function HomePage() {
             className="mt-10 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
           />
           <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4">
-            {METHOD_STEPS.map((step, i) => (
+            {methodSteps.map((step, i) => (
               <li
                 key={step.title}
                 className="card reveal rounded-2xl border border-border bg-background p-6"
@@ -319,10 +284,10 @@ export default function HomePage() {
             id="pourquoi-title"
             className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
-            Pourquoi les PME nous font confiance
+            {c.pourquoi.title}
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_US.map((item) => (
+            {whyUs.map((item) => (
               <div
                 key={item.title}
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"

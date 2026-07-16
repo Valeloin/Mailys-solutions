@@ -1,23 +1,31 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
-import { METHOD_STEPS } from "@/lib/services";
+import Rich from "@/components/Rich";
+import { getAproposContent, getMethodSteps } from "@/lib/sections";
 import { StepNumber, BrandDots } from "@/components/ui";
 
 // ============================================================
 // À PROPOS — page de réassurance (E-E-A-T) : qui nous sommes,
 // comment nous travaillons, ce que nous croyons.
+// Textes éditables dans /admin/contenus.
 // ============================================================
 
-export const metadata: Metadata = {
-  title: "À propos : votre partenaire digitalisation PME",
-  description:
-    "Mailys Solutions accompagne les PME dans leur transformation digitale : applications métier sur mesure, modernisation et maintenance WINDEV / WEBDEV.",
-  alternates: { canonical: "/a-propos" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getAproposContent();
+  return {
+    title: c.meta.title,
+    description: c.meta.description,
+    alternates: { canonical: "/a-propos" },
+  };
+}
 
-export default function AProposPage() {
+export default async function AProposPage() {
+  const [c, METHOD_STEPS] = await Promise.all([
+    getAproposContent(),
+    getMethodSteps(),
+  ]);
+
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
@@ -26,69 +34,25 @@ export default function AProposPage() {
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
         <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
-          Le partenaire digital des PME qui veulent des outils à leur mesure
+          {c.h1}
         </h1>
 
         <div className="rise rise-2 mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
-          <p>
-            Mailys Solutions est née d&apos;un constat simple : les PME
-            méritent mieux que des logiciels génériques qui les obligent à
-            tordre leur organisation — et mieux que des fichiers Excel qui
-            craquent de partout.
-          </p>
-          <p>
-            Notre métier : concevoir des{" "}
-            <Link
-              href="/services/developpement-application-metier"
-              className="font-semibold text-accent underline-offset-2 hover:underline"
-            >
-              applications métier sur mesure
-            </Link>{" "}
-            qui simplifient réellement le quotidien des équipes,{" "}
-            <Link
-              href="/services/modernisation-application"
-              className="font-semibold text-accent underline-offset-2 hover:underline"
-            >
-              moderniser des applications existantes
-            </Link>{" "}
-            et assurer la{" "}
-            <Link
-              href="/services/maintenance-windev-webdev"
-              className="font-semibold text-accent underline-offset-2 hover:underline"
-            >
-              maintenance évolutive d&apos;applications WINDEV et WEBDEV
-            </Link>
-            .
-          </p>
-          <p>
-            Notre conviction : un bon logiciel commence par une bonne
-            compréhension. Avant de développer, nous passons du temps dans
-            votre réalité — vos équipes, vos contraintes, vos habitudes. C&apos;est
-            ce travail-là qui fait qu&apos;un outil est adopté au lieu d&apos;être subi.
-          </p>
+          {c.paragraphs.map((p) => (
+            <p key={p.slice(0, 40)}>
+              <Rich text={p} />
+            </p>
+          ))}
         </div>
       </section>
 
       <section aria-labelledby="valeurs" className="bg-surface">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-bordeaux">
-            Ce qui guide notre façon de travailler
+            {c.valeursTitle}
           </h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: "La franchise",
-                text: "Si un développement ne se justifie pas, nous vous le disons. Un client bien conseillé aujourd'hui est un client qui revient demain.",
-              },
-              {
-                title: "La simplicité",
-                text: "Pas de jargon, pas d'usine à gaz. Le meilleur logiciel est celui que vos équipes utilisent sans y penser.",
-              },
-              {
-                title: "L'engagement long terme",
-                text: "Nous ne livrons pas puis disparaissons : nous restons responsables de ce que nous construisons, année après année.",
-              },
-            ].map((v) => (
+            {c.valeurs.map((v) => (
               <div
                 key={v.title}
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
@@ -108,7 +72,7 @@ export default function AProposPage() {
             id="apropos-methode"
             className="text-3xl font-bold tracking-tight text-bordeaux"
           >
-            Notre méthode en 7 étapes
+            {c.methodeTitle}
           </h2>
           <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {METHOD_STEPS.map((step, i) => (

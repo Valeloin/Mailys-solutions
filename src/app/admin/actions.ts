@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { getServerClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/blog";
 import { EDITABLE_COLORS } from "@/lib/colors";
+import { getSectionDef } from "@/lib/sections";
+import { deepMerge } from "@/lib/content";
 
 // ============================================================
 // Server actions de l'admin. Toutes exigent une session valide
@@ -137,6 +139,65 @@ export async function deleteMessage(formData: FormData): Promise<void> {
     await supabase.from("contact_messages").delete().eq("id", id);
   }
   redirect("/admin/messages");
+}
+
+// ---------- Contenus des sections ----------
+
+export async function saveSection(formData: FormData): Promise<void> {
+  const supabase = await requireClient();
+
+  const key = String(formData.get("key") || "");
+  const def = getSectionDef(key);
+  if (!def) redirect("/admin/contenus");
+
+  const raw = String(formData.get("data") || "{}");
+  // Garde-fou : une section ne peut pas dépasser 200 Ko de texte.
+  if (raw.length > 200_000) {
+    redirect(`/admin/contenus/${encodeURIComponent(key)}?error=format`);
+  }
+
+  let data: unknown;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    redirect(`/admin/contenus/${encodeURIComponent(key)}?error=format`);
+  }
+  if (typeof data !== "object" || data === null || Array.isArray(data)) {
+    redirect(`/admin/contenus/${encodeURIComponent(key)}?error=format`);
+  }
+
+  // Normalisation par les défauts : seules les clés connues du
+  // schéma sont conservées, les structures malformées sont
+  // corrigées AVANT stockage — la base ne contient jamais de
+  // données capables de casser une page publique.
+  const cleaned = deepMerge(def.defaults, data);
+
+  const { error } = await supabase
+    .from("site_sections")
+    .upsert({ key, data: cleaned, updated_at: new Date().toISOString() });
+  if (error) {
+    redirect(`/admin/contenus/${encodeURIComponent(key)}?error=sauvegarde`);
+  }
+
+  // Tout le site est régénéré avec les nouveaux textes.
+  revalidatePath("/", "layout");
+  redirect(`/admin/contenus/${encodeURIComponent(key)}?saved=1`);
+}
+
+export async function resetSection(formData: FormData): Promise<void> {
+  const supabase = await requireClient();
+  const key = String(formData.get("key") || "");
+  if (getSectionDef(key)) {
+    const { error } = await supabase
+      .from("site_sections")
+      .delete()
+      .eq("key", key);
+    if (error) {
+      redirect(`/admin/contenus/${encodeURIComponent(key)}?error=sauvegarde`);
+    }
+    revalidatePath("/", "layout");
+  }
+  redirect(`/admin/contenus/${encodeURIComponent(key)}?reset=1`);
 }
 
 // ---------- Couleurs ----------

@@ -1,17 +1,23 @@
 import Link from "next/link";
+import { getCtaContent } from "@/lib/sections";
 
 // CTA final réutilisable — présent en bas de chaque page (conversion).
-// Seule inversion sombre du site : le panneau bordeaux est le climax
-// chromatique et le repère de conversion systématique.
-export default function CtaSection({
-  title = "Parlons de votre projet",
-  text = "Décrivez-nous votre besoin en quelques lignes : nous revenons vers vous rapidement avec un premier avis honnête et un devis gratuit, sans engagement.",
-  buttonLabel = "Demander un devis gratuit",
+// Textes par défaut éditables dans /admin/contenus (« Bandeau contact ») ;
+// certaines pages passent un titre/texte spécifique en props.
+export default async function CtaSection({
+  title,
+  text,
+  buttonLabel,
 }: {
   title?: string;
   text?: string;
   buttonLabel?: string;
 }) {
+  const c = await getCtaContent();
+  const heading = title ?? c.title;
+  const body = text ?? c.text;
+  const button = buttonLabel ?? c.buttonLabel;
+
   return (
     <section aria-label="Contactez-nous" className="bg-background">
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
@@ -26,21 +32,21 @@ export default function CtaSection({
           </div>
           <div className="relative">
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              {title}
+              {heading}
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-white/80">{text}</p>
+            <p className="mx-auto mt-4 max-w-2xl text-white/80">{body}</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/contact"
                 className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
               >
-                {buttonLabel}
+                {button}
               </Link>
               <Link
                 href="/realisations"
                 className="rounded-xl border border-white/30 px-7 py-3.5 font-semibold text-white transition-colors hover:border-white/60 hover:bg-white/10"
               >
-                Voir nos réalisations
+                {c.secondaryLabel}
               </Link>
             </div>
           </div>

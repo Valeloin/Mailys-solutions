@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getPublicClient } from "@/lib/supabase/public";
 
 // Couleurs éditables depuis l'admin. Les valeurs par défaut sont
@@ -31,13 +32,15 @@ export function hexToChannels(hex: string): string | null {
   return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`;
 }
 
-export async function getStoredColors(): Promise<Record<string, string>> {
-  const db = getPublicClient();
-  if (!db) return {};
-  const { data, error } = await db.from("site_colors").select("key,value");
-  if (error || !data) return {};
-  return Object.fromEntries(data.map((r) => [r.key, r.value]));
-}
+export const getStoredColors = cache(
+  async (): Promise<Record<string, string>> => {
+    const db = getPublicClient();
+    if (!db) return {};
+    const { data, error } = await db.from("site_colors").select("key,value");
+    if (error || !data) return {};
+    return Object.fromEntries(data.map((r) => [r.key, r.value]));
+  }
+);
 
 /** CSS d'écrasement des variables :root, ou null si rien à écraser. */
 export async function getColorOverridesCss(): Promise<string | null> {
