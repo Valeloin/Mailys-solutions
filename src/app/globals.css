@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Palette Mailys Solutions — DA officielle (fournie 2026-07-16)
+   Bordeaux #5B0F1A : professionnel, fiable, élégant
+   Rouge    #E11D2A : énergie, action (CTA, liens)
+   Corail   #FF6B6B : douceur, modernité (survols, accents doux)
+   Orange   #F97316 : chaleur, optimisme (détails, puces)
+   Noir     #1A1A1A : texte, sobriété, lisibilité
+   Thème clair : fond blanc, surfaces légèrement chaudes.
+   Toutes les couleurs du site vivent ici — un seul endroit à modifier.
+   Les accents sont en canaux RGB pour les variantes d'opacité
+   (accent/10, orange/20…).
+   ============================================================ */
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --surface: #fbf6f4;
+  --border: #f0e2dd;
+  --muted: #6e605c;
+  --accent: 225 29 42; /* rouge #E11D2A */
+  --accent-dark: 185 18 31; /* rouge foncé (survol) */
+  --bordeaux: 91 15 26; /* #5B0F1A */
+  --coral: 255 107 107; /* #FF6B6B */
+  --orange: 249 115 22; /* #F97316 */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+::selection {
+  background: rgb(var(--coral) / 0.25);
+}
