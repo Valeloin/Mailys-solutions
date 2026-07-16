@@ -684,25 +684,46 @@ body {
     transform: scaleX(0);
   }
 }
-/* Digitalisation : l'enveloppe (le mail part) une fois tout coché */
+/* Digitalisation : le mail part une fois tout coché.
+   Scénario : l'enveloppe surgit en douceur (76-80 %), marque un
+   élan vers l'arrière (81 %), puis décolle en diagonale avec
+   rotation et rétrécissement, et se fond dans le coin (88-90 %). */
 @keyframes pv-mail {
   0%,
-  76% {
+  74% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.5);
+    transform: translate(0, 14px) scale(0.5) rotate(0deg);
+  }
+  78% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
   }
   81% {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transform: translate(-8px, 5px) scale(1) rotate(-9deg);
   }
-  93% {
+  88% {
     opacity: 1;
-    transform: translate(52px, -44px) scale(0.85);
+    transform: translate(200px, -88px) scale(0.8) rotate(13deg);
   }
-  97%,
+  90%,
   100% {
     opacity: 0;
-    transform: translate(66px, -56px) scale(0.75);
+    transform: translate(240px, -108px) scale(0.7) rotate(13deg);
+  }
+}
+/* Traînée de vitesse derrière l'enveloppe au décollage */
+@keyframes pv-mail-trail {
+  0%,
+  82% {
+    opacity: 0;
+  }
+  84.5% {
+    opacity: 1;
+  }
+  88%,
+  100% {
+    opacity: 0;
   }
 }
 /* Vitrine du hero : les 4 scènes des services se succèdent en
@@ -874,34 +895,34 @@ body {
    histoires — la scène suivante démarre toujours à zéro). */
 @keyframes pv-trans {
   0%,
-  22.5% {
+  22.1% {
     opacity: 0;
   }
-  23%,
+  22.7%,
   24.9% {
     opacity: 1;
   }
   25%,
-  47.5% {
+  47.1% {
     opacity: 0;
   }
-  48%,
+  47.7%,
   49.9% {
     opacity: 1;
   }
   50%,
-  72.5% {
+  72.1% {
     opacity: 0;
   }
-  73%,
+  72.7%,
   74.9% {
     opacity: 1;
   }
   75%,
-  97.5% {
+  97.1% {
     opacity: 0;
   }
-  98%,
+  97.7%,
   99.9% {
     opacity: 1;
   }
@@ -912,34 +933,34 @@ body {
 /* Le spinner laisse la place à la coche en fin de fenêtre */
 @keyframes pv-spin-vis {
   0%,
-  22.5% {
+  22.3% {
     opacity: 0;
   }
-  23%,
+  22.8%,
   24% {
     opacity: 1;
   }
   24.3%,
-  47.5% {
+  47.3% {
     opacity: 0;
   }
-  48%,
+  47.8%,
   49% {
     opacity: 1;
   }
   49.3%,
-  72.5% {
+  72.3% {
     opacity: 0;
   }
-  73%,
+  72.8%,
   74% {
     opacity: 1;
   }
   74.3%,
-  97.5% {
+  97.3% {
     opacity: 0;
   }
-  98%,
+  97.8%,
   99% {
     opacity: 1;
   }
@@ -1173,7 +1194,8 @@ body {
 /* Transition inter-scènes : invisible par défaut et sans animation */
 .pv-trans,
 .pv-spin-vis,
-.pv-ok {
+.pv-ok,
+.pv-mail-trail {
   opacity: 0;
 }
 .pv-ok,
@@ -1330,7 +1352,10 @@ body {
     animation: pv-ok 33.6s ease-in-out infinite;
   }
   .pv-rotate {
-    animation: pv-rotate 0.9s linear infinite;
+    animation: pv-rotate 1.6s linear infinite;
+  }
+  .pv-mail-trail {
+    animation: pv-mail-trail 8.4s ease-in-out infinite;
   }
   .pv-shine {
     animation: pv-shine 8.4s ease-in-out infinite;

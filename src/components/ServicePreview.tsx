@@ -241,23 +241,27 @@ export function Digitalisation() {
       {/* Progression */}
       <rect x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.08)" />
       <rect className="pv-fill" x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--accent) / 0.8)" />
-      {/* Tout est coché → le mail part (enveloppe aux couleurs du gradient) */}
+      {/* Tout est coché → le mail décolle : surgissement en douceur,
+          élan vers l'arrière, envol en diagonale avec rotation */}
       <g className="pv-mail">
-        <rect x="176" y="96" width="48" height="34" rx="6" fill="#ffffff" stroke="rgb(var(--accent))" strokeWidth="2.5" />
+        <rect x="178" y="104" width="44" height="30" rx="5" fill="#ffffff" stroke="rgb(var(--accent))" strokeWidth="2.5" />
         <path
-          d="M178 100l22 16 22 -16"
+          d="M180 108l20 14 20 -14"
           fill="none"
           stroke="rgb(var(--orange))"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        {/* Traînée d'envoi */}
+      </g>
+      {/* Traînée de vitesse au décollage (dans l'axe opposé au vol) */}
+      <g className="pv-mail-trail">
         <path
-          d="M166 118h-16M170 108h-10"
+          d="M170 134l-18 8M178 143l-26 11M174 124l-13 6"
           stroke="rgb(var(--coral))"
           strokeWidth="2.5"
           strokeLinecap="round"
+          fill="none"
         />
       </g>
     </>
