@@ -25,9 +25,10 @@
   --bordeaux: 91 15 26; /* #5B0F1A */
   --coral: 255 107 107; /* #FF6B6B */
   --orange: 249 115 22; /* #F97316 */
-  /* Orange lisible pour le TEXTE sur fond clair (4.9:1, AA).
+  /* Orange lisible pour le TEXTE sur fond clair (AA garanti, y compris
+     sur pastille orange/10 posée sur surface : 4.73:1 au pire cas).
      L'orange pur #F97316 (3.0:1) est réservé au décor pur. */
-  --orange-text: 194 65 12; /* #C2410C */
+  --orange-text: 185 62 12; /* #B93E0C */
 }
 
 html {

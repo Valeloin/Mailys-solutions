@@ -25,10 +25,10 @@ export default function RealisationsPage() {
       </div>
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
-        <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-bordeaux">
+        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
           Nos réalisations
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           Chaque projet raconte la même histoire : une entreprise freinée par
           ses outils, un logiciel conçu pour ses processus réels, des équipes
           qui respirent. Nos premières études de cas détaillées arrivent très

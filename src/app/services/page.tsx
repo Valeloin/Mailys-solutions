@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SERVICES } from "@/lib/services";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
+import { MobileCtaBar, StepNumber } from "@/components/ui";
 
 // ============================================================
 // HUB SERVICES — page carrefour du cocon sémantique :
@@ -24,10 +25,10 @@ export default function ServicesPage() {
       </div>
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
-        <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-bordeaux">
+        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
           Nos services pour digitaliser votre PME
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           Création d&apos;applications métier sur mesure, modernisation de
           logiciels existants, digitalisation des processus et maintenance
           WINDEV / WEBDEV : quatre expertises, une seule approche — comprendre
@@ -38,16 +39,14 @@ export default function ServicesPage() {
           {SERVICES.map((s, i) => (
             <article
               key={s.slug}
-              className="grid gap-6 rounded-2xl border border-border p-6 sm:p-8 md:grid-cols-[auto_1fr]"
+              className="card reveal group grid gap-6 rounded-2xl border border-border bg-background p-6 hover:border-coral sm:p-8 md:grid-cols-[auto_1fr]"
             >
-              <p aria-hidden="true" className="text-2xl font-extrabold text-orange">
-                {String(i + 1).padStart(2, "0")}
-              </p>
+              <StepNumber size="lg">{String(i + 1).padStart(2, "0")}</StepNumber>
               <div>
-                <h2 className="text-2xl font-bold">
+                <h2 className="text-2xl font-bold text-bordeaux transition-colors group-hover:text-accent">
                   <Link
                     href={`/services/${s.slug}`}
-                    className="hover:text-accent"
+                    className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                   >
                     {s.name}
                   </Link>
@@ -68,7 +67,12 @@ export default function ServicesPage() {
                   className="mt-5 inline-block font-semibold text-accent underline-offset-2 hover:underline"
                 >
                   En savoir plus sur {s.name.toLowerCase()}{" "}
-                  <span aria-hidden="true">→</span>
+                  <span
+                    aria-hidden="true"
+                    className="inline-block transition-transform duration-200 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
                 </Link>
               </div>
             </article>
@@ -80,6 +84,7 @@ export default function ServicesPage() {
         title="Vous ne savez pas par où commencer ?"
         text="Décrivez-nous simplement votre situation : nous vous orientons vers la bonne approche, même si elle est plus modeste que ce que vous imaginiez."
       />
+      <MobileCtaBar />
     </>
   );
 }

@@ -6,6 +6,13 @@ import { SITE } from "@/lib/site";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
+import {
+  Check,
+  StepNumber,
+  BrandDots,
+  MobileCtaBar,
+  ProblemItem,
+} from "@/components/ui";
 
 // ============================================================
 // GABARIT DES 4 PAGES SERVICES — structure PAS en 9 blocs :
@@ -84,47 +91,48 @@ export default async function ServicePage({
       </div>
 
       {/* ========== 1. HERO ========== */}
-      <section className="mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
-        <h1 className="max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
-          {service.h1}
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          {service.heroSubtitle}
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Link
-            href="/contact"
-            className="rounded-lg bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-dark"
-          >
-            Demander un devis gratuit
-          </Link>
-          <a
-            href="#methode"
-            className="rounded-lg border border-border px-6 py-3 font-semibold transition-colors hover:border-coral"
-          >
-            Voir notre méthode
-          </a>
+      <section className="relative overflow-hidden">
+        {/* Décor : les deux barres du logo, fantômes (desktop uniquement) */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -right-14 -top-24 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
+          <div className="absolute -top-32 right-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
+        </div>
+        <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
+          <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+            {service.h1}
+          </h1>
+          <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            {service.heroSubtitle}
+          </p>
+          <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
+            <Link
+              href="/contact"
+              className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
+            >
+              Demander un devis gratuit
+            </Link>
+            <a
+              href="#methode"
+              className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
+            >
+              Voir notre méthode
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ========== 2. LES PROBLÉMATIQUES ========== */}
       <section aria-labelledby="problemes" className="bg-surface">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="problemes"
-            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux"
+            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             {service.problemsIntro}
           </h2>
           <ul className="mt-8 grid gap-4 md:grid-cols-2">
             {service.problems.map((p) => (
-              <li
-                key={p}
-                className="flex gap-3 rounded-xl bg-background p-4 shadow-sm"
-              >
-                <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent"></span>
-                <span className="text-foreground">{p}</span>
-              </li>
+              <ProblemItem key={p}>{p}</ProblemItem>
             ))}
           </ul>
           <p className="mt-8 text-lg font-semibold text-bordeaux">
@@ -136,18 +144,21 @@ export default async function ServicePage({
 
       {/* ========== 3. LES CONSÉQUENCES ========== */}
       <section aria-labelledby="consequences">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="consequences"
-            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux"
+            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             Ce que cela coûte vraiment à votre entreprise
           </h2>
           <p className="mt-4 max-w-2xl text-muted">{service.consequencesIntro}</p>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {service.consequences.map((c) => (
-              <div key={c.title} className="rounded-2xl border border-border p-6">
-                <h3 className="font-bold">{c.title}</h3>
+              <div
+                key={c.title}
+                className="card reveal rounded-2xl border border-border bg-background p-6"
+              >
+                <h3 className="font-bold text-bordeaux">{c.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{c.text}</p>
               </div>
             ))}
@@ -157,51 +168,57 @@ export default async function ServicePage({
 
       {/* ========== 4. LA SOLUTION ========== */}
       <section aria-labelledby="solution" className="bg-surface">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
-          <h2
-            id="solution"
-            className="max-w-3xl text-3xl font-bold tracking-tight text-bordeaux"
-          >
-            {service.solutionTitle}
-          </h2>
-          <div className="mt-6 max-w-3xl space-y-4 leading-relaxed text-muted">
-            {service.solutionParagraphs.map((p) => (
-              <p key={p.slice(0, 40)}>{p}</p>
-            ))}
-          </div>
-          <ul className="mt-8 grid gap-3 md:grid-cols-2">
-            {service.solutionPoints.map((point) => (
-              <li key={point} className="flex gap-3">
-                <span aria-hidden="true" className="mt-1 font-bold text-orange">✓</span>
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10">
-            <Link
-              href="/contact"
-              className="inline-block rounded-lg bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-dark"
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
+            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+            <h2
+              id="solution"
+              className="max-w-3xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
             >
-              Parler de votre projet
-            </Link>
+              {service.solutionTitle}
+            </h2>
+            <div className="mt-6 max-w-3xl space-y-4 leading-relaxed text-muted">
+              {service.solutionParagraphs.map((p) => (
+                <p key={p.slice(0, 40)}>{p}</p>
+              ))}
+            </div>
+            <ul className="mt-8 grid gap-3 md:grid-cols-2">
+              {service.solutionPoints.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <Check className="mt-1 h-4 w-4" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-10">
+              <Link
+                href="/contact"
+                className="btn-cta inline-block rounded-xl px-7 py-3.5 font-semibold text-white"
+              >
+                Parler de votre projet
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========== 5. LES BÉNÉFICES ========== */}
       <section aria-labelledby="benefices">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="benefices"
-            className="text-3xl font-bold tracking-tight text-bordeaux"
+            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             Les bénéfices concrets pour vos équipes
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {service.benefits.map((b) => (
-              <div key={b.title} className="rounded-2xl border border-border p-5">
-                <h3 className="flex items-center gap-2 font-bold">
-                  <span aria-hidden="true" className="text-orange">✓</span>
+              <div
+                key={b.title}
+                className="card reveal rounded-2xl border border-border bg-background p-5"
+              >
+                <h3 className="flex items-center gap-2 font-bold text-bordeaux">
+                  <Check />
                   {b.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{b.text}</p>
@@ -213,20 +230,26 @@ export default async function ServicePage({
 
       {/* ========== 6. NOTRE MÉTHODE ========== */}
       <section id="methode" aria-labelledby="methode-titre" className="bg-surface">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="methode-titre"
-            className="text-3xl font-bold tracking-tight text-bordeaux"
+            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             Notre méthode : 7 étapes, zéro mauvaise surprise
           </h2>
-          <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Fil conducteur : dégradé corail → orange → rouge */}
+          <div
+            aria-hidden="true"
+            className="mt-10 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
+          />
+          <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4">
             {METHOD_STEPS.map((step, i) => (
-              <li key={step.title} className="rounded-2xl bg-background p-5 shadow-sm">
-                <p className="text-sm font-bold text-orange">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-2 font-bold">{step.title}</h3>
+              <li
+                key={step.title}
+                className="card reveal rounded-2xl border border-border bg-background p-6"
+              >
+                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
+                <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
               </li>
             ))}
@@ -236,17 +259,21 @@ export default async function ServicePage({
 
       {/* ========== 7. POURQUOI NOUS CHOISIR ========== */}
       <section aria-labelledby="pourquoi">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="pourquoi"
-            className="text-3xl font-bold tracking-tight text-bordeaux"
+            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             Pourquoi choisir Mailys Solutions
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {WHY_US.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-border p-5">
-                <h3 className="font-bold">{item.title}</h3>
+              <div
+                key={item.title}
+                className="card reveal rounded-2xl border border-border/60 bg-background p-7"
+              >
+                <BrandDots />
+                <h3 className="font-bold text-bordeaux">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
               </div>
             ))}
@@ -256,21 +283,24 @@ export default async function ServicePage({
 
       {/* ========== 8. FAQ ========== */}
       <section aria-labelledby="faq" className="bg-surface">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
-          <h2 id="faq" className="text-3xl font-bold tracking-tight text-bordeaux">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+          <h2
+            id="faq"
+            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+          >
             Questions fréquentes
           </h2>
           <div className="mt-8 max-w-3xl space-y-3">
             {service.faq.map((f) => (
               <details
                 key={f.question}
-                className="group rounded-xl border border-border bg-background p-5 open:shadow-sm"
+                className="group rounded-xl border border-border bg-background p-5 transition-shadow open:shadow-[0_16px_40px_-24px_rgb(var(--bordeaux)/0.2)]"
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold [&::-webkit-details-marker]:hidden">
                   <h3 className="text-base font-semibold">{f.question}</h3>
                   <span
                     aria-hidden="true"
-                    className="text-xl text-orange transition-transform group-open:rotate-45"
+                    className="text-xl text-orange-text transition-transform group-open:rotate-45"
                   >
                     +
                   </span>
@@ -284,7 +314,7 @@ export default async function ServicePage({
 
       {/* ========== Maillage interne : services voisins ========== */}
       <section aria-labelledby="autres-services">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="autres-services"
             className="text-2xl font-bold tracking-tight text-bordeaux"
@@ -296,11 +326,17 @@ export default async function ServicePage({
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="rounded-xl border border-border p-5 transition-colors hover:border-coral"
+                className="card group rounded-xl border border-border bg-background p-5 hover:border-coral"
               >
                 <span className="font-semibold">{s.name}</span>
-                <span className="mt-1 block text-sm text-accent">
-                  Découvrir <span aria-hidden="true">→</span>
+                <span className="mt-1 block text-sm font-semibold text-accent">
+                  Découvrir{" "}
+                  <span
+                    aria-hidden="true"
+                    className="inline-block transition-transform duration-200 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
                 </span>
               </Link>
             ))}
@@ -310,6 +346,7 @@ export default async function ServicePage({
 
       {/* ========== 9. CTA FINAL ========== */}
       <CtaSection />
+      <MobileCtaBar />
     </>
   );
 }

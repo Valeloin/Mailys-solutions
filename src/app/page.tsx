@@ -2,6 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SERVICES, METHOD_STEPS, WHY_US } from "@/lib/services";
 import CtaSection from "@/components/CtaSection";
+import {
+  Kicker,
+  Check,
+  StepNumber,
+  BrandDots,
+  MobileCtaBar,
+  ProblemItem,
+} from "@/components/ui";
 
 // ============================================================
 // ACCUEIL — requête principale :
@@ -28,32 +36,6 @@ const SERVICE_ICONS: Record<string, React.ReactNode> = {
     <path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6L14 13l-3-3z" />
   ),
 };
-
-// Coche orange (réassurance)
-function Check() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0" fill="none" aria-hidden="true">
-      <path
-        d="M4 10.5l4 4 8-9"
-        stroke="rgb(var(--orange))"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-// Badge « kicker » système (pilule + points du logo)
-function Kicker({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="inline-flex items-center gap-2 rounded-full border border-orange/25 bg-orange/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-text">
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-orange"></span>
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-coral"></span>
-      {children}
-    </p>
-  );
-}
 
 export default function HomePage() {
   return (
@@ -202,9 +184,11 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-bold transition-colors group-hover:text-accent">
+                  {/* Lien « étendu » : le ::after se cale sur l'<article relative>
+                      → toute la carte est cliquable */}
                   <Link
                     href={`/services/${s.slug}`}
-                    className="relative after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                    className="after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                   >
                     {s.name}
                   </Link>
@@ -245,25 +229,7 @@ export default function HomePage() {
                 "Des processus qui ne tiennent que grâce aux habitudes",
                 "Aucune visibilité fiable pour piloter l'activité",
               ].map((p) => (
-                <li
-                  key={p}
-                  className="reveal flex gap-3 rounded-xl border border-border/70 bg-background/70 px-4 py-3"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/10"
-                  >
-                    <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none" aria-hidden="true">
-                      <path
-                        d="M2 2l8 8M10 2l-8 8"
-                        stroke="rgb(var(--accent))"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </span>
-                  {p}
-                </li>
+                <ProblemItem key={p}>{p}</ProblemItem>
               ))}
             </ul>
           </div>
@@ -335,9 +301,7 @@ export default function HomePage() {
                 key={step.title}
                 className="card reveal rounded-2xl border border-border bg-background p-6"
               >
-                <p className="flex h-9 w-9 items-center justify-center rounded-full bg-orange/10 text-sm font-bold text-orange-text">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
+                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
                 <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {step.text}
@@ -363,11 +327,7 @@ export default function HomePage() {
                 key={item.title}
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
-                {/* Les deux points du logo */}
-                <div aria-hidden="true" className="mb-4 flex gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-orange" />
-                  <span className="h-2 w-2 rounded-full bg-coral" />
-                </div>
+                <BrandDots />
                 <h3 className="font-bold text-bordeaux">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {item.text}
@@ -379,17 +339,7 @@ export default function HomePage() {
       </section>
 
       <CtaSection />
-
-      {/* Sticky CTA mobile : l'espaceur en flux réserve la hauteur (zéro CLS) */}
-      <div aria-hidden="true" className="h-16 md:hidden" />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur md:hidden">
-        <Link
-          href="/contact"
-          className="btn-cta block rounded-xl px-6 py-3 text-center font-semibold text-white"
-        >
-          Demander un devis gratuit
-        </Link>
-      </div>
+      <MobileCtaBar />
     </>
   );
 }

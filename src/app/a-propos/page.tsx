@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import { METHOD_STEPS } from "@/lib/services";
+import { StepNumber, BrandDots } from "@/components/ui";
 
 // ============================================================
 // À PROPOS — page de réassurance (E-E-A-T) : qui nous sommes,
@@ -24,11 +25,11 @@ export default function AProposPage() {
       </div>
 
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
-        <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-bordeaux">
+        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
           Le partenaire digital des PME qui veulent des outils à leur mesure
         </h1>
 
-        <div className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
+        <div className="rise rise-2 mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
           <p>
             Mailys Solutions est née d&apos;un constat simple : les PME
             méritent mieux que des logiciels génériques qui les obligent à
@@ -88,8 +89,12 @@ export default function AProposPage() {
                 text: "Nous ne livrons pas puis disparaissons : nous restons responsables de ce que nous construisons, année après année.",
               },
             ].map((v) => (
-              <div key={v.title} className="rounded-2xl bg-background p-6 shadow-sm">
-                <h3 className="font-bold">{v.title}</h3>
+              <div
+                key={v.title}
+                className="card reveal rounded-2xl border border-border/60 bg-background p-7"
+              >
+                <BrandDots />
+                <h3 className="font-bold text-bordeaux">{v.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{v.text}</p>
               </div>
             ))}
@@ -107,11 +112,12 @@ export default function AProposPage() {
           </h2>
           <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {METHOD_STEPS.map((step, i) => (
-              <li key={step.title} className="rounded-2xl border border-border p-5">
-                <p className="text-sm font-bold text-orange">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-2 font-bold">{step.title}</h3>
+              <li
+                key={step.title}
+                className="card reveal rounded-2xl border border-border bg-background p-6"
+              >
+                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
+                <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
               </li>
             ))}

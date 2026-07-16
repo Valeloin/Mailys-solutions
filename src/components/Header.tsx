@@ -14,7 +14,7 @@ const NAV = [
 // le menu mobile repose sur <details>, natif et accessible.
 export default function Header() {
   return (
-    <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-md">
+    <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background">
       {/* Filet signature de marque : corail → rouge → orange */}
       <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
       <div className="mx-auto flex h-16 max-w-content items-center justify-between gap-6 px-4 sm:px-6">

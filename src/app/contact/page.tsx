@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import { SITE } from "@/lib/site";
+import { StepNumber } from "@/components/ui";
 
 // ============================================================
 // CONTACT — page de conversion.
@@ -26,10 +27,10 @@ export default function ContactPage() {
       <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-bordeaux">
+            <h1 className="text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
               Parlons de votre projet
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted">
+            <p className="rise rise-2 mt-6 text-lg leading-relaxed text-muted">
               Application métier à créer, logiciel à moderniser, processus à
               digitaliser ou application WINDEV à reprendre : décrivez-nous
               votre situation en quelques lignes. Nous revenons vers vous
@@ -42,7 +43,7 @@ export default function ContactPage() {
 
             <a
               href={`mailto:${SITE.email}?subject=Demande de devis`}
-              className="mt-8 inline-block rounded-lg bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-dark"
+              className="btn-cta mt-8 inline-block rounded-xl px-7 py-3.5 font-semibold text-white"
             >
               Écrivez-nous : {SITE.email}
             </a>
@@ -53,7 +54,8 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-surface p-8">
+          <div className="card relative overflow-hidden rounded-2xl border border-border bg-surface p-8">
+            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
             <h2 className="text-xl font-bold text-bordeaux">
               Ce qui se passe ensuite
             </h2>
@@ -73,12 +75,7 @@ export default function ContactPage() {
                 },
               ].map((step, i) => (
                 <li key={step.title} className="flex gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange/15 text-sm font-bold text-orange"
-                  >
-                    {i + 1}
-                  </span>
+                  <StepNumber size="sm">{i + 1}</StepNumber>
                   <div>
                     <h3 className="font-semibold">{step.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-muted">
