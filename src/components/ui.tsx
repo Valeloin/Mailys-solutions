@@ -67,23 +67,27 @@ export function StepNumber({
   );
 }
 
-/** Item de liste « problème » : croix rouge en pastille + texte */
+/** Item de liste « problème » : liseré rouge + picto d'alerte
+    (clairement non cliquable), fond blanc contrasté + ombre douce. */
 export function ProblemItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="reveal flex gap-3 rounded-xl border border-border/70 bg-background/70 px-4 py-3">
-      <span
+    <li className="reveal flex gap-3 rounded-xl border border-border border-l-4 border-l-accent/70 bg-background px-4 py-3.5 shadow-[0_2px_10px_-6px_rgb(var(--bordeaux)/0.25)]">
+      <svg
+        viewBox="0 0 20 20"
+        className="mt-0.5 h-5 w-5 shrink-0"
+        fill="none"
         aria-hidden="true"
-        className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/10"
       >
-        <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none" aria-hidden="true">
-          <path
-            d="M2 2l8 8M10 2l-8 8"
-            stroke="rgb(var(--accent))"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
+        <path
+          d="M10 3 2.5 16.5h15L10 3z"
+          fill="rgb(var(--accent) / 0.1)"
+          stroke="rgb(var(--accent) / 0.8)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path d="M10 8.5v3.5" stroke="rgb(var(--accent))" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="10" cy="14.4" r="1" fill="rgb(var(--accent))" />
+      </svg>
       <span className="text-foreground">{children}</span>
     </li>
   );

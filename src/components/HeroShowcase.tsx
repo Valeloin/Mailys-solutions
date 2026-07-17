@@ -58,6 +58,26 @@ export default function HeroShowcase() {
           />
         </g>
       </g>
+      {/* Feu d'artifice : grands rayons + étincelles qui jaillissent
+          de la coche dans toutes les directions (ça pétille !) */}
+      <g className="pv-burst" stroke="none" fill="none">
+        <g strokeWidth="3" strokeLinecap="round">
+          <path d="M226 118h22" stroke="rgb(var(--coral))" />
+          <path d="M218 100l16 -16" stroke="rgb(var(--orange))" />
+          <path d="M200 92v-22" stroke="rgb(var(--accent))" />
+          <path d="M182 100l-16 -16" stroke="rgb(var(--coral))" />
+          <path d="M174 118h-22" stroke="rgb(var(--orange))" />
+          <path d="M182 136l-16 16" stroke="rgb(var(--accent))" />
+          <path d="M200 144v22" stroke="rgb(var(--coral))" />
+          <path d="M218 136l16 16" stroke="rgb(var(--orange))" />
+        </g>
+        <circle cx="238" cy="88" r="3" fill="rgb(var(--orange))" />
+        <circle cx="162" cy="88" r="3" fill="rgb(var(--coral))" />
+        <circle cx="162" cy="148" r="3" fill="rgb(var(--accent))" />
+        <circle cx="238" cy="148" r="3" fill="rgb(var(--orange))" />
+        <circle cx="200" cy="80" r="2.5" fill="rgb(var(--coral))" />
+        <circle cx="200" cy="156" r="2.5" fill="rgb(var(--orange))" />
+      </g>
       <g className="pv-ok">
         <circle cx="200" cy="118" r="16" fill="rgb(var(--orange) / 0.15)" />
         <path

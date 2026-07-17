@@ -4,6 +4,7 @@ import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
 import HeroShowcase from "@/components/HeroShowcase";
+import WhyUsMotif from "@/components/WhyUsMotif";
 import {
   getHomeContent,
   getMergedServices,
@@ -14,7 +15,6 @@ import {
   Kicker,
   Check,
   StepNumber,
-  BrandDots,
   MobileCtaBar,
   ProblemItem,
 } from "@/components/ui";
@@ -243,12 +243,12 @@ export default async function HomePage() {
             {c.pourquoi.title}
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {whyUs.map((item) => (
+            {whyUs.map((item, i) => (
               <div
                 key={item.title}
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
-                <BrandDots />
+                <WhyUsMotif index={i} />
                 <h3 className="font-bold text-bordeaux">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {item.text}

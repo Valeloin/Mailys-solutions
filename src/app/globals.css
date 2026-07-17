@@ -283,12 +283,24 @@ body {
   padding: 0;
 }
 
-/* ---------- Vignettes animées des services (pur CSS, zéro JS) ----------
-   Inspirées des vignettes OHIHO, refaites aux couleurs Mailys.
-   Sans animation (prefers-reduced-motion) : l'état final s'affiche
-   (barres pleines, version « Après », coches visibles). */
-/* Barres de graphique : trois motifs différents + durées différentes
-   = mouvement « anarchique » de données vivantes, jamais de vague. */
+/* ============================================================
+   Vignettes animées des services + vitrine du hero (pur CSS).
+   TIMELINE MAÎTRESSE — cycle histoire : 8,4 s / vitrine : 33,6 s.
+   Chaque histoire (en % de 8,4 s) :
+     0 → 40   phase 1 (vue 1 / avant / défilement / cochage…)
+    40 → 45   bascule interne (onglet, fondu avant→après)
+    45 → 85   phase 2 (courbe, cascade, envol, correction…)
+    85 → 88   repos : l'histoire TERMINÉE reste affichée
+    88 → 100  transition de la vitrine (spinner → coche) pendant
+              que les éléments se réinitialisent à couvert
+   La vitrine bascule de scène pile à 100 % : chaque histoire se
+   joue donc EN ENTIER, jamais coupée par la suivante.
+   Sans animation (prefers-reduced-motion) : état final affiché.
+   ============================================================ */
+
+/* ---------- Ambiance (rythme propre, non scénarisé) ---------- */
+/* Barres de graphique : trois motifs × durées différentes
+   = données vivantes « anarchiques », jamais de vague. */
 @keyframes pv-bar-a {
   0%,
   100% {
@@ -334,143 +346,7 @@ body {
     transform: scaleY(0.9);
   }
 }
-@keyframes pv-show-old {
-  0%,
-  38% {
-    opacity: 1;
-  }
-  50%,
-  88% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes pv-show-new {
-  0%,
-  38% {
-    opacity: 0;
-  }
-  50%,
-  88% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-/* Cochage séquentiel : chaque coche a son instant d'apparition,
-   mais TOUTES disparaissent ensemble à la fin du cycle avant que
-   la séquence reprenne. */
-@keyframes pv-pop-1 {
-  0% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  8% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  92% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-}
-@keyframes pv-pop-2 {
-  0%,
-  22% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  92% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-}
-@keyframes pv-pop-3 {
-  0%,
-  44% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  52% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  92% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-}
-@keyframes pv-pop-4 {
-  0%,
-  66% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  74% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  92% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-}
-@keyframes pv-fill {
-  0% {
-    transform: scaleX(0.06);
-  }
-  74% {
-    transform: scaleX(1);
-  }
-  92% {
-    transform: scaleX(1);
-  }
-  100% {
-    transform: scaleX(0.06);
-  }
-}
-@keyframes pv-fix {
-  0%,
-  55% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  59% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  94% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* Scintillement : bref clignotement d'opacité, aucun grossissement. */
+/* Scintillement des pastilles : clignotement bref, sans zoom. */
 @keyframes pv-dot {
   0%,
   100% {
@@ -483,40 +359,87 @@ body {
     opacity: 1;
   }
 }
-/* Pastille d'erreur (✕) : apparaît quand la frappe s'arrête et que
-   la ligne clignote, disparaît quand la correction (✓) prend le relais. */
-@keyframes pv-err {
+
+/* ---------- Scène 1 & 2 : bascule vue 1 → vue 2 (40-45 %) ---------- */
+@keyframes pv-show-old {
   0%,
-  31% {
+  40% {
+    opacity: 1;
+  }
+  45%,
+  96% {
     opacity: 0;
-    transform: scale(0.4);
   }
-  35% {
+  100% {
     opacity: 1;
-    transform: scale(1);
   }
-  50% {
+}
+@keyframes pv-show-new {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  45%,
+  95% {
     opacity: 1;
-    transform: scale(1);
   }
-  55%,
   100% {
     opacity: 0;
   }
 }
-/* Vignette Développement, vue 2 : les 5 points des sommets
-   apparaissent un à un, puis la courbe se trace à travers eux. */
+/* Indicateur d'onglet actif + couleur qui le suit */
+@keyframes pv-side {
+  0%,
+  40% {
+    transform: translateY(0);
+  }
+  45%,
+  95% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes pv-tab-1 {
+  0%,
+  40% {
+    fill: rgb(var(--accent) / 0.7);
+  }
+  45%,
+  95% {
+    fill: rgb(var(--bordeaux) / 0.12);
+  }
+  100% {
+    fill: rgb(var(--accent) / 0.7);
+  }
+}
+@keyframes pv-tab-2 {
+  0%,
+  40% {
+    fill: rgb(var(--bordeaux) / 0.12);
+  }
+  45%,
+  95% {
+    fill: rgb(var(--accent) / 0.7);
+  }
+  100% {
+    fill: rgb(var(--bordeaux) / 0.12);
+  }
+}
+
+/* ---------- Scène 1, vue 2 : 5 points (47-61) puis courbe (63-83) ---------- */
 @keyframes pv-peak-1 {
   0%,
-  50% {
+  46% {
     opacity: 0;
     transform: scale(0.3);
   }
-  53% {
+  49% {
     opacity: 1;
     transform: scale(1);
   }
-  96% {
+  95% {
     opacity: 1;
   }
   100% {
@@ -524,6 +447,23 @@ body {
   }
 }
 @keyframes pv-peak-2 {
+  0%,
+  49% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  52% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pv-peak-3 {
   0%,
   52% {
     opacity: 0;
@@ -533,14 +473,14 @@ body {
     opacity: 1;
     transform: scale(1);
   }
-  96% {
+  95% {
     opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
-@keyframes pv-peak-3 {
+@keyframes pv-peak-4 {
   0%,
   55% {
     opacity: 0;
@@ -550,24 +490,7 @@ body {
     opacity: 1;
     transform: scale(1);
   }
-  96% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes pv-peak-4 {
-  0%,
-  57% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  96% {
+  95% {
     opacity: 1;
   }
   100% {
@@ -576,169 +499,352 @@ body {
 }
 @keyframes pv-peak-5 {
   0%,
-  60% {
+  58% {
     opacity: 0;
     transform: scale(0.3);
   }
-  63% {
+  61% {
     opacity: 1;
     transform: scale(1);
   }
-  96% {
+  95% {
     opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
-/* Tracé ralenti (~2,1 s au lieu de 1,1 s) — le cycle reste à 7 s,
-   la synchronisation globale de la vitrine est préservée. */
 @keyframes pv-draw {
   0%,
-  58% {
+  63% {
     stroke-dashoffset: 420;
   }
-  88%,
-  96% {
+  83%,
+  95% {
     stroke-dashoffset: 0;
   }
   100% {
     stroke-dashoffset: 420;
   }
 }
-/* Modernisation, vue « Après » : contrairement à l'Avant figé,
-   les éléments arrivent en cascade. Aucun dépassement au-delà de
-   l'échelle 1 : rien ne peut jamais se chevaucher. */
+
+/* ---------- Scène 2 : cascade du « Après » (45-66), barres (66-74),
+     reflet en DERNIER acte (76-84) — tout est fini à 85 % ---------- */
 @keyframes pv-in-1 {
   0%,
-  50% {
+  45% {
     transform: scale(0.88);
   }
-  56%,
+  51%,
   100% {
     transform: scale(1);
   }
 }
 @keyframes pv-in-2 {
   0%,
-  53% {
+  48% {
     transform: scale(0.88);
   }
-  59%,
+  54%,
   100% {
     transform: scale(1);
   }
 }
 @keyframes pv-in-3 {
   0%,
-  56% {
+  51% {
     transform: scale(0.88);
   }
-  62%,
+  57%,
   100% {
     transform: scale(1);
   }
 }
 @keyframes pv-in-4 {
   0%,
-  59% {
+  54% {
     transform: scale(0.88);
   }
-  64%,
+  60%,
   100% {
     transform: scale(1);
   }
 }
 @keyframes pv-in-5 {
   0%,
-  63% {
+  57% {
     transform: scale(0.88);
   }
-  68%,
+  63%,
   100% {
     transform: scale(1);
   }
 }
 @keyframes pv-in-6 {
   0%,
-  67% {
+  60% {
     transform: scale(0.88);
   }
-  72%,
+  66%,
   100% {
     transform: scale(1);
   }
 }
-/* Micro-barre de chargement dans les cartes du « Après » :
-   se remplit une fois les cartes posées. */
 @keyframes pv-spark {
   0%,
-  70% {
+  66% {
     transform: scaleX(0);
   }
-  82%,
-  96% {
+  74%,
+  95% {
     transform: scaleX(1);
   }
   100% {
     transform: scaleX(0);
   }
 }
-/* Digitalisation : le mail part une fois tout coché.
-   Scénario : l'enveloppe surgit en douceur (76-80 %), marque un
-   élan vers l'arrière (81 %), puis décolle en diagonale avec
-   rotation et rétrécissement, et se fond dans le coin (88-90 %). */
-@keyframes pv-mail {
+@keyframes pv-shine {
   0%,
-  74% {
+  76% {
+    transform: translateX(0) skewX(-18deg);
     opacity: 0;
-    transform: translate(0, 14px) scale(0.5) rotate(0deg);
   }
   78% {
     opacity: 1;
+  }
+  84% {
+    transform: translateX(520px) skewX(-18deg);
+    opacity: 1;
+  }
+  86%,
+  100% {
+    transform: translateX(520px) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+/* ---------- Scène 3 : cochage (2-50), progression, envol (52-82),
+     tout décoché ensemble en fin de cycle ---------- */
+@keyframes pv-pop-1 {
+  0%,
+  2% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  8% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+@keyframes pv-pop-2 {
+  0%,
+  16% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+@keyframes pv-pop-3 {
+  0%,
+  30% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  36% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+@keyframes pv-pop-4 {
+  0%,
+  44% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+@keyframes pv-fill {
+  0% {
+    transform: scaleX(0.06);
+  }
+  56% {
+    transform: scaleX(1);
+  }
+  90% {
+    transform: scaleX(1);
+  }
+  96%,
+  100% {
+    transform: scaleX(0.06);
+  }
+}
+/* L'enveloppe : surgit en BAS À GAUCHE (52-58), élan (62),
+   file en HAUT À DROITE (62-78), fondue à 82 — finie avant 85. */
+@keyframes pv-mail {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translate(0, 12px) scale(0.6) rotate(0deg);
+  }
+  58% {
+    opacity: 1;
     transform: translate(0, 0) scale(1) rotate(0deg);
   }
-  81% {
+  62% {
     opacity: 1;
     transform: translate(-8px, 5px) scale(1) rotate(-9deg);
   }
-  88% {
+  78% {
     opacity: 1;
-    transform: translate(200px, -88px) scale(0.8) rotate(13deg);
+    transform: translate(268px, -118px) scale(0.85) rotate(12deg);
   }
-  90%,
+  82%,
   100% {
     opacity: 0;
-    transform: translate(240px, -108px) scale(0.7) rotate(13deg);
+    transform: translate(294px, -132px) scale(0.8) rotate(12deg);
   }
 }
-/* Traînée de vitesse derrière l'enveloppe au décollage */
 @keyframes pv-mail-trail {
   0%,
-  82% {
+  61% {
     opacity: 0;
   }
-  84.5% {
+  65%,
+  74% {
     opacity: 1;
   }
-  88%,
+  79%,
   100% {
     opacity: 0;
   }
 }
-/* Vitrine du hero : les 4 scènes des services se succèdent en
-   boucle sans fin (28 s = 4 × 7 s, fondus croisés). */
-/* Bascules quasi nettes calées sur les frontières des cycles de
-   8,4 s : chaque histoire se joue EN ENTIER, rien n'est tronqué
-   (micro-fondu de 0,25 s uniquement, au moment où les histoires
-   se réinitialisent de toute façon). */
+
+/* ---------- Scène 4 : défilement (0-20), arrêt sur l'erreur,
+     clignotement + ✕ (26-46), validation ✓ (52-95) ---------- */
+@keyframes pv-scroll {
+  0% {
+    transform: translateY(0);
+  }
+  20%,
+  100% {
+    transform: translateY(-110px);
+  }
+}
+@keyframes pv-code {
+  0%,
+  24% {
+    fill: rgb(var(--bordeaux) / 0.15);
+  }
+  28% {
+    fill: rgb(var(--accent) / 0.9);
+  }
+  32% {
+    fill: rgb(var(--accent) / 0.35);
+  }
+  36% {
+    fill: rgb(var(--accent) / 0.9);
+  }
+  40% {
+    fill: rgb(var(--accent) / 0.35);
+  }
+  44% {
+    fill: rgb(var(--accent) / 0.9);
+  }
+  52%,
+  100% {
+    fill: rgb(var(--bordeaux) / 0.15);
+  }
+}
+@keyframes pv-err {
+  0%,
+  26% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  46% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  52%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pv-fix {
+  0%,
+  52% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  57% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Vitrine du hero (33,6 s = 4 × 8,4 s) ----------
+   Scènes visibles sur leur quart exact ; les histoires étant
+   terminées à 85 % et la transition couvrant 88,8-100 %, RIEN
+   n'est jamais coupé. */
 @keyframes pv-scene-1 {
   0%,
-  24.2% {
+  24.4% {
     opacity: 1;
   }
   25%,
-  99.2% {
+  99.4% {
     opacity: 0;
   }
   100% {
@@ -747,11 +853,11 @@ body {
 }
 @keyframes pv-scene-2 {
   0%,
-  24.2% {
+  24.4% {
     opacity: 0;
   }
   25%,
-  49.2% {
+  49.4% {
     opacity: 1;
   }
   50%,
@@ -761,11 +867,11 @@ body {
 }
 @keyframes pv-scene-3 {
   0%,
-  49.2% {
+  49.4% {
     opacity: 0;
   }
   50%,
-  74.2% {
+  74.4% {
     opacity: 1;
   }
   75%,
@@ -775,19 +881,18 @@ body {
 }
 @keyframes pv-scene-4 {
   0%,
-  74.2% {
+  74.4% {
     opacity: 0;
   }
   75%,
-  99.2% {
+  99.4% {
     opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
-/* Titres de la vitrine du hero : chacun glisse en entrant au début
-   de sa fenêtre de 7 s — le changement de titre se voit clairement. */
+/* Titres : glissent en entrant au début de chaque quart */
 @keyframes pv-title-1 {
   0% {
     opacity: 0;
@@ -866,251 +971,284 @@ body {
     transform: translateY(-8px);
   }
 }
-/* Reflet « tout neuf » : une bande lumineuse balaye le site
-   modernisé une fois la cascade posée. */
-/* Le reflet est le DERNIER acte : il balaye une fois la cascade
-   posée et les barres de chargement remplies. */
-@keyframes pv-shine {
-  0%,
-  80% {
-    transform: translateX(0) skewX(-18deg);
-    opacity: 0;
-  }
-  82% {
-    opacity: 1;
-  }
-  90% {
-    transform: translateX(520px) skewX(-18deg);
-    opacity: 1;
-  }
-  92%,
-  100% {
-    transform: translateX(520px) skewX(-18deg);
-    opacity: 0;
-  }
-}
-/* Transition entre les scènes de la vitrine : voile blanc +
-   spinner qui tourne + coche validée, dans les 0,84 dernières
-   secondes de chaque quart (pendant la réinitialisation des
-   histoires — la scène suivante démarre toujours à zéro). */
+/* Transition : voile 22.2→25 de chaque quart (≈ 88,8-100 % de
+   l'histoire, déjà terminée). Spinner posé, puis coche posée. */
 @keyframes pv-trans {
   0%,
-  22.1% {
-    opacity: 0;
-  }
-  22.7%,
-  24.9% {
+  1.2% {
     opacity: 1;
   }
-  25%,
-  47.1% {
+  1.8%,
+  21.3% {
     opacity: 0;
   }
-  47.7%,
-  49.9% {
+  21.9%,
+  26.2% {
     opacity: 1;
   }
-  50%,
-  72.1% {
+  26.8%,
+  46.3% {
     opacity: 0;
   }
-  72.7%,
-  74.9% {
+  46.9%,
+  51.2% {
     opacity: 1;
   }
-  75%,
-  97.1% {
+  51.8%,
+  71.3% {
     opacity: 0;
   }
-  97.7%,
-  99.9% {
+  71.9%,
+  76.2% {
     opacity: 1;
   }
+  76.8%,
+  96.3% {
+    opacity: 0;
+  }
+  96.9%,
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
-/* Le spinner laisse la place à la coche en fin de fenêtre */
+
 @keyframes pv-spin-vis {
   0%,
-  22.3% {
+  21.9% {
     opacity: 0;
   }
-  22.8%,
-  24% {
+  22.4%,
+  24.3% {
     opacity: 1;
   }
-  24.3%,
-  47.3% {
+  24.6%,
+  46.9% {
     opacity: 0;
   }
-  47.8%,
-  49% {
+  47.4%,
+  49.3% {
     opacity: 1;
   }
-  49.3%,
-  72.3% {
+  49.6%,
+  71.9% {
     opacity: 0;
   }
-  72.8%,
-  74% {
+  72.4%,
+  74.3% {
     opacity: 1;
   }
-  74.3%,
-  97.3% {
+  74.6%,
+  96.9% {
     opacity: 0;
   }
-  97.8%,
-  99% {
+  97.4%,
+  99.3% {
     opacity: 1;
   }
-  99.3%,
+  99.6%,
   100% {
     opacity: 0;
   }
 }
+
 @keyframes pv-ok {
   0%,
-  24.1% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  24.5% {
+  1.2% {
     opacity: 1;
     transform: scale(1);
+  }
+  1.7%,
+  24.5% {
+    opacity: 0;
+    transform: scale(0.5);
   }
   24.9% {
     opacity: 1;
     transform: scale(1);
   }
-  25%,
-  49.1% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  49.5% {
+  26.2% {
     opacity: 1;
     transform: scale(1);
+  }
+  26.7%,
+  49.5% {
+    opacity: 0;
+    transform: scale(0.5);
   }
   49.9% {
     opacity: 1;
     transform: scale(1);
   }
-  50%,
-  74.1% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  74.5% {
+  51.2% {
     opacity: 1;
     transform: scale(1);
+  }
+  51.7%,
+  74.5% {
+    opacity: 0;
+    transform: scale(0.5);
   }
   74.9% {
     opacity: 1;
     transform: scale(1);
   }
-  75%,
-  99.1% {
+  76.2% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  76.7%,
+  99.5% {
     opacity: 0;
     transform: scale(0.5);
   }
-  99.5% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  99.9% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  99.9%,
   100% {
-    opacity: 0;
+    opacity: 1;
+    transform: scale(1);
   }
 }
-/* Rotation continue du spinner */
+
+/* Rotation lente et régulière du spinner */
 @keyframes pv-rotate {
   to {
     transform: rotate(360deg);
   }
 }
-/* Maintenance : le fichier DÉFILE (scroll vers le bas), s'arrête
-   pile sur la ligne fautive, l'erreur clignote, puis correction. */
-@keyframes pv-scroll {
+/* Feu d'artifice à la validation : les rayons jaillissent du
+   centre dans toutes les directions et s'évanouissent, pile au
+   moment où la coche se pose (chaque quart de la vitrine). */
+@keyframes pv-burst {
   0% {
-    transform: translateY(0);
+    opacity: 0.55;
+    transform: scale(1.25);
   }
-  24%,
-  100% {
-    transform: translateY(-110px);
+  1.4%,
+  24.6% {
+    opacity: 0;
+    transform: scale(0.3);
   }
-}
-@keyframes pv-code {
-  0%,
-  28% {
-    fill: rgb(var(--bordeaux) / 0.15);
+  25.2% {
+    opacity: 0.9;
+    transform: scale(1);
   }
-  32% {
-    fill: rgb(var(--accent) / 0.9);
+  26.4%,
+  49.6% {
+    opacity: 0;
+    transform: scale(1.8);
   }
-  36% {
-    fill: rgb(var(--accent) / 0.35);
+  50.2% {
+    opacity: 0.9;
+    transform: scale(1);
   }
-  40% {
-    fill: rgb(var(--accent) / 0.9);
+  51.4%,
+  74.6% {
+    opacity: 0;
+    transform: scale(1.8);
   }
-  44% {
-    fill: rgb(var(--accent) / 0.35);
+  75.2% {
+    opacity: 0.9;
+    transform: scale(1);
   }
-  48% {
-    fill: rgb(var(--accent) / 0.9);
-  }
-  55%,
-  100% {
-    fill: rgb(var(--bordeaux) / 0.15);
-  }
-}
-/* Indicateur d'onglet actif du menu latéral (suit le cycle 7 s) */
-@keyframes pv-side {
-  0%,
-  40% {
-    transform: translateY(0);
-  }
-  50%,
-  88% {
-    transform: translateY(20px);
+  76.4%,
+  99.6% {
+    opacity: 0;
+    transform: scale(1.8);
   }
   100% {
-    transform: translateY(0);
-  }
-}
-/* La couleur active suit l'indicateur : l'onglet 1 s'éteint,
-   l'onglet 2 s'allume en rouge. */
-@keyframes pv-tab-1 {
-  0%,
-  40% {
-    fill: rgb(var(--accent) / 0.7);
-  }
-  50%,
-  88% {
-    fill: rgb(var(--bordeaux) / 0.12);
-  }
-  100% {
-    fill: rgb(var(--accent) / 0.7);
-  }
-}
-@keyframes pv-tab-2 {
-  0%,
-  40% {
-    fill: rgb(var(--bordeaux) / 0.12);
-  }
-  50%,
-  88% {
-    fill: rgb(var(--accent) / 0.7);
-  }
-  100% {
-    fill: rgb(var(--bordeaux) / 0.12);
+    opacity: 0.55;
+    transform: scale(1.25);
   }
 }
 
+
+
+
+/* ---------- Micro-animations des cartes « Pourquoi nous » ----------
+   Ambiance douce et lente, chacune illustre son argument. */
+/* Le point qui fait le trajet de A à Z (accompagnement) */
+@keyframes pv-wu-travel {
+  0%,
+  8% {
+    transform: translateX(0);
+  }
+  46%,
+  54% {
+    transform: translateX(44px);
+  }
+  92%,
+  100% {
+    transform: translateX(0);
+  }
+}
+/* Les curseurs de réglage qui s'ajustent finement (sur mesure) :
+   chaque bouton glisse à son propre rythme vers sa position idéale. */
+@keyframes pv-wu-knob-1 {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(16px);
+  }
+}
+@keyframes pv-wu-knob-2 {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-12px);
+  }
+}
+@keyframes pv-wu-knob-3 {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+/* La loupe qui balaye le texte (compréhension métier) */
+@keyframes pv-wu-scan {
+  0%,
+  100% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+/* L'onde qui émane de l'interlocuteur unique */
+@keyframes pv-wu-ping {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.35);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+/* Le pointillé qui avance sans fin (suivi long terme) */
+@keyframes pv-wu-line {
+  to {
+    stroke-dashoffset: -72;
+  }
+}
+/* Reflet lent qui traverse le bandeau contact (~toutes les 12 s) */
+@keyframes pv-cta-shine {
+  0% {
+    transform: translateX(-12rem) skewX(-14deg);
+  }
+  18%,
+  100% {
+    transform: translateX(84rem) skewX(-14deg);
+  }
+}
+
+/* ---------- Réglages statiques ---------- */
 .pv-bar,
 .pv-pop-1,
 .pv-pop-2,
@@ -1118,13 +1256,33 @@ body {
 .pv-pop-4,
 .pv-fill,
 .pv-fix,
-.pv-err {
+.pv-err,
+.pv-mail,
+.pv-dot,
+.pv-side,
+.pv-shine,
+.pv-in-1,
+.pv-in-2,
+.pv-in-3,
+.pv-in-4,
+.pv-in-5,
+.pv-in-6,
+.pv-spark,
+.pv-peak-1,
+.pv-peak-2,
+.pv-peak-3,
+.pv-peak-4,
+.pv-peak-5,
+.pv-scroll,
+.pv-rotate,
+.pv-ok {
   transform-box: fill-box;
 }
 .pv-bar {
   transform-origin: center bottom;
 }
-.pv-fill {
+.pv-fill,
+.pv-spark {
   transform-origin: left center;
 }
 .pv-pop-1,
@@ -1132,90 +1290,49 @@ body {
 .pv-pop-3,
 .pv-pop-4,
 .pv-fix,
-.pv-err {
-  transform-origin: center;
-}
-.pv-side,
-.pv-peak-1,
-.pv-peak-2,
-.pv-peak-3,
-.pv-peak-4,
-.pv-peak-5,
-.pv-mail,
-.pv-code,
-.pv-in-1,
-.pv-in-2,
-.pv-in-3,
-.pv-in-4,
-.pv-in-5,
-.pv-in-6,
-.pv-spark {
-  transform-box: fill-box;
-}
-.pv-in-1,
-.pv-in-2,
-.pv-in-3,
-.pv-in-4,
-.pv-in-5,
-.pv-in-6 {
-  transform-origin: center;
-}
-.pv-spark {
-  transform-origin: left center;
-}
-.pv-peak-1,
-.pv-peak-2,
-.pv-peak-3,
-.pv-peak-4,
-.pv-peak-5,
-.pv-mail {
-  transform-origin: center;
-}
-.pv-code {
-  transform-origin: left center;
-}
-/* Sans animation : l'erreur et l'enveloppe ne sont jamais montrées,
-   la correction oui ; la vitrine du hero reste sur la scène 1 ;
-   le fichier de la Maintenance est déjà arrêté sur la bonne ligne. */
 .pv-err,
 .pv-mail,
-.pv-scene-2,
-.pv-scene-3,
-.pv-scene-4 {
-  opacity: 0;
-}
-.pv-scroll {
-  transform: translateY(-110px);
-}
-.pv-shine {
-  transform-box: fill-box;
-  opacity: 0;
-}
-/* Transition inter-scènes : invisible par défaut et sans animation */
-.pv-trans,
-.pv-spin-vis,
 .pv-ok,
-.pv-mail-trail {
-  opacity: 0;
-}
-.pv-ok,
-.pv-rotate {
-  transform-box: fill-box;
+.pv-rotate,
+.pv-peak-1,
+.pv-peak-2,
+.pv-peak-3,
+.pv-peak-4,
+.pv-peak-5 {
   transform-origin: center;
 }
-/* Sans animation : le titre de la scène 1 reste affiché. */
-.pv-title-2,
-.pv-title-3,
-.pv-title-4 {
-  opacity: 0;
-}
-/* Sans animation : on montre l'état final (site modernisé, courbe tracée). */
+/* Sans animation : état final (site modernisé, courbe tracée,
+   coches posées) — jamais d'erreur ni de voile affichés. */
 .pv-old {
   opacity: 0;
 }
 .pv-line {
   stroke-dasharray: 420;
   stroke-dashoffset: 0;
+}
+.pv-scroll {
+  transform: translateY(-110px);
+}
+.pv-err,
+.pv-mail-trail,
+.pv-trans,
+.pv-spin-vis,
+.pv-ok,
+.pv-burst {
+  opacity: 0;
+}
+.pv-burst,
+.pv-wu-travel,
+.pv-wu-knob-1,
+.pv-wu-knob-2,
+.pv-wu-knob-3,
+.pv-wu-scan,
+.pv-wu-ping {
+  transform-box: fill-box;
+}
+.pv-burst,
+.pv-wu-ping {
+  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1228,50 +1345,23 @@ body {
   .pv-bar-c {
     animation: pv-bar-c 9.4s ease-in-out infinite;
   }
+  .pv-dot {
+    animation: pv-dot 3.1s ease-in-out infinite;
+  }
   .pv-old {
     animation: pv-show-old 8.4s ease-in-out infinite;
   }
   .pv-new {
     animation: pv-show-new 8.4s ease-in-out infinite;
   }
-  /* ⚠️ Toutes les animations scénarisées durent 7 s : elles restent
-     ainsi alignées sur les fenêtres de la vitrine du hero (28 s = 4 × 7 s),
-     chaque scène joue donc son cycle COMPLET avant la bascule. */
-  .pv-pop-1 {
-    animation: pv-pop-1 8.4s ease-in-out infinite;
+  .pv-side {
+    animation: pv-side 8.4s ease-in-out infinite;
   }
-  .pv-pop-2 {
-    animation: pv-pop-2 8.4s ease-in-out infinite;
+  .pv-tab-1 {
+    animation: pv-tab-1 8.4s ease-in-out infinite;
   }
-  .pv-pop-3 {
-    animation: pv-pop-3 8.4s ease-in-out infinite;
-  }
-  .pv-pop-4 {
-    animation: pv-pop-4 8.4s ease-in-out infinite;
-  }
-  .pv-fill {
-    animation: pv-fill 8.4s ease-in-out infinite;
-  }
-  .pv-err {
-    animation: pv-err 8.4s ease-in-out infinite;
-  }
-  .pv-scroll {
-    animation: pv-scroll 8.4s ease-in-out infinite;
-  }
-  .pv-code {
-    animation: pv-code 8.4s ease-in-out infinite;
-  }
-  .pv-fix {
-    animation: pv-fix 8.4s ease-in-out infinite;
-  }
-  .pv-mail {
-    animation: pv-mail 8.4s ease-in-out infinite;
-  }
-  .pv-dot {
-    animation: pv-dot 3.1s ease-in-out infinite;
-  }
-  .pv-line {
-    animation: pv-draw 8.4s ease-in-out infinite;
+  .pv-tab-2 {
+    animation: pv-tab-2 8.4s ease-in-out infinite;
   }
   .pv-peak-1 {
     animation: pv-peak-1 8.4s ease-in-out infinite;
@@ -1288,14 +1378,8 @@ body {
   .pv-peak-5 {
     animation: pv-peak-5 8.4s ease-in-out infinite;
   }
-  .pv-side {
-    animation: pv-side 8.4s ease-in-out infinite;
-  }
-  .pv-tab-1 {
-    animation: pv-tab-1 8.4s ease-in-out infinite;
-  }
-  .pv-tab-2 {
-    animation: pv-tab-2 8.4s ease-in-out infinite;
+  .pv-line {
+    animation: pv-draw 8.4s ease-in-out infinite;
   }
   .pv-in-1 {
     animation: pv-in-1 8.4s ease-in-out infinite;
@@ -1318,17 +1402,53 @@ body {
   .pv-spark {
     animation: pv-spark 8.4s ease-in-out infinite;
   }
+  .pv-shine {
+    animation: pv-shine 8.4s ease-in-out infinite;
+  }
+  .pv-pop-1 {
+    animation: pv-pop-1 8.4s ease-in-out infinite;
+  }
+  .pv-pop-2 {
+    animation: pv-pop-2 8.4s ease-in-out infinite;
+  }
+  .pv-pop-3 {
+    animation: pv-pop-3 8.4s ease-in-out infinite;
+  }
+  .pv-pop-4 {
+    animation: pv-pop-4 8.4s ease-in-out infinite;
+  }
+  .pv-fill {
+    animation: pv-fill 8.4s ease-in-out infinite;
+  }
+  .pv-mail {
+    animation: pv-mail 8.4s ease-in-out infinite;
+  }
+  .pv-mail-trail {
+    animation: pv-mail-trail 8.4s ease-in-out infinite;
+  }
+  .pv-scroll {
+    animation: pv-scroll 8.4s ease-in-out infinite;
+  }
+  .pv-code {
+    animation: pv-code 8.4s ease-in-out infinite;
+  }
+  .pv-err {
+    animation: pv-err 8.4s ease-in-out infinite;
+  }
+  .pv-fix {
+    animation: pv-fix 8.4s ease-in-out infinite;
+  }
   .pv-scene-1 {
-    animation: pv-scene-1 33.6s ease-in-out infinite;
+    animation: pv-scene-1 33.6s linear infinite;
   }
   .pv-scene-2 {
-    animation: pv-scene-2 33.6s ease-in-out infinite;
+    animation: pv-scene-2 33.6s linear infinite;
   }
   .pv-scene-3 {
-    animation: pv-scene-3 33.6s ease-in-out infinite;
+    animation: pv-scene-3 33.6s linear infinite;
   }
   .pv-scene-4 {
-    animation: pv-scene-4 33.6s ease-in-out infinite;
+    animation: pv-scene-4 33.6s linear infinite;
   }
   .pv-title-1 {
     animation: pv-title-1 33.6s ease-in-out infinite;
@@ -1352,13 +1472,34 @@ body {
     animation: pv-ok 33.6s ease-in-out infinite;
   }
   .pv-rotate {
-    animation: pv-rotate 1.6s linear infinite;
+    animation: pv-rotate 2.2s linear infinite;
   }
-  .pv-mail-trail {
-    animation: pv-mail-trail 8.4s ease-in-out infinite;
+  .pv-burst {
+    animation: pv-burst 33.6s ease-out infinite;
   }
-  .pv-shine {
-    animation: pv-shine 8.4s ease-in-out infinite;
+  .pv-wu-travel {
+    animation: pv-wu-travel 6s ease-in-out infinite;
+  }
+  .pv-wu-knob-1 {
+    animation: pv-wu-knob-1 5s ease-in-out infinite;
+  }
+  .pv-wu-knob-2 {
+    animation: pv-wu-knob-2 6.2s ease-in-out infinite;
+  }
+  .pv-wu-knob-3 {
+    animation: pv-wu-knob-3 7.4s ease-in-out infinite;
+  }
+  .pv-wu-scan {
+    animation: pv-wu-scan 4.5s ease-in-out infinite;
+  }
+  .pv-wu-ping {
+    animation: pv-wu-ping 3.2s ease-out infinite;
+  }
+  .pv-wu-line {
+    animation: pv-wu-line 3.5s linear infinite;
+  }
+  .pv-cta-shine {
+    animation: pv-cta-shine 12s ease-in-out infinite;
   }
 }
 

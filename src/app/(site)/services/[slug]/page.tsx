@@ -15,10 +15,10 @@ import JsonLd from "@/components/JsonLd";
 import {
   Check,
   StepNumber,
-  BrandDots,
   MobileCtaBar,
   ProblemItem,
 } from "@/components/ui";
+import WhyUsMotif from "@/components/WhyUsMotif";
 
 // ============================================================
 // GABARIT DES 4 PAGES SERVICES — structure PAS en 9 blocs :
@@ -278,12 +278,12 @@ export default async function ServicePage({
             Pourquoi choisir Mailys Solutions
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_US.map((item) => (
+            {WHY_US.map((item, i) => (
               <div
                 key={item.title}
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
-                <BrandDots />
+                <WhyUsMotif index={i} />
                 <h3 className="font-bold text-bordeaux">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
               </div>

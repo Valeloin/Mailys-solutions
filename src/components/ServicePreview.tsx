@@ -8,26 +8,61 @@
 // Décoratives : aria-hidden, le texte des cartes porte le sens.
 // ============================================================
 
-export function Chrome({ url }: { url?: string }) {
+export function Chrome({
+  url,
+  urlSwap,
+}: {
+  url?: string;
+  /** [avant, après] : l'URL change en même temps que la scène
+      bascule (mêmes horloges pv-old / pv-new de 8,4 s). */
+  urlSwap?: [string, string];
+}) {
   return (
     <>
       <rect width="400" height="26" fill="rgb(var(--bordeaux) / 0.05)" />
       <circle className="pv-dot" cx="16" cy="13" r="4" fill="rgb(var(--coral))" />
       <circle className="pv-dot" style={{ animationDelay: "0.4s" }} cx="30" cy="13" r="4" fill="rgb(var(--orange))" />
       <circle className="pv-dot" style={{ animationDelay: "0.8s" }} cx="44" cy="13" r="4" fill="rgb(var(--accent))" />
-      {url ? (
+      {url || urlSwap ? (
         <>
           <rect x="130" y="5" width="160" height="16" rx="8" fill="rgb(var(--bordeaux) / 0.06)" />
-          <text
-            x="210"
-            y="16.5"
-            textAnchor="middle"
-            fontSize="9"
-            fontWeight="600"
-            fill="rgb(var(--bordeaux) / 0.45)"
-          >
-            {url}
-          </text>
+          {urlSwap ? (
+            <>
+              <text
+                className="pv-old"
+                x="210"
+                y="16.5"
+                textAnchor="middle"
+                fontSize="9"
+                fontWeight="600"
+                fill="rgb(var(--bordeaux) / 0.45)"
+              >
+                {urlSwap[0]}
+              </text>
+              <text
+                className="pv-new"
+                x="210"
+                y="16.5"
+                textAnchor="middle"
+                fontSize="9"
+                fontWeight="600"
+                fill="rgb(var(--bordeaux) / 0.45)"
+              >
+                {urlSwap[1]}
+              </text>
+            </>
+          ) : (
+            <text
+              x="210"
+              y="16.5"
+              textAnchor="middle"
+              fontSize="9"
+              fontWeight="600"
+              fill="rgb(var(--bordeaux) / 0.45)"
+            >
+              {url}
+            </text>
+          )}
         </>
       ) : (
         <rect x="150" y="7" width="120" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.06)" />
@@ -241,12 +276,12 @@ export function Digitalisation() {
       {/* Progression */}
       <rect x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.08)" />
       <rect className="pv-fill" x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--accent) / 0.8)" />
-      {/* Tout est coché → le mail décolle : surgissement en douceur,
-          élan vers l'arrière, envol en diagonale avec rotation */}
+      {/* Tout est coché → le mail décolle : il surgit EN BAS À
+          GAUCHE, prend son élan, et file EN HAUT À DROITE */}
       <g className="pv-mail">
-        <rect x="178" y="104" width="44" height="30" rx="5" fill="#ffffff" stroke="rgb(var(--accent))" strokeWidth="2.5" />
+        <rect x="52" y="146" width="44" height="30" rx="5" fill="#ffffff" stroke="rgb(var(--accent))" strokeWidth="2.5" />
         <path
-          d="M180 108l20 14 20 -14"
+          d="M54 150l20 14 20 -14"
           fill="none"
           stroke="rgb(var(--orange))"
           strokeWidth="2.5"
@@ -257,7 +292,7 @@ export function Digitalisation() {
       {/* Traînée de vitesse au décollage (dans l'axe opposé au vol) */}
       <g className="pv-mail-trail">
         <path
-          d="M170 134l-18 8M178 143l-26 11M174 124l-13 6"
+          d="M46 184l-16 7M56 192l-22 9M50 174l-12 5"
           stroke="rgb(var(--coral))"
           strokeWidth="2.5"
           strokeLinecap="round"
@@ -351,6 +386,18 @@ const PREVIEWS: Record<string, () => React.ReactNode> = {
   "maintenance-windev-webdev": Maintenance,
 };
 
+// Fausses URLs des vignettes : elles rendent la fenêtre plus réelle.
+// Modernisation : l'URL bascule avec la scène (obsolète → nouvelle).
+const CHROME_PROPS: Record<
+  string,
+  { url?: string; urlSwap?: [string, string] }
+> = {
+  "developpement-application-metier": { url: "votre-application.fr" },
+  "modernisation-application": {
+    urlSwap: ["application-obsolete.fr", "nouvelle-application.fr"],
+  },
+};
+
 export default function ServicePreview({ slug }: { slug: string }) {
   const Preview = PREVIEWS[slug];
   if (!Preview) return null;
@@ -364,7 +411,7 @@ export default function ServicePreview({ slug }: { slug: string }) {
     >
       <rect width="400" height="220" fill="#ffffff" />
       <Preview />
-      <Chrome />
+      <Chrome {...(CHROME_PROPS[slug] ?? {})} />
     </svg>
   );
 }
