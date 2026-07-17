@@ -31,6 +31,9 @@ export default function PageTransition() {
       if (!href.startsWith("/")) return;
       const url = new URL(href, window.location.href);
       if (url.pathname === window.location.pathname) return;
+      // Jamais dans l'administration : le spinner est une pièce du
+      // site public, pas un écran de chargement du back-office.
+      if (url.pathname.startsWith("/admin")) return;
 
       shownAt.current = Date.now();
       setVisible(true);
