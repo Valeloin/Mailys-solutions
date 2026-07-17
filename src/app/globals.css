@@ -1219,17 +1219,19 @@ body {
 
 /* ---------- Micro-animations des cartes « Pourquoi nous » ----------
    Ambiance douce et lente, chacune illustre son argument. */
-/* Le point qui fait le trajet de A à Z (accompagnement) */
+/* Le point qui fait le trajet de A à Z (accompagnement) :
+   part sur le point A (translateX 0) et va jusqu'au point Z
+   (translateX 48px = 56-8), recouvrant chaque extrémité. */
 @keyframes pv-wu-travel {
   0%,
-  8% {
+  10% {
     transform: translateX(0);
   }
   46%,
   54% {
-    transform: translateX(44px);
+    transform: translateX(48px);
   }
-  92%,
+  90%,
   100% {
     transform: translateX(0);
   }

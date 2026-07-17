@@ -13,7 +13,9 @@ const MOTIFS: (() => React.ReactNode)[] = [
       <line x1="8" y1="12" x2="56" y2="12" stroke="rgb(var(--bordeaux) / 0.15)" strokeWidth="2" strokeLinecap="round" />
       <circle cx="8" cy="12" r="3" fill="rgb(var(--coral))" />
       <circle cx="56" cy="12" r="3" fill="rgb(var(--accent))" />
-      <circle className="pv-wu-travel" cx="10" cy="12" r="3.5" fill="rgb(var(--orange))" />
+      {/* Part exactement du point A (cx=8) et va jusqu'au point Z (cx=56),
+          en recouvrant chaque extrémité — de A à Z, jusqu'au bout. */}
+      <circle className="pv-wu-travel" cx="8" cy="12" r="4" fill="rgb(var(--orange))" />
     </>
   ),
   // 1 — Du vrai sur mesure : trois curseurs de réglage dont les
