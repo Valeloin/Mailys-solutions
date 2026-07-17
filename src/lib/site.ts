@@ -5,7 +5,10 @@
 // Emails autorisés à accéder à l'administration (/admin).
 // Doit rester aligné avec la fonction is_admin() côté Supabase
 // (supabase/migrations/002_harden_rls.sql).
-export const ADMIN_EMAILS = ["v.condamy@gmail.com"];
+export const ADMIN_EMAILS = [
+  "v.condamy@gmail.com",
+  "mailyscondamy.pro@gmail.com",
+];
 
 export const SITE = {
   name: "Mailys Solutions",
