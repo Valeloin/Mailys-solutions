@@ -1,12 +1,13 @@
 # Journal des modifications — Mailys Solutions
 
-> Toutes les modifications apportées au site, de la plus récente à la plus ancienne.
-> Date et heure issues de l'historique Git (fuseau Europe/Paris, `+0200`).
+> Mini récap de chaque modification, de la plus récente à la plus ancienne.
+> **Mis à jour automatiquement à chaque push** (date + heure, fuseau Europe/Paris).
 
 ---
 
 ## 17 juillet 2026
 
+- **21:36** — Mise en place du mini-récap : ce journal reçoit désormais une ligne datée à chaque push.
 - **19:47** — Section « Le constat » : cartes à **pictogrammes distincts** + tons chauds (accueil + pages services) ; panneau « La réponse » **épuré** (sans barre fantôme ni reflet) ; **fil d'Ariane** refondu dans la DA (pastille chaude, maison, chevrons corail, point dégradé).
 - **18:48** — Fil d'Ariane habillé DA + ajustements UI et page service.
 - **18:40** — Admin : le spinner de transition ne se déclenche plus vers `/admin`.
