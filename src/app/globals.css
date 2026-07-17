@@ -1117,6 +1117,97 @@ body {
     stroke-dashoffset: -72;
   }
 }
+
+/* ---------- Micro-animations des 8 étapes de la méthode ----------
+   Discrètes et lentes, chacune illustre son étape. Coupées par
+   prefers-reduced-motion (état de repos affiché : picto figé). */
+@keyframes pv-mi-scan {
+  0%,
+  100% {
+    transform: translateX(-1.5px);
+  }
+  50% {
+    transform: translateX(1.5px);
+  }
+}
+@keyframes pv-mi-bar {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.5);
+  }
+}
+@keyframes pv-mi-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+@keyframes pv-mi-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+@keyframes pv-mi-chev-l {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-1.5px);
+  }
+}
+@keyframes pv-mi-chev-r {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1.5px);
+  }
+}
+@keyframes pv-mi-draw {
+  0% {
+    stroke-dashoffset: 12;
+  }
+  55%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pv-mi-nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(2.5px);
+  }
+}
+@keyframes pv-mi-type {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* ---------- Réglages statiques ---------- */
 .pv-bar,
 .pv-pop-1,
@@ -1206,6 +1297,36 @@ body {
 }
 .pv-wu-ping {
   transform-origin: center;
+}
+/* Pictogrammes de la méthode : origines de transformation propres
+   à chaque geste (repos = état final : coche tracée, picto figé). */
+.pv-mi-scan,
+.pv-mi-bar,
+.pv-mi-pulse,
+.pv-mi-wiggle,
+.pv-mi-chev-l,
+.pv-mi-chev-r,
+.pv-mi-nudge,
+.pv-mi-type {
+  transform-box: fill-box;
+}
+.pv-mi-scan,
+.pv-mi-pulse,
+.pv-mi-chev-l,
+.pv-mi-chev-r,
+.pv-mi-nudge,
+.pv-mi-type {
+  transform-origin: center;
+}
+.pv-mi-bar {
+  transform-origin: center bottom;
+}
+.pv-mi-wiggle {
+  transform-origin: 5px 19px;
+}
+.pv-mi-draw {
+  stroke-dasharray: 12;
+  stroke-dashoffset: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1373,6 +1494,35 @@ body {
   }
   .pv-wu-line {
     animation: pv-wu-line 3.5s linear infinite;
+  }
+  /* Pictogrammes de la méthode (durées variées = vie ambiante,
+     jamais synchronisée) */
+  .pv-mi-scan {
+    animation: pv-mi-scan 4.8s ease-in-out infinite;
+  }
+  .pv-mi-bar {
+    animation: pv-mi-bar 3.6s ease-in-out infinite;
+  }
+  .pv-mi-pulse {
+    animation: pv-mi-pulse 3.4s ease-in-out infinite;
+  }
+  .pv-mi-wiggle {
+    animation: pv-mi-wiggle 4.2s ease-in-out infinite;
+  }
+  .pv-mi-chev-l {
+    animation: pv-mi-chev-l 3.2s ease-in-out infinite;
+  }
+  .pv-mi-chev-r {
+    animation: pv-mi-chev-r 3.2s ease-in-out infinite;
+  }
+  .pv-mi-draw {
+    animation: pv-mi-draw 4s ease-in-out infinite;
+  }
+  .pv-mi-nudge {
+    animation: pv-mi-nudge 3s ease-in-out infinite;
+  }
+  .pv-mi-type {
+    animation: pv-mi-type 1.4s ease-in-out infinite;
   }
 }
 

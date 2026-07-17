@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import ServicePreview from "@/components/ServicePreview";
+import HeroShowcase from "@/components/HeroShowcase";
 import { getServicesHubContent, getMergedServices } from "@/lib/sections";
 import { Kicker, MobileCtaBar, StepNumber } from "@/components/ui";
 
@@ -47,28 +48,64 @@ export default async function ServicesPage() {
         </div>
 
         <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
-          <div className="rise rise-1">
-            <Kicker>Nos expertises</Kicker>
-          </div>
-          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
-            {c.h1}
-          </h1>
-          <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            {c.intro}
-          </p>
-          <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/contact"
-              className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
-            >
-              Demander un devis gratuit
-            </Link>
-            <a
-              href="#nos-services"
-              className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
-            >
-              Découvrir nos services
-            </a>
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
+            {/* Colonne texte */}
+            <div>
+              <div className="rise rise-1">
+                <Kicker>Nos expertises</Kicker>
+              </div>
+              <h1 className="mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+                {c.h1}
+              </h1>
+              <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                {c.intro}
+              </p>
+              <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/contact"
+                  className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
+                >
+                  Demander un devis gratuit
+                </Link>
+                <a
+                  href="#nos-services"
+                  className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
+                >
+                  Découvrir nos services
+                </a>
+              </div>
+            </div>
+
+            {/* Vitrine défilante : mêmes 4 vignettes que l'accueil, titre
+                et onglets segmentés synchronisés (mêmes horloges CSS) */}
+            <div className="relative" aria-hidden="true">
+              <div className="glow-warm absolute -inset-12 rounded-full" />
+              {/* Titre de la scène en cours (cross-slide pv-title-N) */}
+              <div className="relative mb-3 h-9 max-[374px]:h-14">
+                {SERVICES.map((s, i) => (
+                  <span
+                    key={s.slug}
+                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
+                  >
+                    {s.name}
+                  </span>
+                ))}
+              </div>
+              {/* Onglets segmentés : le segment actif suit la scène */}
+              <div className="mb-5 flex justify-center gap-2">
+                {[1, 2, 3, 4].map((n) => (
+                  <span
+                    key={n}
+                    className="relative h-1.5 w-8 overflow-hidden rounded-full bg-bordeaux/10"
+                  >
+                    <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-accent/70`} />
+                  </span>
+                ))}
+              </div>
+              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
+                <HeroShowcase />
+              </div>
+            </div>
           </div>
 
           {/* Sommaire cliquable : les 4 expertises, chacune saute à son bloc */}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import { SERVICES } from "@/lib/services";
 
 const NAV = [
   { name: "Accueil", href: "/" },
@@ -10,10 +11,17 @@ const NAV = [
   { name: "Contact", href: "/contact" },
 ];
 
+// Sous-pages du menu Services (dérivées de la source de vérité).
+const SERVICE_LINKS = [
+  { name: "Tous les services", href: "/services" },
+  ...SERVICES.map((s) => ({ name: s.name, href: `/services/${s.slug}` })),
+];
+
 // Header 100 % HTML/CSS (aucun JavaScript envoyé au navigateur).
 // Composition en trois zones : logo | navigation centrée | action.
 // Navigation en petites capitales espacées (épuré mais travaillé),
 // soulignement dégradé au survol, filet signature en couronnement.
+// L'onglet Services ouvre un menu déroulant (survol + focus clavier).
 // Le menu mobile repose sur <details>, natif et accessible.
 export default function Header() {
   return (
@@ -32,15 +40,61 @@ export default function Header() {
           aria-label="Navigation principale"
           className="hidden items-center gap-7 lg:flex"
         >
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {NAV.map((item) =>
+            item.name === "Services" ? (
+              // Onglet Services : menu déroulant CSS (survol + focus-within)
+              <div key={item.href} className="group relative">
+                <Link
+                  href={item.href}
+                  className="nav-link flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground group-hover:text-foreground group-focus-within:text-foreground"
+                  aria-haspopup="true"
+                >
+                  {item.name}
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 12 12"
+                    className="h-2.5 w-2.5 transition-transform duration-200 group-hover:-rotate-180 group-focus-within:-rotate-180"
+                  >
+                    <path
+                      d="M2.5 4.5 6 8l3.5-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+
+                {/* Panneau : invisible par défaut, révélé au survol/focus.
+                    Le pont haut évite la coupure du survol sous le filet. */}
+                <div className="invisible absolute left-1/2 top-full z-20 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                  <div className="w-72 overflow-hidden rounded-xl border border-border bg-background shadow-[0_24px_48px_-24px_rgb(var(--bordeaux)/0.35)]">
+                    <span aria-hidden="true" className="brand-hairline block h-0.5" />
+                    <div className="p-2">
+                      {SERVICE_LINKS.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-surface hover:text-coral"
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
+              >
+                {item.name}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Action, séparée par un filet vertical */}
@@ -72,15 +126,38 @@ export default function Header() {
           >
             <span aria-hidden="true" className="brand-hairline block h-0.5" />
             <div className="p-2">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground hover:bg-surface"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {NAV.map((item) =>
+                item.name === "Services" ? (
+                  <div key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground hover:bg-surface"
+                    >
+                      {item.name}
+                    </Link>
+                    {/* Sous-pages de services, légèrement en retrait */}
+                    <div className="ml-3 border-l border-border pl-2">
+                      {SERVICE_LINKS.slice(1).map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className="block rounded-lg px-3.5 py-2 text-[13px] font-medium text-muted hover:bg-surface hover:text-foreground"
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground hover:bg-surface"
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
               <Link
                 href="/contact"
                 className="btn-cta mt-2 block rounded-lg px-3 py-2.5 text-center text-sm font-semibold text-white"

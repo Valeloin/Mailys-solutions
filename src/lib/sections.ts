@@ -79,7 +79,7 @@ const HOME_DEFAULTS = {
   },
   methode: {
     kicker: "Notre méthode",
-    title: "Un projet mené étape par étape, sans jargon et sans surprise",
+    title: "Un projet mené en 8 étapes, sans jargon et sans surprise",
   },
   pourquoi: {
     title: "Pourquoi les PME nous font confiance",
@@ -327,7 +327,7 @@ export const SECTIONS: SectionDef[] = [
   },
   {
     key: "method",
-    label: "Méthode (7 étapes)",
+    label: "Méthode (8 étapes)",
     description: "Utilisée sur l'accueil, les services et À propos",
     defaults: METHOD_DEFAULTS,
     fields: [
