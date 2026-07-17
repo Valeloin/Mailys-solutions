@@ -177,23 +177,23 @@ export default async function HomePage() {
               {c.probleme.title}
             </h2>
             <ul className="mt-8 space-y-3 text-muted">
-              {c.probleme.items.map((p) => (
+              {c.probleme.items.map((p, i) => (
                 // Chaque point de douleur posé en question (écho du H2)
-                <ProblemItem key={p}>{/[?!.]$/.test(p) ? p : `${p} ?`}</ProblemItem>
+                <ProblemItem key={p} index={i}>
+                  {/[?!.]$/.test(p) ? p : `${p} ?`}
+                </ProblemItem>
               ))}
             </ul>
           </div>
 
-          {/* ---------- DROITE : la réponse (panneau premium chaud) ---------- */}
-          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.4)] sm:p-10">
+          {/* ---------- DROITE : la réponse (panneau premium chaud, épuré) ---------- */}
+          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
-            {/* Décor chaud : lavis orangé + halo + barre fantôme + reflet
-                qui balaye lentement le panneau */}
+            {/* Décor chaud, net : lavis diagonal + halo orangé en haut à
+                droite (sans barre fantôme ni reflet — comme la maquette). */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange/[0.11] via-orange/[0.03] to-transparent" />
-              <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-orange/15 blur-3xl" />
-              <div className="absolute -right-8 -top-24 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.07] lg:block" />
-              <div className="pv-panel-shine absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-orange/[0.08] to-transparent" />
+              <div className="absolute -right-20 -top-16 h-64 w-64 rounded-full bg-orange/[0.16] blur-3xl" />
             </div>
             <div className="relative">
               {/* Badge « la réponse » : pilule + les deux points du logo */}

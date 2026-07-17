@@ -155,8 +155,8 @@ export default async function ServicePage({
             {service.problemsIntro}
           </h2>
           <ul className="mt-8 grid gap-4 md:grid-cols-2">
-            {service.problems.map((p) => (
-              <ProblemItem key={p}>{p}</ProblemItem>
+            {service.problems.map((p, i) => (
+              <ProblemItem key={p} index={i}>{p}</ProblemItem>
             ))}
           </ul>
           <p className="mt-8 text-lg font-semibold text-bordeaux">

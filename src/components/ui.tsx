@@ -67,42 +67,81 @@ export function StepNumber({
   );
 }
 
-/** Item de liste « problème » : pastille ronde au dégradé de marque
-    (corail → orange → rouge) avec un halo qui respire et le triangle
-    qui bat doucement. Aucune bordure colorée, fond blanc, ombre neutre.
-    Décoratif, non cliquable. Animations coupées par
-    prefers-reduced-motion (pastille et halo restent colorés). */
-export function ProblemItem({ children }: { children: React.ReactNode }) {
+// ---------- Pictogrammes distincts des constats ----------
+// Chaque item de « problème » reçoit son icône + son ton chaud
+// (cyclés par index). Traits fins en currentColor → l'icône prend
+// la couleur de sa pastille.
+const PROBLEM_TONES = [
+  "bg-coral/[0.15] text-[#D8494F]",
+  "bg-orange/[0.15] text-orange-text",
+  "bg-accent/[0.12] text-accent",
+  "bg-bordeaux/[0.08] text-bordeaux",
+] as const;
+
+const PROBLEM_ICONS: React.ReactNode[] = [
+  // Fichiers dispersés — tableurs éparpillés
+  <>
+    <rect x="3" y="4" width="8" height="6" rx="1.2" />
+    <rect x="13.5" y="8" width="7.5" height="6" rx="1.2" />
+    <rect x="6" y="14" width="8" height="6" rx="1.2" />
+  </>,
+  // Ressaisies — document dupliqué
+  <>
+    <rect x="4" y="4" width="11" height="13" rx="2" />
+    <path d="M9 20h9a2 2 0 0 0 2-2V9" />
+  </>,
+  // Logiciel vieillissant — horloge
+  <>
+    <circle cx="12" cy="12" r="8" />
+    <path d="M12 8v4l2.5 2.5" />
+  </>,
+  // Processus fragiles — maillons qui lâchent
+  <>
+    <path d="M10 8a3.2 3.2 0 0 0 0 6" />
+    <path d="M14 16a3.2 3.2 0 0 0 0-6" />
+    <path d="M9.5 11h2M12.5 13h2" />
+  </>,
+  // Aucune visibilité — œil barré
+  <>
+    <path d="M2.5 12S6 5.5 12 5.5s9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12Z" />
+    <circle cx="12" cy="12" r="2.6" />
+    <path d="M4 4l16 16" />
+  </>,
+];
+
+/** Item de liste « problème » : carte chaude + pictogramme distinct
+    (index → icône + ton). Fond blanc, ombre douce, survol qui soulève
+    et réchauffe la bordure. Aucune bordure colorée agressive. */
+export function ProblemItem({
+  children,
+  index = 0,
+}: {
+  children: React.ReactNode;
+  index?: number;
+}) {
+  const tone = PROBLEM_TONES[index % PROBLEM_TONES.length];
+  const icon = PROBLEM_ICONS[index % PROBLEM_ICONS.length];
   return (
-    <li className="problem-item reveal group flex items-center gap-3.5 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]">
-      {/* Badge rond en tons chauds doux (même famille que les pastilles
-          kicker orange/10) ; le triangle est tracé au dégradé de marque
-          corail → orange → rouge, et bat doucement. */}
+    <li className="problem-item reveal group flex items-center gap-4 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-orange/40 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]">
       <span
         aria-hidden="true"
-        className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-coral/[0.18] to-orange/[0.14] ring-1 ring-orange/20 transition-[box-shadow,background] duration-200 group-hover:ring-orange/40 group-hover:from-coral/[0.24] group-hover:to-orange/[0.18]"
+        className={`flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[13px] ${tone}`}
       >
-        <svg viewBox="0 0 24 24" className="pv-alert-mark h-[18px] w-[18px]" fill="none">
-          <defs>
-            <linearGradient id="pi-tri" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="rgb(var(--coral))" />
-              <stop offset="0.55" stopColor="rgb(var(--orange))" />
-              <stop offset="1" stopColor="rgb(var(--accent))" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M12 5 20 18.5H4L12 5z"
-            fill="url(#pi-tri)"
-            fillOpacity="0.16"
-            stroke="url(#pi-tri)"
-            strokeWidth="1.9"
-            strokeLinejoin="round"
-          />
-          <path d="M12 10.4v3" stroke="url(#pi-tri)" strokeWidth="1.9" strokeLinecap="round" />
-          <circle cx="12" cy="16.2" r="1.05" fill="url(#pi-tri)" />
+        <svg
+          viewBox="0 0 24 24"
+          className="h-[21px] w-[21px]"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {icon}
         </svg>
       </span>
-      <span className="text-foreground">{children}</span>
+      <span className="text-[15px] font-medium leading-snug text-foreground">
+        {children}
+      </span>
     </li>
   );
 }
