@@ -95,13 +95,14 @@ export default async function HomePage() {
             <div className="glow-warm absolute -inset-12 rounded-full" />
             {/* Titre de la scène en cours + segments de progression,
                 au-dessus de la vitrine */}
-            {/* Titre de la scène : même horloge (pv-scene-N) que la
-                carte et les segments → synchronisation parfaite */}
+            {/* Titre de la scène : cross-slide (pv-title-N) calé sur
+                les mêmes fenêtres de fondu que la vitrine et les
+                segments → changement de titre net et vivant */}
             <div className="relative mb-3 h-9 max-[374px]:h-14">
               {services.map((s, i) => (
                 <span
                   key={s.slug}
-                  className={`pv-scene-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
+                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
                 >
                   {s.name}
                 </span>

@@ -892,13 +892,18 @@ body {
    Scènes visibles sur leur quart exact ; les histoires étant
    terminées à 85 % et la transition couvrant 88,8-100 %, RIEN
    n'est jamais coupé. */
+/* Fondus croisés doux (zones de 2 % = ~0,67 s) : chaque vignette
+   se fond dans la suivante, la couture de boucle tombe pile dans
+   le maintien de la scène 1 (aucun saut). */
 @keyframes pv-scene-1 {
-  0%,
-  24.4% {
+  0% {
     opacity: 1;
   }
-  25%,
-  99.4% {
+  24% {
+    opacity: 1;
+  }
+  26%,
+  98% {
     opacity: 0;
   }
   100% {
@@ -907,316 +912,135 @@ body {
 }
 @keyframes pv-scene-2 {
   0%,
-  24.4% {
+  24% {
     opacity: 0;
   }
-  25%,
-  49.4% {
+  26%,
+  49% {
     opacity: 1;
   }
-  50%,
+  51%,
   100% {
     opacity: 0;
   }
 }
 @keyframes pv-scene-3 {
   0%,
-  49.4% {
+  49% {
     opacity: 0;
   }
-  50%,
-  74.4% {
+  51%,
+  74% {
     opacity: 1;
   }
-  75%,
+  76%,
   100% {
     opacity: 0;
   }
 }
 @keyframes pv-scene-4 {
   0%,
-  74.4% {
+  74% {
     opacity: 0;
   }
-  75%,
-  99.4% {
+  76%,
+  98% {
     opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
-/* Titres : glissent en entrant au début de chaque quart */
+/* Titres : cross-slide — l'ancien titre s'efface vers le haut,
+   le nouveau monte depuis le bas, calé sur les fondus des scènes
+   (fenêtres 24-26 / 49-51 / 74-76 / 98-100). */
 @keyframes pv-title-1 {
   0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  24% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  26% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
   }
-  2% {
-    opacity: 1;
-    transform: translateY(0);
+  30%,
+  98% {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  23.5% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  25%,
   100% {
-    opacity: 0;
-    transform: translateY(-8px);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 @keyframes pv-title-2 {
   0%,
-  25% {
+  24% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
-  27% {
+  26%,
+  49% {
     opacity: 1;
     transform: translateY(0);
   }
-  48.5% {
-    opacity: 1;
-    transform: translateY(0);
+  51% {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  50%,
+  55%,
   100% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(12px);
   }
 }
 @keyframes pv-title-3 {
   0%,
-  50% {
+  49% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
-  52% {
+  51%,
+  74% {
     opacity: 1;
     transform: translateY(0);
   }
-  73.5% {
-    opacity: 1;
-    transform: translateY(0);
+  76% {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  75%,
+  80%,
   100% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(12px);
   }
 }
 @keyframes pv-title-4 {
   0%,
-  75% {
+  74% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
-  77% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  98.5% {
+  76%,
+  98% {
     opacity: 1;
     transform: translateY(0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-10px);
   }
 }
-/* Transition : voile 22.2→25 de chaque quart (≈ 88,8-100 % de
-   l'histoire, déjà terminée). Spinner posé, puis coche posée. */
-@keyframes pv-trans {
-  0%,
-  1.2% {
-    opacity: 1;
-  }
-  1.8%,
-  21.3% {
-    opacity: 0;
-  }
-  21.9%,
-  26.2% {
-    opacity: 1;
-  }
-  26.8%,
-  46.3% {
-    opacity: 0;
-  }
-  46.9%,
-  51.2% {
-    opacity: 1;
-  }
-  51.8%,
-  71.3% {
-    opacity: 0;
-  }
-  71.9%,
-  76.2% {
-    opacity: 1;
-  }
-  76.8%,
-  96.3% {
-    opacity: 0;
-  }
-  96.9%,
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes pv-spin-vis {
-  0%,
-  21.9% {
-    opacity: 0;
-  }
-  22.4%,
-  24.3% {
-    opacity: 1;
-  }
-  24.6%,
-  46.9% {
-    opacity: 0;
-  }
-  47.4%,
-  49.3% {
-    opacity: 1;
-  }
-  49.6%,
-  71.9% {
-    opacity: 0;
-  }
-  72.4%,
-  74.3% {
-    opacity: 1;
-  }
-  74.6%,
-  96.9% {
-    opacity: 0;
-  }
-  97.4%,
-  99.3% {
-    opacity: 1;
-  }
-  99.6%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes pv-ok {
-  0%,
-  1.2% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  1.7%,
-  24.5% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  24.9% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  26.2% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  26.7%,
-  49.5% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  49.9% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  51.2% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  51.7%,
-  74.5% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  74.9% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  76.2% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  76.7%,
-  99.5% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  99.9%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Rotation lente et régulière du spinner */
+/* Rotation lente et régulière du spinner global (page transition) */
 @keyframes pv-rotate {
   to {
     transform: rotate(360deg);
   }
 }
-/* Feu d'artifice à la validation : les rayons jaillissent du
-   centre dans toutes les directions et s'évanouissent, pile au
-   moment où la coche se pose (chaque quart de la vitrine). */
-@keyframes pv-burst {
-  0% {
-    opacity: 0.55;
-    transform: scale(1.25);
-  }
-  1.4%,
-  24.6% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  25.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  26.4%,
-  49.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  50.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  51.4%,
-  74.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  75.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  76.4%,
-  99.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  100% {
-    opacity: 0.55;
-    transform: scale(1.25);
-  }
-}
-
-
-
-
 /* ---------- Micro-animations des cartes « Pourquoi nous » ----------
    Ambiance douce et lente, chacune illustre son argument. */
 /* Le point qui fait le trajet de A à Z (accompagnement) :
@@ -1293,17 +1117,6 @@ body {
     stroke-dashoffset: -72;
   }
 }
-/* Reflet lent qui traverse le bandeau contact (~toutes les 12 s) */
-@keyframes pv-cta-shine {
-  0% {
-    transform: translateX(-12rem) skewX(-14deg);
-  }
-  18%,
-  100% {
-    transform: translateX(84rem) skewX(-14deg);
-  }
-}
-
 /* ---------- Réglages statiques ---------- */
 .pv-bar,
 .pv-pop-1,
@@ -1330,8 +1143,7 @@ body {
 .pv-peak-4,
 .pv-peak-5,
 .pv-scroll,
-.pv-rotate,
-.pv-ok {
+.pv-rotate {
   transform-box: fill-box;
 }
 .pv-bar {
@@ -1350,7 +1162,6 @@ body {
 .pv-fix,
 .pv-err,
 .pv-mail,
-.pv-ok,
 .pv-rotate,
 .pv-peak-1,
 .pv-peak-2,
@@ -1368,7 +1179,10 @@ body {
    les suivants sont masqués par défaut, l'animation les révèle. */
 .pv-scene-2,
 .pv-scene-3,
-.pv-scene-4 {
+.pv-scene-4,
+.pv-title-2,
+.pv-title-3,
+.pv-title-4 {
   opacity: 0;
 }
 .pv-line {
@@ -1379,14 +1193,9 @@ body {
   transform: translateY(-110px);
 }
 .pv-err,
-.pv-mail-trail,
-.pv-trans,
-.pv-spin-vis,
-.pv-ok,
-.pv-burst {
+.pv-mail-trail {
   opacity: 0;
 }
-.pv-burst,
 .pv-wu-travel,
 .pv-wu-knob-1,
 .pv-wu-knob-2,
@@ -1395,7 +1204,6 @@ body {
 .pv-wu-ping {
   transform-box: fill-box;
 }
-.pv-burst,
 .pv-wu-ping {
   transform-origin: center;
 }
@@ -1542,20 +1350,8 @@ body {
   .pv-title-4 {
     animation: pv-title-4 33.6s ease-in-out infinite;
   }
-  .pv-trans {
-    animation: pv-trans 33.6s linear infinite;
-  }
-  .pv-spin-vis {
-    animation: pv-spin-vis 33.6s linear infinite;
-  }
-  .pv-ok {
-    animation: pv-ok 33.6s ease-in-out infinite;
-  }
   .pv-rotate {
     animation: pv-rotate 2.2s linear infinite;
-  }
-  .pv-burst {
-    animation: pv-burst 33.6s ease-out infinite;
   }
   .pv-wu-travel {
     animation: pv-wu-travel 6s ease-in-out infinite;
@@ -1577,9 +1373,6 @@ body {
   }
   .pv-wu-line {
     animation: pv-wu-line 3.5s linear infinite;
-  }
-  .pv-cta-shine {
-    animation: pv-cta-shine 12s ease-in-out infinite;
   }
 }
 
