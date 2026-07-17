@@ -1,38 +1,35 @@
 // ============================================================
 // Carte de marque du hero — pièce maîtresse de l'accueil.
-// Le logo Mailys Solutions posé sur un dégradé chaud
-// (corail → rouge → orange), une carte blanche qui « flotte ».
-// Vie discrète : halos qui scintillent (opacité), points du
-// logo qui pulsent. Climax lent : un reflet balaie toute la
-// carte et révèle « Mailys Solutions » en lumière.
+// Structure : un grand carré blanc (le logo) qui flotte dans
+// un rectangle au dégradé chaud travaillé (corail → rouge →
+// orange, avec halos, pastilles et barres fantômes de la DA).
+// Climax lent : un reflet balaie toute la carte et fait glisser
+// la lumière sur le lettrage « MAILYS SOLUTIONS ».
 // 100 % CSS, décoratif (aria-hidden). Animations coupées par
 // prefers-reduced-motion → carte figée, logo net, zéro CLS.
-// (Remplace l'ancienne vitrine HeroShowcase, désormais réservée
-//  à la page Services — ne rien y toucher.)
+// (Remplace l'ancienne vitrine HeroShowcase, réservée à la
+//  page Services — ne rien y toucher.)
 // ============================================================
 export default function HeroBrandCard() {
   return (
     <div
       aria-hidden="true"
-      className="hero-panel relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-window"
+      className="hero-panel relative aspect-square w-full overflow-hidden rounded-[28px] shadow-window"
     >
       {/* Halos chauds qui respirent (scintillement d'opacité, pas de scale) */}
       <div className="hero-glow hero-glow-1" />
       <div className="hero-glow hero-glow-2" />
+      {/* Spot doux qui soulève la carte */}
+      <div className="hero-spot" />
       {/* Barres fantômes du logo, inclinées à -22° */}
       <div className="hero-ghost hero-ghost-1" />
       <div className="hero-ghost hero-ghost-2" />
 
-      {/* Reflet : « Mailys Solutions » en lumière, révélé par le
-          balayage — placé derrière la carte, dans le bas du panneau */}
-      <span className="hero-word-ghost">Mailys Solutions</span>
-      <span className="hero-word">Mailys Solutions</span>
-
-      {/* Carte blanche centrale : le logo complet qui flotte */}
-      <div className="hero-card absolute left-1/2 top-[42%] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 rounded-[22px] bg-white px-9 py-8 sm:px-11 sm:py-9">
+      {/* Carte blanche centrale : grand carré, le logo complet */}
+      <div className="hero-card absolute left-1/2 top-1/2 flex aspect-square w-[66%] max-w-[22rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 rounded-[26px]">
         <svg
           viewBox="0 0 132 104"
-          className="h-14 w-auto sm:h-16"
+          className="h-24 w-auto sm:h-28"
           aria-hidden="true"
           focusable="false"
         >
@@ -70,17 +67,19 @@ export default function HeroBrandCard() {
           />
         </svg>
         <div className="flex flex-col items-center leading-none">
-          <span className="text-2xl font-extrabold tracking-[0.14em] text-bordeaux">
+          <span className="text-4xl font-extrabold tracking-[0.13em] text-bordeaux sm:text-5xl">
             MAILYS
           </span>
-          <span className="mt-1.5 text-[11px] font-semibold tracking-[0.42em] text-coral">
+          <span className="mt-2.5 text-sm font-semibold tracking-[0.44em] text-coral sm:text-base">
             SOLUTIONS
           </span>
         </div>
       </div>
 
-      {/* Gloss : la même lumière balaie toute la surface (calée sur
-          le reflet du texte → tout s'illumine ensemble) */}
+      {/* Liseré interne : arête de lumière en haut + hairline (détail premium) */}
+      <div className="hero-ring" />
+      {/* Reflet : la lumière balaie toute la surface — carte comprise —
+          et fait glisser un éclat sur le lettrage (mix-blend screen) */}
       <div className="hero-gloss" />
     </div>
   );
