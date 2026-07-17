@@ -15,6 +15,7 @@ const ICON_COLORS = [
   "--orange",
   "--accent",
   "--coral",
+  "--orange",
 ];
 
 const ICONS: ((color: string) => React.ReactNode)[] = [
@@ -34,7 +35,15 @@ const ICONS: ((color: string) => React.ReactNode)[] = [
       <rect x="16" y="13" width="3" height="4" rx="1" fill={c} opacity="0.55" />
     </>
   ),
-  // 3 — Conception : le crayon
+  // 3 — Cadrage : la cible (périmètre, priorités)
+  (c) => (
+    <>
+      <circle cx="12" cy="12" r="8" stroke={c} strokeWidth="2" fill="none" />
+      <circle cx="12" cy="12" r="3.5" stroke={c} strokeWidth="2" fill="none" />
+      <circle cx="12" cy="12" r="1" fill={c} />
+    </>
+  ),
+  // 4 — Conception : le crayon
   (c) => (
     <path
       d="M4 20l1.6-5.2L16 4.4a2.1 2.1 0 013 3L8.6 17.8 4 20z"
@@ -44,7 +53,7 @@ const ICONS: ((color: string) => React.ReactNode)[] = [
       fill="none"
     />
   ),
-  // 4 — Développement : les chevrons de code
+  // 5 — Développement : les chevrons de code
   (c) => (
     <path
       d="M9 6l-6 6 6 6M15 6l6 6-6 6"
@@ -55,25 +64,22 @@ const ICONS: ((color: string) => React.ReactNode)[] = [
       fill="none"
     />
   ),
-  // 5 — Tests : la coche validée
+  // 6 — Tests : la coche validée
   (c) => (
     <>
       <circle cx="12" cy="12" r="8" stroke={c} strokeWidth="2" fill="none" />
       <path d="M8.5 12l2.5 2.5 4.5-5" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </>
   ),
-  // 6 — Déploiement : la flèche d'envol
+  // 7 — Déploiement : trois flèches horizontales (l'envoi qui part)
   (c) => (
-    <path
-      d="M12 19V5M5.5 11.5L12 5l6.5 6.5"
-      stroke={c}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
+    <g stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+      <path d="M4 6h9m0 0l-3-3m3 3l-3 3" />
+      <path d="M4 12h14m0 0l-3-3m3 3l-3 3" />
+      <path d="M4 18h6m0 0l-3-3m3 3l-3 3" />
+    </g>
   ),
-  // 7 — Accompagnement : la bulle de dialogue
+  // 8 — Accompagnement : la bulle de dialogue
   (c) => (
     <path
       d="M20 4.5H4v11h4.5V20l5-4.5H20v-11z"

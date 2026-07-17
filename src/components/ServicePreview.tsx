@@ -276,29 +276,6 @@ export function Digitalisation() {
       {/* Progression */}
       <rect x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.08)" />
       <rect className="pv-fill" x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--accent) / 0.8)" />
-      {/* Tout est coché → le mail décolle : il surgit EN BAS À
-          GAUCHE, prend son élan, et file EN HAUT À DROITE */}
-      <g className="pv-mail">
-        <rect x="52" y="146" width="44" height="30" rx="5" fill="#ffffff" stroke="rgb(var(--accent))" strokeWidth="2.5" />
-        <path
-          d="M54 150l20 14 20 -14"
-          fill="none"
-          stroke="rgb(var(--orange))"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-      {/* Traînée de vitesse au décollage (dans l'axe opposé au vol) */}
-      <g className="pv-mail-trail">
-        <path
-          d="M46 184l-16 7M56 192l-22 9M50 174l-12 5"
-          stroke="rgb(var(--coral))"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          fill="none"
-        />
-      </g>
     </>
   );
 }

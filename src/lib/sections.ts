@@ -79,7 +79,7 @@ const HOME_DEFAULTS = {
   },
   methode: {
     kicker: "Notre méthode",
-    title: "Un projet mené en 7 étapes, sans jargon et sans surprise",
+    title: "Un projet mené étape par étape, sans jargon et sans surprise",
   },
   pourquoi: {
     title: "Pourquoi les PME nous font confiance",
@@ -135,7 +135,7 @@ const APROPOS_DEFAULTS = {
       text: "Nous ne livrons pas puis disparaissons : nous restons responsables de ce que nous construisons, année après année.",
     },
   ],
-  methodeTitle: "Notre méthode en 7 étapes",
+  methodeTitle: "Notre méthode, étape par étape",
 };
 
 const CONTACT_DEFAULTS = {

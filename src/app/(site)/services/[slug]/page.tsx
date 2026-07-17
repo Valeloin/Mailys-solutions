@@ -242,7 +242,7 @@ export default async function ServicePage({
             id="methode-titre"
             className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
-            Notre méthode : 7 étapes, zéro mauvaise surprise
+            Notre méthode, étape par étape et sans surprise
           </h2>
           {/* Fil conducteur : dégradé corail → orange → rouge */}
           <div

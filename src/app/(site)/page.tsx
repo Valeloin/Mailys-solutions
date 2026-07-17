@@ -95,12 +95,13 @@ export default async function HomePage() {
             <div className="glow-warm absolute -inset-12 rounded-full" />
             {/* Titre de la scène en cours + segments de progression,
                 au-dessus de la vitrine */}
-            {/* Titre de la scène : orange, sans puce, police unifiée */}
+            {/* Titre de la scène : même horloge (pv-scene-N) que la
+                carte et les segments → synchronisation parfaite */}
             <div className="relative mb-3 h-9 max-[374px]:h-14">
               {services.map((s, i) => (
                 <span
                   key={s.slug}
-                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
+                  className={`pv-scene-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
                 >
                   {s.name}
                 </span>

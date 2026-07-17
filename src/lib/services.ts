@@ -51,6 +51,10 @@ export const METHOD_STEPS = [
     text: "Nous observons vos processus réels — pas ceux du papier — pour identifier les points de friction, les doubles saisies et les tâches automatisables.",
   },
   {
+    title: "Cadrage",
+    text: "Nous cadrons le projet avec vous : périmètre, priorités, budget et planning. Vous validez un devis clair et détaillé avant tout démarrage.",
+  },
+  {
     title: "Conception",
     text: "Nous concevons les écrans et les parcours avec vos utilisateurs. Vous validez une maquette concrète avant tout développement.",
   },

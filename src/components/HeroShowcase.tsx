@@ -39,24 +39,38 @@ export default function HeroShowcase() {
       <g className="pv-trans">
         <rect x="0" y="26" width="400" height="194" fill="#ffffff" opacity="0.94" />
       </g>
+      {/* Spinner = pièce signature de la DA : le logo Mailys animé
+          (barres qui respirent, points qui pulsent) ceint d'un
+          anneau dégradé en rotation — même identité que le spinner
+          global de changement de page. */}
       <g className="pv-spin-vis">
-        <g className="pv-rotate">
-          <circle
-            cx="200"
-            cy="118"
-            r="16"
-            stroke="rgb(var(--bordeaux) / 0.12)"
-            strokeWidth="4"
-            fill="none"
-          />
-          <path
-            d="M200 102a16 16 0 0 1 16 16"
-            stroke="rgb(var(--accent))"
-            strokeWidth="4"
-            strokeLinecap="round"
-            fill="none"
-          />
-        </g>
+        <svg x="160" y="80" width="80" height="76" viewBox="-38 -46 208 196">
+          <defs>
+            <linearGradient id="pv-ring-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="rgb(var(--coral))" />
+              <stop offset="0.5" stopColor="rgb(var(--accent))" />
+              <stop offset="1" stopColor="rgb(var(--orange))" />
+            </linearGradient>
+          </defs>
+          <g className="pv-rotate">
+            <circle
+              cx="66"
+              cy="52"
+              r="90"
+              fill="none"
+              stroke="url(#pv-ring-grad)"
+              strokeWidth="7"
+              strokeLinecap="round"
+              strokeDasharray="215 350"
+            />
+          </g>
+          {/* Le logo Mailys : barres verticales (le -22° et la
+              respiration viennent des keyframes pt-bar), points pulsants */}
+          <circle className="pt-dot-1" cx="15" cy="87" r="14" fill="rgb(var(--orange))" />
+          <rect className="pt-bar-1" x="30" y="6" width="30" height="92" rx="15" fill="rgb(var(--coral))" />
+          <rect className="pt-bar-2" x="72" y="6" width="30" height="92" rx="15" fill="rgb(var(--accent))" />
+          <circle className="pt-dot-2" cx="117" cy="17" r="14" fill="rgb(var(--orange))" />
+        </svg>
       </g>
       {/* Feu d'artifice : grands rayons + étincelles qui jaillissent
           de la coche dans toutes les directions (ça pétille !) */}
