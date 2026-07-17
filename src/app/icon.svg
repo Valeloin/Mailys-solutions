@@ -1,0 +1,12 @@
+<svg width="132" height="132" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon Mailys Solutions : la marque officielle (deux barres + deux points)
+       centrée dans un carré. Couleurs figées en dur (un fichier favicon ne peut
+       pas lire les variables CSS de globals.css) — corail #ff6b6b, rouge #e11d2a,
+       orange #f97316. Garder synchronisé avec components/Logo.tsx (LogoMark). -->
+  <g transform="translate(0 14)">
+    <circle cx="15" cy="87" r="14" fill="#f97316" />
+    <rect x="30" y="6" width="30" height="92" rx="15" fill="#ff6b6b" transform="rotate(-22 45 52)" />
+    <rect x="72" y="6" width="30" height="92" rx="15" fill="#e11d2a" transform="rotate(-22 87 52)" />
+    <circle cx="117" cy="17" r="14" fill="#f97316" />
+  </g>
+</svg>
