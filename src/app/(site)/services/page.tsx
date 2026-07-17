@@ -20,9 +20,10 @@ import { Kicker, MobileCtaBar, StepNumber } from "@/components/ui";
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getServicesHubContent();
   return {
-    title: c.meta.title,
+    title: { absolute: c.meta.title },
     description: c.meta.description,
     alternates: { canonical: "/services" },
+    openGraph: { title: c.meta.title, description: c.meta.description, url: "/services" },
   };
 }
 

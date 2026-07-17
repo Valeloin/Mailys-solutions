@@ -17,9 +17,10 @@ import { sendContactMessage } from "./actions";
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getContactContent();
   return {
-    title: c.meta.title,
+    title: { absolute: c.meta.title },
     description: c.meta.description,
     alternates: { canonical: "/contact" },
+    openGraph: { title: c.meta.title, description: c.meta.description, url: "/contact" },
   };
 }
 

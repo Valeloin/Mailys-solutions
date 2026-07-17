@@ -19,12 +19,15 @@ export const revalidate = 300; // ISR : re-génération toutes les 5 min
 
 export async function generateMetadata(): Promise<Metadata> {
   const posts = await getPublishedPosts();
+  const title = "Blog : digitalisation et applications métier pour PME";
+  const description =
+    "Conseils, retours d'expérience et guides pratiques sur la digitalisation des PME, les applications métier sur mesure et la maintenance WINDEV / WEBDEV.";
   return {
-    title: "Blog : digitalisation et applications métier pour PME",
-    description:
-      "Conseils, retours d'expérience et guides pratiques sur la digitalisation des PME, les applications métier sur mesure et la maintenance WINDEV / WEBDEV.",
+    title,
+    description,
     alternates: { canonical: "/blog" },
     robots: posts.length > 0 ? { index: true, follow: true } : { index: false, follow: true },
+    openGraph: { title, description, url: "/blog", type: "website" },
   };
 }
 
@@ -213,7 +216,7 @@ export default async function BlogPage() {
                 >
                   {post.cover_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={post.cover_url} alt="" className="h-40 w-full object-cover" />
+                    <img src={post.cover_url} alt={post.title} className="h-40 w-full object-cover" />
                   ) : (
                     <div className="h-40 w-full bg-gradient-to-br from-coral/20 via-accent/15 to-orange/20" />
                   )}

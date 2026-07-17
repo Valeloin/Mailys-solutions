@@ -3,7 +3,7 @@ import Link from "next/link";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
-import HeroShowcase from "@/components/HeroShowcase";
+import HeroBrandCard from "@/components/HeroBrandCard";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 import {
@@ -87,40 +87,12 @@ export default async function HomePage() {
             </ul>
           </div>
 
-          {/* Vitrine décorative : les 4 scènes des services en boucle,
-              avec le titre du service synchronisé dessous.
-              Visible aussi sur mobile : SVG inline pur, aucune image
-              à charger, ratio fixe = zéro décalage de mise en page. */}
-          <div className="relative lg:-mt-8" aria-hidden="true">
-            <div className="glow-warm absolute -inset-12 rounded-full" />
-            {/* Titre de la scène en cours + segments de progression,
-                au-dessus de la vitrine */}
-            {/* Titre de la scène : cross-slide (pv-title-N) calé sur
-                les mêmes fenêtres de fondu que la vitrine et les
-                segments → changement de titre net et vivant */}
-            <div className="relative mb-3 h-9 max-[374px]:h-14">
-              {services.map((s, i) => (
-                <span
-                  key={s.slug}
-                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
-                >
-                  {s.name}
-                </span>
-              ))}
-            </div>
-            <div className="mb-5 flex justify-center gap-2">
-              {[1, 2, 3, 4].map((n) => (
-                <span
-                  key={n}
-                  className="relative h-1.5 w-8 overflow-hidden rounded-full bg-bordeaux/10"
-                >
-                  <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-accent/70`} />
-                </span>
-              ))}
-            </div>
-            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
-              <HeroShowcase />
-            </div>
+          {/* Carte de marque animée : le logo Mailys Solutions sur
+              dégradé chaud, avec un reflet final qui révèle
+              « Mailys Solutions ». Première chose vue à l'arrivée.
+              100 % CSS, décoratif, ratio fixe = zéro décalage. */}
+          <div className="rise rise-3 relative lg:-mt-4">
+            <HeroBrandCard />
           </div>
         </div>
       </section>
@@ -182,31 +154,67 @@ export default async function HomePage() {
       </section>
 
       {/* ================= PROBLÈME → SOLUTION (PAS condensé) ================= */}
-      <section aria-labelledby="probleme-title" className="bg-surface">
-        <div className="mx-auto grid max-w-content gap-12 px-4 py-20 sm:px-6 sm:py-24 md:grid-cols-2">
+      {/* Même grammaire que le hero : décor de barres fantômes, kicker,
+          panneau chaud premium (dégradé + halo + reflet animé), ombrages. */}
+      <section
+        aria-labelledby="probleme-title"
+        className="relative overflow-hidden bg-surface"
+      >
+        {/* Décor : barres fantômes du logo, inclinées à -22° */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-16 top-24 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.05] lg:block" />
+          <div className="absolute -right-12 -top-10 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
+        </div>
+
+        <div className="relative mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-24 md:grid-cols-2">
+          {/* ---------- GAUCHE : le constat ---------- */}
           <div>
+            <Kicker>Le constat</Kicker>
             <h2
               id="probleme-title"
-              className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+              className="mt-5 text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
             >
               {c.probleme.title}
             </h2>
-            <ul className="mt-6 space-y-3 text-muted">
+            <ul className="mt-8 space-y-3 text-muted">
               {c.probleme.items.map((p) => (
-                <ProblemItem key={p}>{p}</ProblemItem>
+                // Chaque point de douleur posé en question (écho du H2)
+                <ProblemItem key={p}>{/[?!.]$/.test(p) ? p : `${p} ?`}</ProblemItem>
               ))}
             </ul>
           </div>
-          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8">
+
+          {/* ---------- DROITE : la réponse (panneau premium chaud) ---------- */}
+          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.4)] sm:p-10">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
-            <h3 className="text-xl font-bold text-bordeaux">
-              {c.probleme.solutionTitle}
-            </h3>
-            {c.probleme.solutionParagraphs.map((p) => (
-              <p key={p.slice(0, 40)} className="mt-4 leading-relaxed text-muted">
-                <Rich text={p} />
+            {/* Décor chaud : lavis orangé + halo + barre fantôme + reflet
+                qui balaye lentement le panneau */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange/[0.11] via-orange/[0.03] to-transparent" />
+              <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-orange/15 blur-3xl" />
+              <div className="absolute -right-8 -top-24 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.07] lg:block" />
+              <div className="pv-panel-shine absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+            <div className="relative">
+              {/* Badge « la réponse » : pilule + les deux points du logo */}
+              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-orange/25 bg-orange/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-text">
+                <span aria-hidden="true" className="pv-dot h-1.5 w-1.5 rounded-full bg-orange" />
+                <span
+                  aria-hidden="true"
+                  className="pv-dot h-1.5 w-1.5 rounded-full bg-coral"
+                  style={{ animationDelay: "0.4s" }}
+                />
+                La réponse
               </p>
-            ))}
+              <h3 className="text-xl font-bold text-bordeaux sm:text-2xl">
+                {c.probleme.solutionTitle}
+              </h3>
+              {c.probleme.solutionParagraphs.map((p) => (
+                <p key={p.slice(0, 40)} className="mt-4 leading-relaxed text-muted">
+                  <Rich text={p} />
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </section>

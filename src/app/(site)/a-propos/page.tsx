@@ -15,9 +15,10 @@ import MethodSteps from "@/components/MethodSteps";
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getAproposContent();
   return {
-    title: c.meta.title,
+    title: { absolute: c.meta.title },
     description: c.meta.description,
     alternates: { canonical: "/a-propos" },
+    openGraph: { title: c.meta.title, description: c.meta.description, url: "/a-propos" },
   };
 }
 

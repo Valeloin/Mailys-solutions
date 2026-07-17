@@ -39,6 +39,12 @@ export async function generateMetadata({
     title: { absolute: service.metaTitle },
     description: service.metaDescription,
     alternates: { canonical: `/services/${service.slug}` },
+    openGraph: {
+      title: service.metaTitle,
+      description: service.metaDescription,
+      url: `/services/${service.slug}`,
+      type: "website",
+    },
   };
 }
 

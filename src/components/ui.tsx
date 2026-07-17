@@ -67,27 +67,37 @@ export function StepNumber({
   );
 }
 
-/** Item de liste « problème » : liseré rouge + picto d'alerte
-    (clairement non cliquable), fond blanc contrasté + ombre douce. */
+/** Item de liste « problème » : liseré rouge + pictogramme d'alerte
+    en badge (triangle soigné, onde qui se propage, « ! » qui bat).
+    Décoratif, non cliquable ; fond blanc contrasté, ombre douce.
+    Onde et battement coupés par prefers-reduced-motion. */
 export function ProblemItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="reveal flex gap-3 rounded-xl border border-border border-l-4 border-l-accent/70 bg-background px-4 py-3.5 shadow-[0_2px_10px_-6px_rgb(var(--bordeaux)/0.25)]">
-      <svg
-        viewBox="0 0 20 20"
-        className="mt-0.5 h-5 w-5 shrink-0"
-        fill="none"
+    <li className="problem-item reveal group flex items-center gap-3.5 rounded-xl border border-border border-l-4 border-l-accent/70 bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.28)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-l-accent hover:shadow-[0_18px_34px_-16px_rgb(var(--accent)/0.38)]">
+      <span
         aria-hidden="true"
+        className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 transition-colors group-hover:bg-accent/[0.16]"
       >
-        <path
-          d="M10 3 2.5 16.5h15L10 3z"
-          fill="rgb(var(--accent) / 0.1)"
-          stroke="rgb(var(--accent) / 0.8)"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path d="M10 8.5v3.5" stroke="rgb(var(--accent))" strokeWidth="1.8" strokeLinecap="round" />
-        <circle cx="10" cy="14.4" r="1" fill="rgb(var(--accent))" />
-      </svg>
+        {/* Onde d'alerte qui se propage (invisible au repos) */}
+        <span className="pv-alert-ring absolute inset-0 rounded-xl border border-accent/50" />
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+          <path
+            d="M12 4.2 20.4 19H3.6L12 4.2z"
+            fill="rgb(var(--accent) / 0.14)"
+            stroke="rgb(var(--accent))"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            className="pv-alert-mark"
+            d="M12 9.4v3.4"
+            stroke="rgb(var(--accent))"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+          />
+          <circle className="pv-alert-mark" cx="12" cy="15.6" r="1.05" fill="rgb(var(--accent))" />
+        </svg>
+      </span>
       <span className="text-foreground">{children}</span>
     </li>
   );

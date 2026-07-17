@@ -29,10 +29,18 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     url: SITE.url,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.name,
+    description: SITE.description,
+  },
   robots: {
     index: true,
     follow: true,
   },
+  // Code fourni par Google Search Console une fois la propriété créée
+  // (Paramètres de la propriété > Vérification > balise HTML) :
+  // verification: { google: "COLLER_LE_CODE_ICI" },
 };
 
 export default async function RootLayout({
@@ -61,6 +69,18 @@ export default async function RootLayout({
             description: SITE.description,
             areaServed: "FR",
             priceRange: "Sur devis",
+            ...(SITE.phone ? { telephone: SITE.phone } : {}),
+            ...(SITE.address ? { address: SITE.address } : {}),
+          }}
+        />
+        {/* Schema.org : identité du site web (favorise le sitelinks searchbox). */}
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: SITE.name,
+            url: SITE.url,
+            inLanguage: "fr-FR",
           }}
         />
         {children}

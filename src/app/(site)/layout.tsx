@@ -11,9 +11,18 @@ export default function SiteLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Lien d'évitement : accessibilité clavier + signal de qualité pour les moteurs */}
+      <a
+        href="#contenu"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-foreground focus:shadow-lg"
+      >
+        Aller au contenu
+      </a>
       <PageTransition />
       <Header />
-      <main className="flex-1">{children}</main>
+      <main id="contenu" className="flex-1">
+        {children}
+      </main>
       <Footer />
     </div>
   );

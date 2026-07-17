@@ -42,6 +42,9 @@ export async function generateMetadata({
       type: "article",
       title: post.meta_title || post.title,
       description: post.meta_description || post.excerpt,
+      url: `/blog/${post.slug}`,
+      ...(post.published_at ? { publishedTime: post.published_at } : {}),
+      modifiedTime: post.updated_at,
       ...(post.cover_url ? { images: [post.cover_url] } : {}),
     },
   };
