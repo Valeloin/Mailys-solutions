@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **22:28** — Script du hook auto (`scripts/changelog-hook.sh`) prêt à activer.
 - **21:36** — Journal cliquable (`/changelog`), suivi **par session**, mise à jour auto au push.
 
 ---
