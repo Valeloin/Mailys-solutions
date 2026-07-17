@@ -5,19 +5,14 @@ import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
 import HeroShowcase from "@/components/HeroShowcase";
 import WhyUsMotif from "@/components/WhyUsMotif";
+import MethodSteps from "@/components/MethodSteps";
 import {
   getHomeContent,
   getMergedServices,
   getMethodSteps,
   getWhyUs,
 } from "@/lib/sections";
-import {
-  Kicker,
-  Check,
-  StepNumber,
-  MobileCtaBar,
-  ProblemItem,
-} from "@/components/ui";
+import { Kicker, Check, MobileCtaBar, ProblemItem } from "@/components/ui";
 
 // ============================================================
 // ACCUEIL — requête principale :
@@ -48,17 +43,11 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
       <section className="relative overflow-hidden border-b border-border bg-surface">
-        {/* Décor : barres fantômes du logo + semis de pastilles
-            scintillantes qui donnent vie aux espaces libres */}
+        {/* Décor : barres fantômes du logo */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
           <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
           <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-          <div className="pv-dot absolute left-[13%] top-12 hidden h-2 w-2 rounded-full bg-coral/50 lg:block" />
-          <div className="pv-dot absolute left-[34%] top-20 hidden h-1.5 w-1.5 rounded-full bg-orange/45 lg:block" style={{ animationDelay: "1.4s" }} />
-          <div className="pv-dot absolute right-[40%] top-12 hidden h-1.5 w-1.5 rounded-full bg-accent/35 lg:block" style={{ animationDelay: "2.6s" }} />
-          <div className="pv-dot absolute right-[8%] top-24 hidden h-2 w-2 rounded-full bg-coral/40 lg:block" style={{ animationDelay: "0.8s" }} />
-          <div className="pv-dot absolute bottom-16 right-[30%] hidden h-1.5 w-1.5 rounded-full bg-orange/40 lg:block" style={{ animationDelay: "2s" }} />
         </div>
         <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1fr_minmax(0,30rem)]">
           <div className="relative">
@@ -104,39 +93,20 @@ export default async function HomePage() {
               à charger, ratio fixe = zéro décalage de mise en page. */}
           <div className="relative lg:-mt-8" aria-hidden="true">
             <div className="glow-warm absolute -inset-12 rounded-full" />
-            {/* Chips de notification flottantes : le produit vit */}
-            <div className="pv-float absolute -top-7 -right-2 z-10 hidden items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)] lg:flex">
-              <span className="pv-dot h-2 w-2 rounded-full bg-orange" />
-              <span className="h-1.5 w-14 rounded-full bg-bordeaux/15" />
-            </div>
-            <div
-              className="pv-float absolute -bottom-5 -left-4 z-10 hidden items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)] lg:flex"
-              style={{ animationDelay: "2.2s" }}
-            >
-              <span className="pv-dot h-2 w-2 rounded-full bg-coral" style={{ animationDelay: "1s" }} />
-              <span className="h-1.5 w-10 rounded-full bg-bordeaux/15" />
-              <span className="h-1.5 w-4 rounded-full bg-accent/40" />
-            </div>
-            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
-              <HeroShowcase />
-            </div>
-            <div className="relative mt-6 h-7 max-[374px]:h-12 sm:h-9">
+            {/* Titre de la scène en cours + segments de progression,
+                au-dessus de la vitrine */}
+            {/* Titre de la scène : orange, sans puce, police unifiée */}
+            <div className="relative mb-3 h-9 max-[374px]:h-14">
               {services.map((s, i) => (
                 <span
                   key={s.slug}
-                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center gap-2.5 text-center text-lg font-extrabold leading-tight tracking-tight text-bordeaux sm:text-2xl`}
+                  className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
                 >
-                  <span
-                    className={`h-2.5 w-2.5 rounded-full ${
-                      ["bg-coral", "bg-orange", "bg-accent", "bg-bordeaux"][i]
-                    }`}
-                  ></span>
                   {s.name}
                 </span>
               ))}
             </div>
-            {/* Segments de progression : la scène en cours s'allume */}
-            <div className="mt-3 flex justify-center gap-2">
+            <div className="mb-5 flex justify-center gap-2">
               {[1, 2, 3, 4].map((n) => (
                 <span
                   key={n}
@@ -145,6 +115,9 @@ export default async function HomePage() {
                   <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-accent/70`} />
                 </span>
               ))}
+            </div>
+            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
+              <HeroShowcase />
             </div>
           </div>
         </div>
@@ -238,33 +211,20 @@ export default async function HomePage() {
 
       {/* ================= MÉTHODE ================= */}
       <section aria-labelledby="methode-title">
-        <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-content px-4 py-14 sm:px-6 sm:py-16">
           <Kicker>{c.methode.kicker}</Kicker>
           <h2
             id="methode-title"
-            className="mt-4 text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="mt-3 text-2xl font-bold tracking-tight text-bordeaux sm:text-3xl"
           >
             {c.methode.title}
           </h2>
           {/* Fil conducteur : dégradé corail → orange → rouge */}
           <div
             aria-hidden="true"
-            className="mt-10 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
+            className="mt-6 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
           />
-          <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4">
-            {methodSteps.map((step, i) => (
-              <li
-                key={step.title}
-                className="card reveal rounded-2xl border border-border bg-background p-6"
-              >
-                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
-                <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {step.text}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <MethodSteps steps={methodSteps} />
         </div>
       </section>
 

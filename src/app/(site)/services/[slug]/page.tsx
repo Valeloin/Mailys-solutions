@@ -12,13 +12,9 @@ import { SITE } from "@/lib/site";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
-import {
-  Check,
-  StepNumber,
-  MobileCtaBar,
-  ProblemItem,
-} from "@/components/ui";
+import { Check, MobileCtaBar, ProblemItem } from "@/components/ui";
 import WhyUsMotif from "@/components/WhyUsMotif";
+import MethodSteps from "@/components/MethodSteps";
 
 // ============================================================
 // GABARIT DES 4 PAGES SERVICES — structure PAS en 9 blocs :
@@ -251,20 +247,9 @@ export default async function ServicePage({
           {/* Fil conducteur : dégradé corail → orange → rouge */}
           <div
             aria-hidden="true"
-            className="mt-10 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
+            className="mt-6 hidden h-px bg-gradient-to-r from-coral/40 via-orange/40 to-accent/40 lg:block"
           />
-          <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4">
-            {METHOD_STEPS.map((step, i) => (
-              <li
-                key={step.title}
-                className="card reveal rounded-2xl border border-border bg-background p-6"
-              >
-                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
-                <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
-              </li>
-            ))}
-          </ol>
+          <MethodSteps steps={METHOD_STEPS} />
         </div>
       </section>
 

@@ -3,7 +3,8 @@ import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import { getAproposContent, getMethodSteps } from "@/lib/sections";
-import { StepNumber, BrandDots } from "@/components/ui";
+import { BrandDots } from "@/components/ui";
+import MethodSteps from "@/components/MethodSteps";
 
 // ============================================================
 // À PROPOS — page de réassurance (E-E-A-T) : qui nous sommes,
@@ -74,18 +75,7 @@ export default async function AProposPage() {
           >
             {c.methodeTitle}
           </h2>
-          <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {METHOD_STEPS.map((step, i) => (
-              <li
-                key={step.title}
-                className="card reveal rounded-2xl border border-border bg-background p-6"
-              >
-                <StepNumber>{String(i + 1).padStart(2, "0")}</StepNumber>
-                <h3 className="mt-3 font-bold text-bordeaux">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
-              </li>
-            ))}
-          </ol>
+          <MethodSteps steps={METHOD_STEPS} />
         </div>
       </section>
 
