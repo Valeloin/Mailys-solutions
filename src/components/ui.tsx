@@ -67,35 +67,39 @@ export function StepNumber({
   );
 }
 
-/** Item de liste « problème » : liseré rouge + pictogramme d'alerte
-    en badge (triangle soigné, onde qui se propage, « ! » qui bat).
-    Décoratif, non cliquable ; fond blanc contrasté, ombre douce.
-    Onde et battement coupés par prefers-reduced-motion. */
+/** Item de liste « problème » : pastille ronde au dégradé de marque
+    (corail → orange → rouge) avec un halo qui respire et le triangle
+    qui bat doucement. Aucune bordure colorée, fond blanc, ombre neutre.
+    Décoratif, non cliquable. Animations coupées par
+    prefers-reduced-motion (pastille et halo restent colorés). */
 export function ProblemItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="problem-item reveal group flex items-center gap-3.5 rounded-xl border border-border border-l-4 border-l-accent/70 bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.28)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-l-accent hover:shadow-[0_18px_34px_-16px_rgb(var(--accent)/0.38)]">
+    <li className="problem-item reveal group flex items-center gap-3.5 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]">
+      {/* Badge rond en tons chauds doux (même famille que les pastilles
+          kicker orange/10) ; le triangle est tracé au dégradé de marque
+          corail → orange → rouge, et bat doucement. */}
       <span
         aria-hidden="true"
-        className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10 transition-colors group-hover:bg-accent/[0.16]"
+        className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-coral/[0.18] to-orange/[0.14] ring-1 ring-orange/20 transition-[box-shadow,background] duration-200 group-hover:ring-orange/40 group-hover:from-coral/[0.24] group-hover:to-orange/[0.18]"
       >
-        {/* Onde d'alerte qui se propage (invisible au repos) */}
-        <span className="pv-alert-ring absolute inset-0 rounded-xl border border-accent/50" />
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+        <svg viewBox="0 0 24 24" className="pv-alert-mark h-[18px] w-[18px]" fill="none">
+          <defs>
+            <linearGradient id="pi-tri" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="rgb(var(--coral))" />
+              <stop offset="0.55" stopColor="rgb(var(--orange))" />
+              <stop offset="1" stopColor="rgb(var(--accent))" />
+            </linearGradient>
+          </defs>
           <path
-            d="M12 4.2 20.4 19H3.6L12 4.2z"
-            fill="rgb(var(--accent) / 0.14)"
-            stroke="rgb(var(--accent))"
-            strokeWidth="1.8"
+            d="M12 5 20 18.5H4L12 5z"
+            fill="url(#pi-tri)"
+            fillOpacity="0.16"
+            stroke="url(#pi-tri)"
+            strokeWidth="1.9"
             strokeLinejoin="round"
           />
-          <path
-            className="pv-alert-mark"
-            d="M12 9.4v3.4"
-            stroke="rgb(var(--accent))"
-            strokeWidth="1.9"
-            strokeLinecap="round"
-          />
-          <circle className="pv-alert-mark" cx="12" cy="15.6" r="1.05" fill="rgb(var(--accent))" />
+          <path d="M12 10.4v3" stroke="url(#pi-tri)" strokeWidth="1.9" strokeLinecap="round" />
+          <circle cx="12" cy="16.2" r="1.05" fill="url(#pi-tri)" />
         </svg>
       </span>
       <span className="text-foreground">{children}</span>

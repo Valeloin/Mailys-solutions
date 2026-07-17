@@ -12,7 +12,7 @@ import { SITE } from "@/lib/site";
 import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
-import { Check, MobileCtaBar, ProblemItem } from "@/components/ui";
+import { Check, Kicker, MobileCtaBar, ProblemItem } from "@/components/ui";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 
@@ -135,11 +135,22 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 2. LES PROBLÉMATIQUES ========== */}
-      <section aria-labelledby="problemes" className="bg-surface">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+      {/* Même grammaire que l'accueil : décor de barres fantômes, kicker,
+          cartes « problème » (pastille dégradée + halo animé). */}
+      <section
+        aria-labelledby="problemes"
+        className="relative overflow-hidden bg-surface"
+      >
+        {/* Décor : barres fantômes du logo, inclinées à -22° */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-16 top-24 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.05] lg:block" />
+          <div className="absolute -right-12 -top-10 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
+        </div>
+        <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+          <Kicker>Le constat</Kicker>
           <h2
             id="problemes"
-            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="mt-5 max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
           >
             {service.problemsIntro}
           </h2>
