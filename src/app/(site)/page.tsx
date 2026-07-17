@@ -48,10 +48,17 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
       <section className="relative overflow-hidden border-b border-border bg-surface">
-        {/* Décor : les deux barres du logo, fantômes (desktop uniquement) */}
+        {/* Décor : barres fantômes du logo + semis de pastilles
+            scintillantes qui donnent vie aux espaces libres */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
           <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
+          <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
+          <div className="pv-dot absolute left-[13%] top-12 hidden h-2 w-2 rounded-full bg-coral/50 lg:block" />
+          <div className="pv-dot absolute left-[34%] top-20 hidden h-1.5 w-1.5 rounded-full bg-orange/45 lg:block" style={{ animationDelay: "1.4s" }} />
+          <div className="pv-dot absolute right-[40%] top-12 hidden h-1.5 w-1.5 rounded-full bg-accent/35 lg:block" style={{ animationDelay: "2.6s" }} />
+          <div className="pv-dot absolute right-[8%] top-24 hidden h-2 w-2 rounded-full bg-coral/40 lg:block" style={{ animationDelay: "0.8s" }} />
+          <div className="pv-dot absolute bottom-16 right-[30%] hidden h-1.5 w-1.5 rounded-full bg-orange/40 lg:block" style={{ animationDelay: "2s" }} />
         </div>
         <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1fr_minmax(0,30rem)]">
           <div className="relative">
@@ -97,6 +104,19 @@ export default async function HomePage() {
               à charger, ratio fixe = zéro décalage de mise en page. */}
           <div className="relative lg:-mt-8" aria-hidden="true">
             <div className="glow-warm absolute -inset-12 rounded-full" />
+            {/* Chips de notification flottantes : le produit vit */}
+            <div className="pv-float absolute -top-7 -right-2 z-10 hidden items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)] lg:flex">
+              <span className="pv-dot h-2 w-2 rounded-full bg-orange" />
+              <span className="h-1.5 w-14 rounded-full bg-bordeaux/15" />
+            </div>
+            <div
+              className="pv-float absolute -bottom-5 -left-4 z-10 hidden items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)] lg:flex"
+              style={{ animationDelay: "2.2s" }}
+            >
+              <span className="pv-dot h-2 w-2 rounded-full bg-coral" style={{ animationDelay: "1s" }} />
+              <span className="h-1.5 w-10 rounded-full bg-bordeaux/15" />
+              <span className="h-1.5 w-4 rounded-full bg-accent/40" />
+            </div>
             <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
               <HeroShowcase />
             </div>
@@ -115,56 +135,71 @@ export default async function HomePage() {
                 </span>
               ))}
             </div>
+            {/* Segments de progression : la scène en cours s'allume */}
+            <div className="mt-3 flex justify-center gap-2">
+              {[1, 2, 3, 4].map((n) => (
+                <span
+                  key={n}
+                  className="relative h-1.5 w-8 overflow-hidden rounded-full bg-bordeaux/10"
+                >
+                  <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-accent/70`} />
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ================= SERVICES ================= */}
       <section aria-labelledby="services-title">
-        <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <Kicker>{c.services.kicker}</Kicker>
           <h2
             id="services-title"
-            className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="mt-4 max-w-2xl text-2xl font-bold tracking-tight text-bordeaux sm:text-3xl"
           >
             {c.services.title}
           </h2>
           <p className="mt-4 max-w-2xl text-muted">{c.services.intro}</p>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          {/* Cartes en format paysage dès lg : les 4 animations
+              tiennent sur un seul écran, deux par deux */}
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
             {services.map((s) => (
               <article
                 key={s.slug}
-                className="group card reveal relative overflow-hidden rounded-2xl border border-border bg-surface p-7 hover:border-coral"
+                className="group card reveal relative overflow-hidden rounded-2xl border border-border bg-surface p-5 hover:border-coral lg:flex lg:flex-row-reverse lg:items-center lg:gap-5"
               >
                 {/* Vignette animée : la maquette du service en action */}
                 <div
                   aria-hidden="true"
-                  className="mb-5 overflow-hidden rounded-xl border border-border shadow-[0_8px_24px_-16px_rgb(var(--bordeaux)/0.25)]"
+                  className="mb-4 overflow-hidden rounded-xl border border-border shadow-[0_8px_24px_-16px_rgb(var(--bordeaux)/0.25)] lg:mb-0 lg:w-[44%] lg:shrink-0"
                 >
                   <ServicePreview slug={s.slug} />
                 </div>
-                <h3 className="text-lg font-bold transition-colors group-hover:text-accent">
-                  {/* Lien « étendu » : le ::after se cale sur l'<article relative>
-                      → toute la carte est cliquable */}
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-                  >
-                    {s.name}
-                  </Link>
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {s.heroSubtitle}
-                </p>
-                <p className="mt-4 text-sm font-semibold text-accent">
-                  Découvrir{" "}
-                  <span
-                    aria-hidden="true"
-                    className="inline-block transition-transform duration-200 group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
-                </p>
+                <div className="lg:min-w-0">
+                  <h3 className="text-lg font-bold transition-colors group-hover:text-accent">
+                    {/* Lien « étendu » : le ::after se cale sur l'<article relative>
+                        → toute la carte est cliquable */}
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                    >
+                      {s.name}
+                    </Link>
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-muted lg:line-clamp-3">
+                    {s.heroSubtitle}
+                  </p>
+                  <p className="mt-3 text-sm font-semibold text-accent">
+                    Découvrir{" "}
+                    <span
+                      aria-hidden="true"
+                      className="inline-block transition-transform duration-200 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </p>
+                </div>
               </article>
             ))}
           </div>

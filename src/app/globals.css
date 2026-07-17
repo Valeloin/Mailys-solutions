@@ -201,8 +201,9 @@ body {
 .rich-links a:hover {
   text-decoration: underline;
 }
+/* Le gras des textes reprend le bordeaux des titres */
 .rich-links strong {
-  color: var(--foreground);
+  color: rgb(var(--bordeaux));
 }
 
 /* ---------- Typographie des articles de blog (contenu Markdown) ---------- */
@@ -344,6 +345,16 @@ body {
   }
   85% {
     transform: scaleY(0.9);
+  }
+}
+/* Lévitation douce des chips décoratives */
+@keyframes pv-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
   }
 }
 /* Scintillement des pastilles : clignotement bref, sans zoom. */
@@ -1348,6 +1359,9 @@ body {
   .pv-dot {
     animation: pv-dot 3.1s ease-in-out infinite;
   }
+  .pv-float {
+    animation: pv-float 7s ease-in-out infinite;
+  }
   .pv-old {
     animation: pv-show-old 8.4s ease-in-out infinite;
   }
@@ -1500,6 +1514,146 @@ body {
   }
   .pv-cta-shine {
     animation: pv-cta-shine 12s ease-in-out infinite;
+  }
+}
+
+/* ============================================================
+   PROGRESSION DE LECTURE — remplace la barre de défilement par
+   une barre dégradée sous le header (pur CSS, scroll-driven).
+   Navigateurs non compatibles : barre native conservée, rien
+   ne change (tout vit dans le @supports).
+   ============================================================ */
+.scroll-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+  background-image: linear-gradient(
+    90deg,
+    rgb(var(--coral)),
+    rgb(var(--accent)) 45%,
+    rgb(var(--orange))
+  );
+}
+@supports (animation-timeline: scroll()) {
+  html {
+    scrollbar-width: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  @keyframes scroll-grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .scroll-progress {
+    animation: scroll-grow linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* ============================================================
+   SPINNER GLOBAL de changement de page — pièce signature de la DA.
+   Le logo Mailys s'anime : les deux barres respirent en alternance,
+   les deux points pulsent, le tout ceint d'un anneau dégradé
+   corail → rouge → orange en rotation. Voile clair + flou léger.
+   ============================================================ */
+.pt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgb(255 255 255 / 0.88);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.pt-overlay.pt-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.pt-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+}
+.pt-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 62%,
+    rgb(var(--coral)) 74%,
+    rgb(var(--accent)) 88%,
+    rgb(var(--orange)) 100%
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    #000 calc(100% - 4px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    #000 calc(100% - 4px)
+  );
+}
+.pt-mark {
+  width: 44px;
+  height: auto;
+}
+.pt-bar-1,
+.pt-bar-2,
+.pt-dot-1,
+.pt-dot-2 {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes pt-bar {
+  0%,
+  100% {
+    transform: rotate(-22deg) scaleY(1);
+  }
+  50% {
+    transform: rotate(-22deg) scaleY(0.62);
+  }
+}
+@keyframes pt-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.55);
+    opacity: 0.5;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pt-ring {
+    animation: pv-rotate 1.15s linear infinite;
+  }
+  .pt-bar-1 {
+    animation: pt-bar 1.15s ease-in-out infinite;
+  }
+  .pt-bar-2 {
+    animation: pt-bar 1.15s ease-in-out infinite;
+    animation-delay: 0.28s;
+  }
+  .pt-dot-1 {
+    animation: pt-dot 1.15s ease-in-out infinite;
+    animation-delay: 0.14s;
+  }
+  .pt-dot-2 {
+    animation: pt-dot 1.15s ease-in-out infinite;
+    animation-delay: 0.42s;
   }
 }
 

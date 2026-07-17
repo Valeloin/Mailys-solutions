@@ -71,12 +71,6 @@ export default function HeroShowcase() {
           <path d="M200 144v22" stroke="rgb(var(--coral))" />
           <path d="M218 136l16 16" stroke="rgb(var(--orange))" />
         </g>
-        <circle cx="238" cy="88" r="3" fill="rgb(var(--orange))" />
-        <circle cx="162" cy="88" r="3" fill="rgb(var(--coral))" />
-        <circle cx="162" cy="148" r="3" fill="rgb(var(--accent))" />
-        <circle cx="238" cy="148" r="3" fill="rgb(var(--orange))" />
-        <circle cx="200" cy="80" r="2.5" fill="rgb(var(--coral))" />
-        <circle cx="200" cy="156" r="2.5" fill="rgb(var(--orange))" />
       </g>
       <g className="pv-ok">
         <circle cx="200" cy="118" r="16" fill="rgb(var(--orange) / 0.15)" />

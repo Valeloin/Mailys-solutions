@@ -20,6 +20,8 @@ export default function Header() {
     <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background">
       {/* Filet signature de marque : corail → rouge → orange */}
       <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
+      {/* Progression de lecture : la barre grandit avec le défilement */}
+      <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       <div className="mx-auto grid h-[4.25rem] max-w-content grid-cols-[1fr_auto] items-center px-4 sm:px-6 lg:grid-cols-[1fr_auto_1fr]">
         <Link href="/" className="justify-self-start">
           <Logo />
