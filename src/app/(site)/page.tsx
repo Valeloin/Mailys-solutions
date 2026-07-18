@@ -3,7 +3,7 @@ import Link from "next/link";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
-import HeroBrandCard from "@/components/HeroBrandCard";
+import HeroShowcase from "@/components/HeroShowcase";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 import {
@@ -87,12 +87,46 @@ export default async function HomePage() {
             </ul>
           </div>
 
-          {/* Carte de marque animée : le logo Mailys Solutions sur
-              dégradé chaud, avec un reflet final qui révèle
-              « Mailys Solutions ». Première chose vue à l'arrivée.
-              100 % CSS, décoratif, ratio fixe = zéro décalage. */}
-          <div className="rise rise-3 relative lg:-mt-4">
-            <HeroBrandCard />
+          {/* Vitrine défilante : les 4 vignettes des services en boucle,
+              titre et onglets segmentés synchronisés (mêmes horloges CSS).
+              Bloc repris à l'identique du hero de la page Services. */}
+          <div className="relative" aria-hidden="true">
+            {/* Carte de fond : dégradé chaud corail → rouge → orange
+                de la DA (classe .hero-panel, halos compris). */}
+            <div className="hero-panel relative overflow-hidden rounded-[28px] px-5 py-7 shadow-window sm:px-8 sm:py-9">
+              <div className="hero-glow hero-glow-1" />
+              <div className="hero-glow hero-glow-2" />
+
+              {/* Titre de la scène en cours (cross-slide pv-title-N) */}
+              <div className="relative mb-3 h-9 max-[374px]:h-14">
+                {services.map((s, i) => (
+                  <span
+                    key={s.slug}
+                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-white drop-shadow-[0_1px_6px_rgb(var(--bordeaux)/0.35)]`}
+                  >
+                    {s.name}
+                  </span>
+                ))}
+              </div>
+              {/* Onglets segmentés : le segment actif suit la scène */}
+              <div className="relative mb-5 flex justify-center gap-2">
+                {[1, 2, 3, 4].map((n) => (
+                  <span
+                    key={n}
+                    className="relative h-1.5 w-8 overflow-hidden rounded-full bg-white/30"
+                  >
+                    <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-white`} />
+                  </span>
+                ))}
+              </div>
+              {/* Maquette navigateur, posée sur le dégradé */}
+              <div className="relative rounded-2xl border border-white/40 bg-background p-2 shadow-window">
+                <HeroShowcase />
+              </div>
+
+              {/* Liseré interne (arête de lumière + hairline) */}
+              <div className="hero-ring" />
+            </div>
           </div>
         </div>
       </section>

@@ -36,7 +36,7 @@ export default function HeroShowcase() {
       <g className="pv-scene-4">
         <Maintenance />
       </g>
-      <Chrome url="mailys-solutions.fr" />
+      <Chrome url="votre-solution.fr" />
     </svg>
   );
 }
