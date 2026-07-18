@@ -4,6 +4,7 @@ import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
 import HeroShowcase from "@/components/HeroShowcase";
+import HeroShowcaseMobile from "@/components/HeroShowcaseMobile";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 import {
@@ -68,7 +69,7 @@ export default async function HomePage() {
                   téléphone, 48 px dès le desktop) au lieu de rester bloqué
                   à 36 px sur toute la plage mobile, où il devenait
                   disproportionné. */}
-              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-bordeaux">
+              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
                 {c.hero.h1}
               </h1>
               <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -101,12 +102,14 @@ export default async function HomePage() {
               aria-hidden="true"
             >
               <div className="glow-warm absolute -inset-12 rounded-full" />
-              {/* Titre de la scène en cours (cross-slide pv-title-N) */}
-              <div className="relative mb-3 h-9 max-[374px]:h-14">
+              {/* Titre de la scène en cours (cross-slide pv-title-N).
+                  Nettement plus discret en mobile : à 24 px il rivalisait
+                  avec le H1 juste au-dessus et brouillait la hiérarchie. */}
+              <div className="relative mb-2.5 h-7 sm:h-8 lg:mb-3 lg:h-9">
                 {services.map((s, i) => (
                   <span
                     key={s.slug}
-                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
+                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-base font-bold leading-tight tracking-tight text-orange sm:text-lg lg:text-2xl`}
                   >
                     {s.name}
                   </span>
@@ -123,7 +126,14 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
+              {/* Deux vitrines, une par usage — et non la même rétrécie.
+                  Téléphone : maquette de téléphone en portrait, peu
+                  d'éléments, gros aplats. Desktop : la fenêtre de
+                  navigateur. Mêmes horloges d'animation pour les deux. */}
+              <div className="mx-auto w-[58%] min-w-[170px] max-w-[220px] lg:hidden">
+                <HeroShowcaseMobile />
+              </div>
+              <div className="relative hidden rounded-2xl border border-border bg-background p-2 shadow-window lg:block">
                 <HeroShowcase />
               </div>
             </div>
@@ -139,9 +149,12 @@ export default async function HomePage() {
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="group flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-muted shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)] transition-colors hover:border-coral hover:text-bordeaux"
+                className="group flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-muted shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)] transition-colors hover:border-coral hover:text-foreground"
               >
-                <span className="font-bold text-orange-text">
+                <span
+                  className="num-pop font-bold text-orange-text"
+                  style={{ animationDelay: `${i * 1.2}s` }}
+                >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {s.name}
@@ -157,7 +170,7 @@ export default async function HomePage() {
           <Kicker>{c.services.kicker}</Kicker>
           <h2
             id="services-title"
-            className="mt-4 max-w-2xl text-2xl font-bold tracking-tight text-bordeaux sm:text-3xl"
+            className="mt-4 max-w-2xl text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
           >
             {c.services.title}
           </h2>
@@ -226,7 +239,7 @@ export default async function HomePage() {
             <Kicker>Le constat</Kicker>
             <h2
               id="probleme-title"
-              className="mt-5 text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+              className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
             >
               {c.probleme.title}
             </h2>
@@ -260,7 +273,7 @@ export default async function HomePage() {
                 />
                 La réponse
               </p>
-              <h3 className="text-xl font-bold text-bordeaux sm:text-2xl">
+              <h3 className="text-xl font-bold text-foreground sm:text-2xl">
                 {c.probleme.solutionTitle}
               </h3>
               {c.probleme.solutionParagraphs.map((p) => (
@@ -279,7 +292,7 @@ export default async function HomePage() {
           <Kicker>{c.methode.kicker}</Kicker>
           <h2
             id="methode-title"
-            className="mt-3 text-2xl font-bold tracking-tight text-bordeaux sm:text-3xl"
+            className="mt-3 text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
           >
             {c.methode.title}
           </h2>
@@ -297,7 +310,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
           <h2
             id="pourquoi-title"
-            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             {c.pourquoi.title}
           </h2>
@@ -308,7 +321,7 @@ export default async function HomePage() {
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
                 <WhyUsMotif index={i} />
-                <h3 className="font-bold text-bordeaux">{item.title}</h3>
+                <h3 className="font-bold text-foreground">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {item.text}
                 </p>
