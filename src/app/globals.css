@@ -1253,7 +1253,194 @@ body {
   }
 }
 
+/* ---------- Interstitiel de la vitrine : voile + spinner + coche + feu d'artifice ---------- */
+@keyframes pv-trans {
+  0%,
+  1.2% {
+    opacity: 1;
+  }
+  1.8%,
+  21.3% {
+    opacity: 0;
+  }
+  21.9%,
+  26.2% {
+    opacity: 1;
+  }
+  26.8%,
+  46.3% {
+    opacity: 0;
+  }
+  46.9%,
+  51.2% {
+    opacity: 1;
+  }
+  51.8%,
+  71.3% {
+    opacity: 0;
+  }
+  71.9%,
+  76.2% {
+    opacity: 1;
+  }
+  76.8%,
+  96.3% {
+    opacity: 0;
+  }
+  96.9%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pv-spin-vis {
+  0%,
+  21.9% {
+    opacity: 0;
+  }
+  22.4%,
+  24.3% {
+    opacity: 1;
+  }
+  24.6%,
+  46.9% {
+    opacity: 0;
+  }
+  47.4%,
+  49.3% {
+    opacity: 1;
+  }
+  49.6%,
+  71.9% {
+    opacity: 0;
+  }
+  72.4%,
+  74.3% {
+    opacity: 1;
+  }
+  74.6%,
+  96.9% {
+    opacity: 0;
+  }
+  97.4%,
+  99.3% {
+    opacity: 1;
+  }
+  99.6%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pv-ok {
+  0%,
+  1.2% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  1.7%,
+  24.5% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  24.9% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  26.2% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  26.7%,
+  49.5% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  49.9% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  51.2% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  51.7%,
+  74.5% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  74.9% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  76.2% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  76.7%,
+  99.5% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  99.9%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pv-burst {
+  0% {
+    opacity: 0.55;
+    transform: scale(1.25);
+  }
+  1.4%,
+  24.6% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  25.2% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  26.4%,
+  49.6% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+  50.2% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  51.4%,
+  74.6% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+  75.2% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  76.4%,
+  99.6% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+  100% {
+    opacity: 0.55;
+    transform: scale(1.25);
+  }
+}
+
 /* ---------- Réglages statiques ---------- */
+.pv-trans,
+.pv-spin-vis,
+.pv-ok,
+.pv-burst {
+  opacity: 0;
+}
+.pv-ok,
+.pv-burst {
+  transform-box: fill-box;
+  transform-origin: center;
+}
 .pv-bar,
 .pv-pop-1,
 .pv-pop-2,
@@ -1531,6 +1718,18 @@ body {
   }
   .pv-rotate {
     animation: pv-rotate 2.2s linear infinite;
+  }
+  .pv-trans {
+    animation: pv-trans 33.6s linear infinite;
+  }
+  .pv-spin-vis {
+    animation: pv-spin-vis 33.6s linear infinite;
+  }
+  .pv-ok {
+    animation: pv-ok 33.6s ease-in-out infinite;
+  }
+  .pv-burst {
+    animation: pv-burst 33.6s ease-out infinite;
   }
   .pv-wu-travel {
     animation: pv-wu-travel 6s ease-in-out infinite;
@@ -1971,6 +2170,105 @@ body {
   .hero-gloss {
     animation: hero-reflet 8.5s ease-in-out infinite;
   }
+}
+
+/* ============================================================
+   FONDS DE SECTION — système unique dérivé de la DA.
+   Une seule classe par <section> ; le décor vit dans les
+   pseudo-éléments (aucun DOM ajouté, rien de masqué aux
+   moteurs). Uniquement des dégradés : pas de blur, donc pas
+   besoin d'overflow-hidden et aucun risque de débordement.
+   Rythme d'une page = alternance .sec-warm / .sec-clean ;
+   .sec-deep réservée aux sections de bascule.
+   ============================================================ */
+.sec {
+  position: relative;
+  isolation: isolate; /* garde le décor derrière le contenu */
+}
+.sec::before,
+.sec::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* --- Chaud : lavis crème + halo corail (haut-gauche) et
+       orange (bas-droite). Remplace bg-surface. --- */
+.sec-warm::before {
+  background:
+    radial-gradient(
+      62% 55% at 10% 0%,
+      rgb(var(--coral) / 0.11),
+      transparent 62%
+    ),
+    radial-gradient(
+      58% 52% at 94% 100%,
+      rgb(var(--orange) / 0.1),
+      transparent 64%
+    ),
+    linear-gradient(180deg, #fdf9f7 0%, var(--surface) 100%);
+}
+
+/* --- Clair : fond blanc + halos très diffus + trame de points
+       estompée au centre (rappel « outil métier »). --- */
+.sec-clean::before {
+  background:
+    radial-gradient(
+      52% 46% at 88% 0%,
+      rgb(var(--coral) / 0.07),
+      transparent 64%
+    ),
+    radial-gradient(
+      48% 42% at 4% 92%,
+      rgb(var(--orange) / 0.06),
+      transparent 62%
+    ),
+    var(--background);
+}
+.sec-clean::after {
+  background-image: radial-gradient(
+    rgb(var(--bordeaux) / 0.055) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  /* La trame s'efface au centre : elle habille sans gêner la lecture */
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 62% at 50% 45%,
+    transparent 32%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 62% at 50% 45%,
+    transparent 32%,
+    #000 100%
+  );
+}
+
+/* --- Bascule : lavis plus soutenu + voile diagonal à -22°
+       (l'inclinaison des barres du logo). --- */
+.sec-deep::before {
+  background:
+    radial-gradient(
+      70% 60% at 50% -10%,
+      rgb(var(--coral) / 0.14),
+      transparent 66%
+    ),
+    radial-gradient(
+      60% 55% at 100% 100%,
+      rgb(var(--orange) / 0.12),
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--surface) 0%, #fdf7f5 100%);
+}
+.sec-deep::after {
+  background-image: linear-gradient(
+    112deg,
+    transparent 44%,
+    rgb(255 255 255 / 0.5) 50%,
+    transparent 56%
+  );
 }
 
 /* ---------- Révélation au scroll : scroll-driven CSS pur ----------

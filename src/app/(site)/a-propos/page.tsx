@@ -34,21 +34,23 @@ export default async function AProposPage() {
         <Breadcrumb items={[{ name: "À propos", href: "/a-propos" }]} />
       </div>
 
-      <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
-        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
-          {c.h1}
-        </h1>
+      <section className="sec sec-warm">
+        <div className="mx-auto max-w-content px-4 py-12 sm:px-6">
+          <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
+            {c.h1}
+          </h1>
 
-        <div className="rise rise-2 mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
-          {c.paragraphs.map((p) => (
-            <p key={p.slice(0, 40)}>
-              <Rich text={p} />
-            </p>
-          ))}
+          <div className="rise rise-2 mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
+            {c.paragraphs.map((p) => (
+              <p key={p.slice(0, 40)}>
+                <Rich text={p} />
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section aria-labelledby="valeurs" className="bg-surface">
+      <section aria-labelledby="valeurs" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-bordeaux">
             {c.valeursTitle}
@@ -68,7 +70,7 @@ export default async function AProposPage() {
         </div>
       </section>
 
-      <section aria-labelledby="apropos-methode">
+      <section aria-labelledby="apropos-methode" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2
             id="apropos-methode"

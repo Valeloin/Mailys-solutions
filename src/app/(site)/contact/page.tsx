@@ -82,7 +82,8 @@ export default async function ContactPage({
         <Breadcrumb items={[{ name: "Contact", href: "/contact" }]} />
       </div>
 
-      <section className="mx-auto max-w-content px-4 py-10 sm:px-6 sm:py-12">
+      <section className="sec sec-warm">
+        <div className="mx-auto max-w-content px-4 py-10 sm:px-6 sm:py-12">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           {/* ================= COLONNE FORMULAIRE ================= */}
           <div className="card relative overflow-hidden rounded-3xl border border-border bg-background p-6 sm:p-9">
@@ -256,6 +257,7 @@ export default async function ContactPage({
               </div>
             </div>
           </aside>
+        </div>
         </div>
       </section>
     </>

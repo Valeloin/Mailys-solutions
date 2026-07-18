@@ -104,7 +104,7 @@ export default async function ServicePage({
       </div>
 
       {/* ========== 1. HERO ========== */}
-      <section className="relative overflow-hidden">
+      <section className="sec sec-warm relative overflow-hidden">
         {/* Décor : les deux barres du logo, fantômes (desktop uniquement) */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -right-14 -top-24 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
@@ -139,7 +139,7 @@ export default async function ServicePage({
           cartes « problème » (pastille dégradée + halo animé). */}
       <section
         aria-labelledby="problemes"
-        className="relative overflow-hidden bg-surface"
+        className="sec sec-deep relative overflow-hidden"
       >
         {/* Décor : barres fantômes du logo, inclinées à -22° */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -167,7 +167,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 3. LES CONSÉQUENCES ========== */}
-      <section aria-labelledby="consequences">
+      <section aria-labelledby="consequences" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="consequences"
@@ -191,7 +191,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 4. LA SOLUTION ========== */}
-      <section aria-labelledby="solution" className="bg-surface">
+      <section aria-labelledby="solution" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
@@ -227,7 +227,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 5. LES BÉNÉFICES ========== */}
-      <section aria-labelledby="benefices">
+      <section aria-labelledby="benefices" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="benefices"
@@ -253,7 +253,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 6. NOTRE MÉTHODE ========== */}
-      <section id="methode" aria-labelledby="methode-titre" className="bg-surface">
+      <section id="methode" aria-labelledby="methode-titre" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="methode-titre"
@@ -271,7 +271,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 7. POURQUOI NOUS CHOISIR ========== */}
-      <section aria-labelledby="pourquoi">
+      <section aria-labelledby="pourquoi" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="pourquoi"
@@ -295,7 +295,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 8. FAQ ========== */}
-      <section aria-labelledby="faq" className="bg-surface">
+      <section aria-labelledby="faq" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="faq"
@@ -326,7 +326,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== Maillage interne : services voisins ========== */}
-      <section aria-labelledby="autres-services">
+      <section aria-labelledby="autres-services" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="autres-services"

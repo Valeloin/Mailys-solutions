@@ -42,7 +42,7 @@ export default async function HomePage() {
     <>
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
-      <section className="relative overflow-hidden border-b border-border bg-surface">
+      <section className="sec sec-warm relative overflow-hidden border-b border-border">
         {/* Décor : barres fantômes du logo */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
@@ -136,7 +136,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= SERVICES ================= */}
-      <section aria-labelledby="services-title">
+      <section aria-labelledby="services-title" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <Kicker>{c.services.kicker}</Kicker>
           <h2
@@ -196,7 +196,7 @@ export default async function HomePage() {
           panneau chaud premium (dégradé + halo + reflet animé), ombrages. */}
       <section
         aria-labelledby="probleme-title"
-        className="relative overflow-hidden bg-surface"
+        className="sec sec-deep relative overflow-hidden"
       >
         {/* Décor : barres fantômes du logo, inclinées à -22° */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -258,7 +258,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= MÉTHODE ================= */}
-      <section aria-labelledby="methode-title">
+      <section aria-labelledby="methode-title" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-14 sm:px-6 sm:py-16">
           <Kicker>{c.methode.kicker}</Kicker>
           <h2
@@ -277,7 +277,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= POURQUOI NOUS ================= */}
-      <section aria-labelledby="pourquoi-title" className="bg-surface">
+      <section aria-labelledby="pourquoi-title" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
           <h2
             id="pourquoi-title"

@@ -26,7 +26,8 @@ export default async function RealisationsPage() {
         <Breadcrumb items={[{ name: "Réalisations", href: "/realisations" }]} />
       </div>
 
-      <section className="mx-auto max-w-content px-4 py-12 sm:px-6">
+      <section className="sec sec-warm">
+        <div className="mx-auto max-w-content px-4 py-12 sm:px-6">
         <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
           {c.h1}
         </h1>
@@ -39,6 +40,7 @@ export default async function RealisationsPage() {
           <p className="mx-auto mt-2 max-w-xl text-sm text-muted">
             {c.placeholderText}
           </p>
+        </div>
         </div>
       </section>
 

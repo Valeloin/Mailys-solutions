@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **11:24** — Vitrine : **restauration de l'interstitiel** entre chaque scène (voile, spinner au logo, coche validée, feu d'artifice).
 - **11:04** — Hero d'accueil : retour à la vitrine défilante des services, puces de réassurance rétablies.
 - **10:45** — Carte de marque du hero en **format paysage** (4/3), carte blanche à bordure égale, logo et lettrage ajustés.
 - **10:42** — Menu déroulant Services aligné sur la DA du header (filet dégradé, label « Nos expertises », points du logo, « Tous les services » en capitales).

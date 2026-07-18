@@ -61,7 +61,7 @@ export default async function BlogPage() {
       </div>
 
       {/* ================= HERO ÉDITORIAL ================= */}
-      <section className="relative overflow-hidden border-b border-border bg-surface">
+      <section className="sec sec-warm relative overflow-hidden border-b border-border">
         {/* Décor : barres fantômes du logo */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -top-16 right-[10%] hidden h-56 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
@@ -134,7 +134,8 @@ export default async function BlogPage() {
       </section>
 
       {/* ================= ARTICLES ================= */}
-      <section aria-label="Articles" className="mx-auto max-w-content px-4 py-14 sm:px-6 sm:py-16">
+      <section aria-label="Articles" className="sec sec-clean">
+        <div className="mx-auto max-w-content px-4 py-14 sm:px-6 sm:py-16">
         {posts.length === 0 ? (
           /* --- État « à venir » soigné : anatomie d'articles en préparation --- */
           <div>
@@ -247,6 +248,7 @@ export default async function BlogPage() {
             </div>
           </>
         )}
+        </div>
       </section>
 
       <CtaSection

@@ -40,7 +40,7 @@ export default async function ServicesPage() {
       </div>
 
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden border-b border-border bg-surface">
+      <section className="sec sec-warm relative overflow-hidden border-b border-border">
         {/* Décor : les barres fantômes du logo, inclinées à -22° */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
@@ -134,7 +134,7 @@ export default async function ServicesPage() {
       <section
         id="nos-services"
         aria-label="Détail de nos services"
-        className="scroll-mt-8"
+        className="sec sec-clean scroll-mt-8"
       >
         <div className="mx-auto max-w-content space-y-8 px-4 py-16 sm:px-6 sm:py-20">
           {SERVICES.map((s, i) => (
