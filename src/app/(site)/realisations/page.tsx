@@ -22,6 +22,9 @@ export default async function RealisationsPage() {
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+        {/* En attente du contenu */}
+      </div>
+      <CtaSection />
     </>
   );
 }

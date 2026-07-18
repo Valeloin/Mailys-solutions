@@ -55,10 +55,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-          <div className="absolute -bottom-28 -left-10 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
-        </div>
-
+      <section className="sec sec-warm relative overflow-hidden">
         <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1fr_minmax(0,28rem)]">
           <div className="relative">
             <Kicker>Le blog</Kicker>

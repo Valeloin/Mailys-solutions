@@ -29,13 +29,6 @@ export default async function AProposPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-              </p>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section aria-labelledby="valeurs" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-foreground">

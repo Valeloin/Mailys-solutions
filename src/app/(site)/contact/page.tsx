@@ -77,7 +77,8 @@ export default async function ContactPage({
 
   return (
     <>
-      <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+      <section className="sec sec-clean">
+      <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
 
             <h1 className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
               {c.h1}
@@ -247,8 +248,7 @@ export default async function ContactPage({
               </div>
             </div>
           </aside>
-        </div>
-        </div>
+      </div>
       </section>
     </>
   );
