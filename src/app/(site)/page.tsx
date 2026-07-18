@@ -4,7 +4,6 @@ import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
 import HeroShowcase from "@/components/HeroShowcase";
-import HeroShowcaseMobile from "@/components/HeroShowcaseMobile";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 import {
@@ -102,14 +101,12 @@ export default async function HomePage() {
               aria-hidden="true"
             >
               <div className="glow-warm absolute -inset-12 rounded-full" />
-              {/* Titre de la scène en cours (cross-slide pv-title-N).
-                  Nettement plus discret en mobile : à 24 px il rivalisait
-                  avec le H1 juste au-dessus et brouillait la hiérarchie. */}
-              <div className="relative mb-2.5 h-7 sm:h-8 lg:mb-3 lg:h-9">
+              {/* Titre de la scène en cours (cross-slide pv-title-N) */}
+              <div className="relative mb-3 h-9 max-[374px]:h-14">
                 {services.map((s, i) => (
                   <span
                     key={s.slug}
-                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-base font-bold leading-tight tracking-tight text-orange sm:text-lg lg:text-2xl`}
+                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
                   >
                     {s.name}
                   </span>
@@ -126,14 +123,7 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              {/* Deux vitrines, une par usage — et non la même rétrécie.
-                  Téléphone : maquette de téléphone en portrait, peu
-                  d'éléments, gros aplats. Desktop : la fenêtre de
-                  navigateur. Mêmes horloges d'animation pour les deux. */}
-              <div className="mx-auto w-[58%] min-w-[170px] max-w-[220px] lg:hidden">
-                <HeroShowcaseMobile />
-              </div>
-              <div className="relative hidden rounded-2xl border border-border bg-background p-2 shadow-window lg:block">
+              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
                 <HeroShowcase />
               </div>
             </div>
