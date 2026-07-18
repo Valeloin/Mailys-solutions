@@ -13,6 +13,17 @@ import { useEffect, useRef, useState } from "react";
 
 const MIN_MS = 650;
 
+/** Referme le menu mobile du header. Le <details> est natif, donc son
+    état survit aux navigations client de Next.js (le header vit dans le
+    layout et n'est jamais remonté) : sans ça, le volet reste ouvert
+    par-dessus la nouvelle page. Cantonné au header pour ne pas refermer
+    les accordéons de contenu (FAQ des pages services). */
+function closeHeaderMenu() {
+  document
+    .querySelectorAll("header details[open]")
+    .forEach((d) => d.removeAttribute("open"));
+}
+
 export default function PageTransition() {
   const [visible, setVisible] = useState(false);
   const shownAt = useRef(0);
@@ -29,6 +40,10 @@ export default function PageTransition() {
       if (link.target && link.target !== "_self") return;
       const href = link.getAttribute("href") || "";
       if (!href.startsWith("/")) return;
+      // Tout lien interne referme le volet — y compris vers la page
+      // courante, où aucune navigation ne se produit et où le menu
+      // resterait donc ouvert indéfiniment.
+      closeHeaderMenu();
       const url = new URL(href, window.location.href);
       if (url.pathname === window.location.pathname) return;
       // Jamais dans l'administration : le spinner est une pièce du
@@ -44,8 +59,11 @@ export default function PageTransition() {
     return () => document.removeEventListener("click", onClick, true);
   }, []);
 
-  // Masque le voile une fois la nouvelle page rendue (minimum 650 ms)
+  // Masque le voile une fois la nouvelle page rendue (minimum 650 ms).
+  // Filet de sécurité : on referme aussi le volet ici, ce qui couvre les
+  // navigations sans clic de lien (boutons Précédent/Suivant du navigateur).
   useEffect(() => {
+    closeHeaderMenu();
     if (!shownAt.current) return;
     const elapsed = Date.now() - shownAt.current;
     const timer = setTimeout(
