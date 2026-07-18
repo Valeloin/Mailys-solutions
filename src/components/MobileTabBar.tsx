@@ -76,9 +76,12 @@ export default function MobileTabBar() {
   return (
     <nav
       aria-label="Navigation rapide"
-      className="border-t border-border/70 bg-background lg:hidden"
+      className="bg-background lg:hidden"
     >
-      <div className="mx-auto grid max-w-lg grid-cols-4 px-2">
+      {/* Aucun filet de séparation : le bandeau doit se lire comme la
+          seconde ligne du header, pas comme une barre rapportée sous lui.
+          Même gouttière que la ligne du logo pour aligner les deux. */}
+      <div className="mx-auto grid max-w-content grid-cols-4 px-2 pb-1.5 sm:px-4">
         {ONGLETS.map((o) => {
           const actif = o.prefixe
             ? pathname.startsWith(o.href)
@@ -88,7 +91,7 @@ export default function MobileTabBar() {
               key={o.href}
               href={o.href}
               aria-current={actif ? "page" : undefined}
-              className={`relative flex h-12 items-center justify-center gap-1.5 transition-colors ${
+              className={`relative flex h-11 items-center justify-center gap-1.5 rounded-lg transition-colors ${
                 actif ? "text-accent" : "text-muted"
               }`}
             >

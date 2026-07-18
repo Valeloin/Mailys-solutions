@@ -291,7 +291,7 @@ export default function Header() {
 
           <nav
             aria-label="Navigation mobile"
-            className="fixed inset-x-0 bottom-0 top-[7.375rem] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="fixed inset-x-0 bottom-0 top-[119px] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
             <div className="mx-auto max-w-lg space-y-7 px-4 py-6">
               {/* ----- Pages ----- */}
