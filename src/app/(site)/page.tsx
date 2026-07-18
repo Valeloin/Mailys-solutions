@@ -65,16 +65,19 @@ export default async function HomePage() {
               <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">
                 <Rich text={c.hero.subtitle} />
               </p>
-              <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
+              {/* Mobile-first : boutons pleine largeur empilés (sinon ils
+                  s'alignent au contenu et laissent un vide à droite),
+                  puis côte à côte dès qu'il y a la place. */}
+              <div className="rise rise-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                 <Link
                   href="/contact"
-                  className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
+                  className="btn-cta w-full rounded-xl px-7 py-3.5 text-center font-semibold text-white sm:w-auto"
                 >
                   {c.hero.ctaPrimary}
                 </Link>
                 <Link
                   href="/services"
-                  className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
+                  className="btn-ghost w-full rounded-xl border border-border bg-background px-7 py-3.5 text-center font-semibold sm:w-auto"
                 >
                   {c.hero.ctaSecondary}
                 </Link>

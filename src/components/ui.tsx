@@ -156,17 +156,20 @@ export function BrandDots() {
   );
 }
 
-/** Barre CTA mobile sticky : l'espaceur en flux réserve la hauteur (zéro CLS) */
+/** Barre CTA mobile sticky : l'espaceur en flux réserve la hauteur (zéro CLS).
+    Discrète par choix — le hero porte déjà le CTA principal : cette barre
+    ne prend le relais qu'une fois celui-ci sorti de l'écran (voir la classe
+    .mobile-cta dans globals.css, révélation pilotée par le défilement). */
 export function MobileCtaBar() {
   return (
     <>
-      <div aria-hidden="true" className="h-16 md:hidden" />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur md:hidden">
+      <div aria-hidden="true" className="h-14 md:hidden" />
+      <div className="mobile-cta fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] backdrop-blur md:hidden">
         <Link
           href="/contact"
-          className="btn-cta block rounded-xl px-6 py-3 text-center font-semibold text-white"
+          className="btn-cta block rounded-lg px-5 py-2.5 text-center text-sm font-semibold text-white"
         >
-          Demander un devis gratuit
+          Demander un devis
         </Link>
       </div>
     </>
