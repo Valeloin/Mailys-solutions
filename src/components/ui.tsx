@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 // ============================================================
 // Petites briques visuelles partagées de la grammaire DA :
 // badge kicker (pilule + points du logo), coche orange,
@@ -156,22 +154,11 @@ export function BrandDots() {
   );
 }
 
-/** Barre CTA mobile sticky : l'espaceur en flux réserve la hauteur (zéro CLS).
-    Discrète par choix — le hero porte déjà le CTA principal : cette barre
-    ne prend le relais qu'une fois celui-ci sorti de l'écran (voir la classe
-    .mobile-cta dans globals.css, révélation pilotée par le défilement). */
+/** Ancienne barre CTA collante — remplacée par MobileTabBar, la barre
+    d'onglets du layout : les deux occupaient le même bas d'écran, et
+    l'onglet « Devis » central porte désormais cette action.
+    Conservée en no-op le temps de retirer ses appels des pages, pour ne
+    pas les modifier pendant la refonte graphique en cours. */
 export function MobileCtaBar() {
-  return (
-    <>
-      <div aria-hidden="true" className="h-14 md:hidden" />
-      <div className="mobile-cta fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] backdrop-blur md:hidden">
-        <Link
-          href="/contact"
-          className="btn-cta block rounded-lg px-5 py-2.5 text-center text-sm font-semibold text-white"
-        >
-          Demander un devis
-        </Link>
-      </div>
-    </>
-  );
+  return null;
 }

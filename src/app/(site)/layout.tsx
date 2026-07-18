@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import MobileTabBar from "@/components/MobileTabBar";
 
 // Coque du site public : header + contenu + footer,
 // avec le spinner signature joué à chaque changement de page.
@@ -24,6 +25,8 @@ export default function SiteLayout({
         {children}
       </main>
       <Footer />
+      {/* Navigation par onglets : téléphone et tablette uniquement */}
+      <MobileTabBar />
     </div>
   );
 }
