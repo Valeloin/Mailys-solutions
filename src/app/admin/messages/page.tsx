@@ -28,11 +28,11 @@ export default async function AdminMessagesPage() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-bordeaux">Messages reçus</h1>
+      <h1 className="text-2xl font-bold text-foreground">Messages reçus</h1>
 
       {messages.length === 0 ? (
         <div className="mt-8 rounded-2xl border border-dashed border-coral bg-background p-8 text-center">
-          <p className="font-semibold text-bordeaux">Aucun message pour l&apos;instant</p>
+          <p className="font-semibold text-foreground">Aucun message pour l&apos;instant</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted">
             Les demandes envoyées depuis le formulaire de contact du site
             apparaîtront ici.

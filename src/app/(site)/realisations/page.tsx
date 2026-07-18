@@ -28,7 +28,7 @@ export default async function RealisationsPage() {
 
       <section className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-12 sm:px-6">
-        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
+        <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
           {c.h1}
         </h1>
         <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
@@ -36,7 +36,7 @@ export default async function RealisationsPage() {
         </p>
 
         <div className="mt-12 rounded-2xl border border-dashed border-coral bg-surface p-8 text-center">
-          <p className="font-semibold text-bordeaux">{c.placeholderTitle}</p>
+          <p className="font-semibold text-foreground">{c.placeholderTitle}</p>
           <p className="mx-auto mt-2 max-w-xl text-sm text-muted">
             {c.placeholderText}
           </p>

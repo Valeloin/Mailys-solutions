@@ -18,7 +18,7 @@ export const EDITABLE_COLORS: {
 }[] = [
   { key: "accent", label: "Rouge (boutons, liens)", cssVar: "--accent", mode: "channels", defaultHex: "#e11d2a" },
   { key: "accent_dark", label: "Rouge foncé (survol)", cssVar: "--accent-dark", mode: "channels", defaultHex: "#b9121f" },
-  { key: "bordeaux", label: "Bordeaux (titres)", cssVar: "--bordeaux", mode: "channels", defaultHex: "#5b0f1a" },
+  { key: "bordeaux", label: "Bordeaux (ombres et décor)", cssVar: "--bordeaux", mode: "channels", defaultHex: "#5b0f1a" },
   { key: "coral", label: "Corail (accents doux)", cssVar: "--coral", mode: "channels", defaultHex: "#ff6b6b" },
   { key: "orange", label: "Orange (détails)", cssVar: "--orange", mode: "channels", defaultHex: "#f97316" },
   { key: "background", label: "Fond de page", cssVar: "--background", mode: "hex", defaultHex: "#ffffff" },

@@ -17,7 +17,7 @@ export default async function AdminLoginPage({
     <div className="mx-auto mt-12 max-w-sm">
       <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8">
         <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
-        <h1 className="text-xl font-bold text-bordeaux">Connexion</h1>
+        <h1 className="text-xl font-bold text-foreground">Connexion</h1>
 
         {!configured ? (
           <p className="mt-4 text-sm leading-relaxed text-muted">

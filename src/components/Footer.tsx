@@ -23,7 +23,7 @@ export default async function Footer() {
         </div>
 
         <nav aria-label="Nos services">
-          <p className="text-sm font-semibold uppercase tracking-wide text-bordeaux">
+          <p className="text-sm font-semibold uppercase tracking-wide text-foreground">
             Services
           </p>
           <ul className="mt-4 space-y-2.5">
@@ -41,7 +41,7 @@ export default async function Footer() {
         </nav>
 
         <nav aria-label="L'entreprise">
-          <p className="text-sm font-semibold uppercase tracking-wide text-bordeaux">
+          <p className="text-sm font-semibold uppercase tracking-wide text-foreground">
             Entreprise
           </p>
           <ul className="mt-4 space-y-2.5">

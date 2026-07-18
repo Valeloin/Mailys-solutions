@@ -36,7 +36,7 @@ export default async function AProposPage() {
 
       <section className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-12 sm:px-6">
-          <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-bordeaux sm:text-5xl">
+          <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             {c.h1}
           </h1>
 
@@ -52,7 +52,7 @@ export default async function AProposPage() {
 
       <section aria-labelledby="valeurs" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
-          <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-bordeaux">
+          <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-foreground">
             {c.valeursTitle}
           </h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
@@ -62,7 +62,7 @@ export default async function AProposPage() {
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
                 <BrandDots />
-                <h3 className="font-bold text-bordeaux">{v.title}</h3>
+                <h3 className="font-bold text-foreground">{v.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{v.text}</p>
               </div>
             ))}
@@ -74,7 +74,7 @@ export default async function AProposPage() {
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2
             id="apropos-methode"
-            className="text-3xl font-bold tracking-tight text-bordeaux"
+            className="text-3xl font-bold tracking-tight text-foreground"
           >
             {c.methodeTitle}
           </h2>

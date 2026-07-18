@@ -67,7 +67,7 @@ export default function SectionEditor({
           key={fieldPath.join(".")}
           className="rounded-2xl border border-border bg-background p-6"
         >
-          <legend className="px-2 font-bold text-bordeaux">{field.label}</legend>
+          <legend className="px-2 font-bold text-foreground">{field.label}</legend>
           <div className="space-y-4">
             {field.fields.map((f) => renderField(f, fieldPath))}
           </div>

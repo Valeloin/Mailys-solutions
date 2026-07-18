@@ -66,7 +66,7 @@ export default function Breadcrumb({ items }: { items: Crumb[] }) {
                 {isLast ? (
                   <span
                     aria-current="page"
-                    className="flex items-center gap-1.5 font-semibold text-bordeaux"
+                    className="flex items-center gap-1.5 font-semibold text-foreground"
                   >
                     <span
                       aria-hidden="true"

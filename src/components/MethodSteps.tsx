@@ -124,7 +124,7 @@ export default function MethodSteps({
             <StepNumber size="sm">{String(i + 1).padStart(2, "0")}</StepNumber>
             <MethodIcon index={i} />
           </div>
-          <h3 className="mt-2.5 font-bold text-bordeaux transition-colors group-hover:text-accent">
+          <h3 className="mt-2.5 font-bold text-foreground transition-colors group-hover:text-accent">
             {step.title}
           </h3>
           <p className="mt-1.5 text-sm leading-snug text-muted">{step.text}</p>

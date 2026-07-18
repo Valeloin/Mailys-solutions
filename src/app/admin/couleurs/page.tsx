@@ -13,7 +13,7 @@ export default async function AdminColorsPage({
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-bordeaux">Couleurs du site</h1>
+      <h1 className="text-2xl font-bold text-foreground">Couleurs du site</h1>
       <p className="mt-2 max-w-2xl text-sm text-muted">
         Ces couleurs s&apos;appliquent à tout le site en quelques secondes
         après l&apos;enregistrement. En cas de doute, revenez aux valeurs
@@ -21,7 +21,7 @@ export default async function AdminColorsPage({
       </p>
 
       {saved === "1" && (
-        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-bordeaux">
+        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-foreground">
           ✓ Couleurs enregistrées — le site public est à jour.
         </p>
       )}

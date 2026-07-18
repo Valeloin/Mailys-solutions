@@ -71,7 +71,7 @@ export default async function BlogPage() {
         <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1fr_minmax(0,28rem)]">
           <div className="relative">
             <Kicker>Le blog</Kicker>
-            <h1 className="mt-5 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+            <h1 className="mt-5 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
               {c.h1}
             </h1>
             <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
@@ -86,7 +86,7 @@ export default async function BlogPage() {
                 {TOPICS.map((t) => (
                   <li
                     key={t.label}
-                    className="group flex items-center gap-2.5 rounded-full border border-border bg-background py-2 pl-2 pr-4 text-sm font-semibold text-bordeaux shadow-[0_3px_10px_-6px_rgb(var(--bordeaux)/0.2)] transition-all hover:-translate-y-0.5 hover:border-coral hover:shadow-[0_10px_20px_-10px_rgb(var(--accent)/0.35)]"
+                    className="group flex items-center gap-2.5 rounded-full border border-border bg-background py-2 pl-2 pr-4 text-sm font-semibold text-foreground shadow-[0_3px_10px_-6px_rgb(var(--bordeaux)/0.2)] transition-all hover:-translate-y-0.5 hover:border-coral hover:shadow-[0_10px_20px_-10px_rgb(var(--accent)/0.35)]"
                   >
                     <span
                       aria-hidden="true"
@@ -118,7 +118,7 @@ export default async function BlogPage() {
             {/* Chips flottantes de méta d'article */}
             <div className="pv-float absolute -left-4 top-6 z-10 flex items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)]">
               <span className="pv-dot h-2 w-2 rounded-full bg-orange" />
-              <span className="text-xs font-semibold text-bordeaux">Guide pratique</span>
+              <span className="text-xs font-semibold text-foreground">Guide pratique</span>
             </div>
             <div
               className="pv-float absolute -bottom-3 right-2 z-10 flex items-center gap-2 rounded-xl border border-border bg-background px-3 py-2 shadow-[0_10px_28px_-14px_rgb(var(--bordeaux)/0.35)]"
@@ -127,7 +127,7 @@ export default async function BlogPage() {
               <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="rgb(var(--accent))" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M12 8v4l3 2" /><circle cx="12" cy="12" r="9" />
               </svg>
-              <span className="text-xs font-semibold text-bordeaux">5 min de lecture</span>
+              <span className="text-xs font-semibold text-foreground">5 min de lecture</span>
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default async function BlogPage() {
           <div>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-bordeaux sm:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
                   {c.placeholderTitle}
                 </h2>
                 <p className="mt-2 max-w-xl text-muted">{c.placeholderText}</p>

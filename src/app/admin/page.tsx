@@ -59,7 +59,7 @@ export default async function AdminDashboard() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-bordeaux">Tableau de bord</h1>
+      <h1 className="text-2xl font-bold text-foreground">Tableau de bord</h1>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
@@ -71,14 +71,14 @@ export default async function AdminDashboard() {
             <p className="text-sm font-semibold uppercase tracking-wide text-muted">
               {c.title}
             </p>
-            <p className="mt-2 text-xl font-bold text-bordeaux">{c.value}</p>
+            <p className="mt-2 text-xl font-bold text-foreground">{c.value}</p>
             <p className="mt-1 text-sm text-muted">{c.hint}</p>
           </Link>
         ))}
       </div>
 
       <div className="mt-8 rounded-2xl border border-border bg-background p-6">
-        <h2 className="font-bold text-bordeaux">État de la configuration</h2>
+        <h2 className="font-bold text-foreground">État de la configuration</h2>
         <ul className="mt-3 space-y-2 text-sm">
           <li className="flex items-center gap-2">
             <span

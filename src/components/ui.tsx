@@ -75,7 +75,7 @@ const PROBLEM_TONES = [
   "bg-coral/[0.15] text-[#D8494F]",
   "bg-orange/[0.15] text-orange-text",
   "bg-accent/[0.12] text-accent",
-  "bg-bordeaux/[0.08] text-bordeaux",
+  "bg-bordeaux/[0.08] text-foreground",
 ] as const;
 
 const PROBLEM_ICONS: React.ReactNode[] = [

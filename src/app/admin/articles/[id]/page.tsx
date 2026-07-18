@@ -30,7 +30,7 @@ export default async function EditArticlePage({
       <Link href="/admin/articles" className="text-sm font-semibold text-muted hover:text-foreground">
         ← Tous les articles
       </Link>
-      <h1 className="mt-2 text-2xl font-bold text-bordeaux">
+      <h1 className="mt-2 text-2xl font-bold text-foreground">
         Modifier : {post.title}
       </h1>
       <PostForm post={post} error={error} />

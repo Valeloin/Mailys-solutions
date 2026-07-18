@@ -35,7 +35,7 @@ const inputClass =
   "w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-muted/70 focus:border-coral focus:bg-background focus:ring-4 focus:ring-coral/15";
 
 const labelClass =
-  "mb-1.5 block text-xs font-bold uppercase tracking-wide text-bordeaux";
+  "mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground";
 
 // Icônes des champs (dans une pastille à gauche du label)
 const FIELD_ICONS: Record<string, React.ReactNode> = {
@@ -89,7 +89,7 @@ export default async function ContactPage({
           <div className="card relative overflow-hidden rounded-3xl border border-border bg-background p-6 sm:p-9">
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1.5" />
 
-            <h1 className="text-balance text-3xl font-extrabold tracking-tight text-bordeaux sm:text-4xl">
+            <h1 className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
               {c.h1}
             </h1>
             <p className="mt-4 leading-relaxed text-muted">
@@ -108,7 +108,7 @@ export default async function ContactPage({
                   </svg>
                 </span>
                 <div>
-                  <p className="font-bold text-bordeaux">Message bien reçu !</p>
+                  <p className="font-bold text-foreground">Message bien reçu !</p>
                   <p className="mt-1 text-sm text-muted">
                     Merci pour votre confiance. Nous vous répondons sous 24 h ouvrées.
                   </p>

@@ -94,7 +94,7 @@ export default async function BlogPostPage({
               {formatDate(post.published_at)}
             </time>
           </p>
-          <h1 className="mt-3 text-balance text-3xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-4xl">
+          <h1 className="mt-3 text-balance text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl">
             {post.title}
           </h1>
           {post.excerpt && (

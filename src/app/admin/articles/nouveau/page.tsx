@@ -12,7 +12,7 @@ export default async function NewArticlePage({
       <Link href="/admin/articles" className="text-sm font-semibold text-muted hover:text-foreground">
         ← Tous les articles
       </Link>
-      <h1 className="mt-2 text-2xl font-bold text-bordeaux">Nouvel article</h1>
+      <h1 className="mt-2 text-2xl font-bold text-foreground">Nouvel article</h1>
       <PostForm error={error} />
     </>
   );

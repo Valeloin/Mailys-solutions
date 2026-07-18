@@ -69,7 +69,7 @@ export default function HeroBrandCard() {
           />
         </svg>
         <div className="flex flex-col items-center leading-none">
-          <span className="text-3xl font-extrabold tracking-[0.13em] text-bordeaux sm:text-4xl">
+          <span className="text-3xl font-extrabold tracking-[0.13em] text-foreground sm:text-4xl">
             MAILYS
           </span>
           <span className="mt-2 text-xs font-semibold tracking-[0.44em] text-coral sm:text-sm">

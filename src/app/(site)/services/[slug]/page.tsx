@@ -111,7 +111,7 @@ export default async function ServicePage({
           <div className="absolute -top-32 right-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
         </div>
         <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
-          <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+          <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
             {service.h1}
           </h1>
           <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
@@ -150,7 +150,7 @@ export default async function ServicePage({
           <Kicker>Le constat</Kicker>
           <h2
             id="problemes"
-            className="mt-5 max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="mt-5 max-w-2xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             {service.problemsIntro}
           </h2>
@@ -159,7 +159,7 @@ export default async function ServicePage({
               <ProblemItem key={p} index={i}>{p}</ProblemItem>
             ))}
           </ul>
-          <p className="mt-8 text-lg font-semibold text-bordeaux">
+          <p className="mt-8 text-lg font-semibold text-foreground">
             Si vous vous reconnaissez dans plusieurs de ces situations, la
             suite va vous intéresser.
           </p>
@@ -171,7 +171,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="consequences"
-            className="max-w-2xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="max-w-2xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             Ce que cela coûte vraiment à votre entreprise
           </h2>
@@ -182,7 +182,7 @@ export default async function ServicePage({
                 key={c.title}
                 className="card reveal rounded-2xl border border-border bg-background p-6"
               >
-                <h3 className="font-bold text-bordeaux">{c.title}</h3>
+                <h3 className="font-bold text-foreground">{c.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{c.text}</p>
               </div>
             ))}
@@ -197,7 +197,7 @@ export default async function ServicePage({
             <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
             <h2
               id="solution"
-              className="max-w-3xl text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+              className="max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
             >
               {service.solutionTitle}
             </h2>
@@ -231,7 +231,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="benefices"
-            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             Les bénéfices concrets pour vos équipes
           </h2>
@@ -241,7 +241,7 @@ export default async function ServicePage({
                 key={b.title}
                 className="card reveal rounded-2xl border border-border bg-background p-5"
               >
-                <h3 className="flex items-center gap-2 font-bold text-bordeaux">
+                <h3 className="flex items-center gap-2 font-bold text-foreground">
                   <Check />
                   {b.title}
                 </h3>
@@ -257,7 +257,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="methode-titre"
-            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             Notre méthode, étape par étape et sans surprise
           </h2>
@@ -275,7 +275,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="pourquoi"
-            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             Pourquoi choisir Mailys Solutions
           </h2>
@@ -286,7 +286,7 @@ export default async function ServicePage({
                 className="card reveal rounded-2xl border border-border/60 bg-background p-7"
               >
                 <WhyUsMotif index={i} />
-                <h3 className="font-bold text-bordeaux">{item.title}</h3>
+                <h3 className="font-bold text-foreground">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
               </div>
             ))}
@@ -299,7 +299,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="faq"
-            className="text-3xl font-bold tracking-tight text-bordeaux sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
           >
             Questions fréquentes
           </h2>
@@ -330,7 +330,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="autres-services"
-            className="text-2xl font-bold tracking-tight text-bordeaux"
+            className="text-2xl font-bold tracking-tight text-foreground"
           >
             Nos autres services
           </h2>

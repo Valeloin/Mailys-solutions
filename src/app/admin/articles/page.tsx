@@ -23,7 +23,7 @@ export default async function AdminArticlesPage({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold text-bordeaux">Articles</h1>
+        <h1 className="text-2xl font-bold text-foreground">Articles</h1>
         <Link
           href="/admin/articles/nouveau"
           className="btn-cta rounded-lg px-4 py-2 text-sm font-semibold text-white"
@@ -33,19 +33,19 @@ export default async function AdminArticlesPage({
       </div>
 
       {saved === "1" && (
-        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-bordeaux">
+        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-foreground">
           ✓ Article enregistré — le site public est à jour.
         </p>
       )}
       {deleted === "1" && (
-        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-bordeaux">
+        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-foreground">
           Article supprimé.
         </p>
       )}
 
       {posts.length === 0 ? (
         <div className="mt-8 rounded-2xl border border-dashed border-coral bg-background p-8 text-center">
-          <p className="font-semibold text-bordeaux">Aucun article pour l&apos;instant</p>
+          <p className="font-semibold text-foreground">Aucun article pour l&apos;instant</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted">
             Chaque article doit viser une question précise que se posent vos
             prospects (« requête longue traîne ») et renvoyer vers la page

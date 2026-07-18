@@ -31,16 +31,16 @@ export default async function EditSectionPage({
       >
         ← Tous les contenus
       </Link>
-      <h1 className="mt-2 text-2xl font-bold text-bordeaux">{def.label}</h1>
+      <h1 className="mt-2 text-2xl font-bold text-foreground">{def.label}</h1>
       <p className="mt-1 text-sm text-muted">{def.description}</p>
 
       {saved === "1" && (
-        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-bordeaux">
+        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-foreground">
           ✓ Contenu enregistré — le site public est à jour.
         </p>
       )}
       {reset === "1" && (
-        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-bordeaux">
+        <p role="status" className="mt-4 rounded-lg border border-border bg-background p-3 text-sm font-semibold text-foreground">
           Textes d&apos;origine restaurés.
         </p>
       )}

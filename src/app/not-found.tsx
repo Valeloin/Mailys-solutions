@@ -14,7 +14,7 @@ export default function NotFound() {
       <main className="flex-1">
         <section className="mx-auto max-w-content px-4 py-24 text-center sm:px-6">
           <Kicker>Erreur 404</Kicker>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-bordeaux">
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground">
             Cette page n&apos;existe pas (ou plus)
           </h1>
           <p className="mx-auto mt-4 max-w-md text-muted">

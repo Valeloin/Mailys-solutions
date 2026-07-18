@@ -33,7 +33,7 @@ export default function PostForm({
       )}
 
       <div className="rounded-2xl border border-border bg-background p-6">
-        <h2 className="font-bold text-bordeaux">Contenu</h2>
+        <h2 className="font-bold text-foreground">Contenu</h2>
         <div className="mt-4 space-y-4">
           <label className="block text-sm font-semibold">
             Titre de l&apos;article *
@@ -81,7 +81,7 @@ export default function PostForm({
       </div>
 
       <div className="rounded-2xl border border-border bg-background p-6">
-        <h2 className="font-bold text-bordeaux">SEO</h2>
+        <h2 className="font-bold text-foreground">SEO</h2>
         <p className="mt-1 text-xs text-muted">
           Un article = une requête Google précise. Le titre SEO (~60
           caractères) doit contenir la requête ; la description (~155

@@ -8,7 +8,7 @@ export default async function AdminContenusPage() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-bordeaux">Contenus du site</h1>
+      <h1 className="text-2xl font-bold text-foreground">Contenus du site</h1>
       <p className="mt-2 max-w-2xl text-sm text-muted">
         Tous les textes du site, section par section. Les modifications sont
         visibles en ligne en quelques secondes. Les adresses des pages (URL)
