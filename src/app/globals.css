@@ -1986,3 +1986,101 @@ body {
     }
   }
 }
+
+/* ============================================================
+   MOBILE-FIRST : confort tactile et adaptation aux téléphones
+   ------------------------------------------------------------
+   Bloc transverse : il corrige au niveau global ce qui, sinon,
+   devrait être répété sur chaque composant. Volontairement placé
+   en fin de feuille pour rester lisible et facile à retirer.
+   ============================================================ */
+
+/* ---------- 1. Hauteur réelle du viewport mobile ----------
+   Sur iOS/Android, 100vh ignore la barre d'URL : la page « saute »
+   quand elle se rétracte. dvh suit la hauteur réellement visible. */
+@supports (height: 100dvh) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+
+/* ---------- 2. Encoches et barre home (iPhone X et suivants) ----------
+   Sans ça, le contenu passe sous l'encoche en paysage. */
+@supports (padding: max(0px)) {
+  header,
+  footer {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  footer {
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- 3. Réactivité du tap ----------
+   `manipulation` supprime le délai de 300 ms hérité du double-tap zoom
+   et évite les zooms accidentels sur les éléments cliquables. */
+a,
+button,
+summary,
+[role="button"],
+input,
+select,
+textarea,
+label {
+  touch-action: manipulation;
+}
+
+/* Halo bleu par défaut d'iOS/Android remplacé par notre teinte de marque */
+a,
+button,
+summary,
+[role="button"] {
+  -webkit-tap-highlight-color: rgb(var(--coral) / 0.12);
+}
+
+/* ---------- 4. Champs de formulaire : pas de zoom iOS ----------
+   Safari zoome automatiquement sur tout champ dont la police est
+   inférieure à 16 px. On force 16 px sur pointeur tactile : le rendu
+   desktop (14 px) reste inchangé. */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ---------- 5. Cibles tactiles : 44 px minimum ----------
+   Seuil Apple HIG et WCAG 2.5.5. Ciblé sur les éléments réellement
+   cliquables — les liens en pleine ligne de texte sont exclus pour
+   ne pas disloquer les paragraphes. */
+@media (pointer: coarse) {
+  nav a,
+  summary,
+  button,
+  [role="button"],
+  .btn-cta,
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+  }
+
+  /* Les liens de navigation sont des blocs : on centre le texte
+     dans la hauteur élargie plutôt que de le laisser en haut. */
+  nav a,
+  .btn-cta {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Le bouton devis reste centré horizontalement */
+  .btn-cta {
+    justify-content: center;
+  }
+
+  /* Bouton burger : carré de 44 px */
+  summary {
+    min-width: 44px;
+  }
+}
