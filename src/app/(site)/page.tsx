@@ -63,7 +63,12 @@ export default async function HomePage() {
               <div className="rise rise-1 order-1">
                 <Kicker>{c.hero.kicker}</Kicker>
               </div>
-              <h1 className="order-2 mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+              {/* Taille fluide plutôt que deux paliers : le titre suit
+                  continûment la largeur de l'écran (28 px sur un petit
+                  téléphone, 48 px dès le desktop) au lieu de rester bloqué
+                  à 36 px sur toute la plage mobile, où il devenait
+                  disproportionné. */}
+              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.75rem,7vw,3rem)] font-extrabold leading-[1.15] tracking-tight text-bordeaux">
                 {c.hero.h1}
               </h1>
               <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
