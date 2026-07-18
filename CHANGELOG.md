@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **11:26** — **Fonds travaillés sur toutes les sections de toutes les pages** : système unique dérivé de la DA (lavis chaud, halos corail/orange, trame de points estompée, voile diagonal), en 3 variantes alternées.
 - **11:24** — Vitrine : **restauration de l'interstitiel** entre chaque scène (voile, spinner au logo, coche validée, feu d'artifice).
 - **11:04** — Hero d'accueil : retour à la vitrine défilante des services, puces de réassurance rétablies.
 - **10:45** — Carte de marque du hero en **format paysage** (4/3), carte blanche à bordure égale, logo et lettrage ajustés.
