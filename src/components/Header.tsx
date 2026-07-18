@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import MobileTabBar from "@/components/MobileTabBar";
 import { SERVICES } from "@/lib/services";
 
 const NAV = [
@@ -267,7 +268,15 @@ export default function Header() {
             rétréci : cartes pleine largeur, pictogramme dans un carré
             teinté, titre + sous-titre, chevron. Cibles largement au-delà
             des 44 px. Toujours <details> natif — aucun JavaScript. */}
-        <details className="group/menu justify-self-end lg:hidden">
+        {/* Bloc d'action mobile : devis à portée directe + menu complet */}
+        <div className="flex items-center gap-2 justify-self-end lg:hidden">
+          <Link
+            href="/contact"
+            className="btn-cta flex h-11 items-center rounded-xl px-4 text-[13px] font-semibold text-white"
+          >
+            Devis
+          </Link>
+        <details className="group/menu">
           <summary
             className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-border bg-background transition-colors hover:border-coral [&::-webkit-details-marker]:hidden"
             aria-label="Ouvrir le menu"
@@ -282,7 +291,7 @@ export default function Header() {
 
           <nav
             aria-label="Navigation mobile"
-            className="fixed inset-x-0 bottom-0 top-[4.25rem] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="fixed inset-x-0 bottom-0 top-[7.375rem] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
             <div className="mx-auto max-w-lg space-y-7 px-4 py-6">
               {/* ----- Pages ----- */}
@@ -339,7 +348,11 @@ export default function Header() {
             </div>
           </nav>
         </details>
+        </div>
       </div>
+
+      {/* Bandeau d'onglets : navigation rapide, téléphone et tablette */}
+      <MobileTabBar />
     </header>
   );
 }
