@@ -2223,81 +2223,94 @@ body {
   pointer-events: none;
 }
 
-/* --- Chaud : lavis crème + halo corail (haut-gauche) et
-       orange (bas-droite). Remplace bg-surface. --- */
+/* --- A · Lavis chaud + grandes taches ---
+       Dégradé crème franc traversé par deux grandes taches
+       corail (haut-gauche) et orange (bas-droite). Chaleureux,
+       aucun motif géométrique. --- */
 .sec-warm::before {
   background:
     radial-gradient(
-      62% 55% at 10% 0%,
-      rgb(var(--coral) / 0.11),
+      60% 70% at 8% 0%,
+      rgb(var(--coral) / 0.32),
       transparent 62%
     ),
     radial-gradient(
-      58% 52% at 94% 100%,
-      rgb(var(--orange) / 0.1),
+      58% 72% at 96% 100%,
+      rgb(var(--orange) / 0.28),
       transparent 64%
     ),
-    linear-gradient(180deg, #fdf9f7 0%, var(--surface) 100%);
+    linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
 }
 
-/* --- Clair : fond blanc + halos très diffus + trame de points
-       estompée au centre (rappel « outil métier »). --- */
+/* --- C · Trame technique + lavis d'angle ---
+       Trame de points visible qui s'efface vers le centre (la
+       lecture reste nette) + lavis coloré dans les angles.
+       Évoque l'outil métier, le logiciel. --- */
 .sec-clean::before {
   background:
     radial-gradient(
-      52% 46% at 88% 0%,
-      rgb(var(--coral) / 0.07),
-      transparent 64%
+      52% 80% at 100% 0%,
+      rgb(var(--coral) / 0.24),
+      transparent 60%
     ),
     radial-gradient(
-      48% 42% at 4% 92%,
-      rgb(var(--orange) / 0.06),
+      46% 70% at 0% 100%,
+      rgb(var(--orange) / 0.2),
       transparent 62%
     ),
-    var(--background);
+    #fffdfc;
 }
 .sec-clean::after {
   background-image: radial-gradient(
-    rgb(var(--bordeaux) / 0.055) 1px,
-    transparent 1px
+    rgb(var(--bordeaux) / 0.15) 1.3px,
+    transparent 1.3px
   );
-  background-size: 22px 22px;
-  /* La trame s'efface au centre : elle habille sans gêner la lecture */
+  background-size: 18px 18px;
+  /* La trame s'efface au centre : elle habille les bords sans
+     jamais passer derrière le corps de texte. */
   -webkit-mask-image: radial-gradient(
-    ellipse 78% 62% at 50% 45%,
-    transparent 32%,
+    ellipse 62% 58% at 50% 50%,
+    transparent 30%,
     #000 100%
   );
   mask-image: radial-gradient(
-    ellipse 78% 62% at 50% 45%,
-    transparent 32%,
+    ellipse 62% 58% at 50% 50%,
+    transparent 30%,
     #000 100%
   );
 }
 
-/* --- Bascule : lavis plus soutenu + voile diagonal à -22°
-       (l'inclinaison des barres du logo). --- */
+/* --- B · Barres du logo à -22° ---
+       Les barres de la marque, en très grand, inclinées comme
+       dans le logo. Le motif le plus identitaire. Les bandes
+       sont placées sur les côtés : le centre reste libre pour
+       le texte. --- */
 .sec-deep::before {
-  background:
-    radial-gradient(
-      70% 60% at 50% -10%,
-      rgb(var(--coral) / 0.14),
-      transparent 66%
-    ),
-    radial-gradient(
-      60% 55% at 100% 100%,
-      rgb(var(--orange) / 0.12),
-      transparent 62%
-    ),
-    linear-gradient(180deg, var(--surface) 0%, #fdf7f5 100%);
+  background: linear-gradient(180deg, #fdf6f3 0%, #faeee9 100%);
 }
 .sec-deep::after {
-  background-image: linear-gradient(
-    112deg,
-    transparent 44%,
-    rgb(255 255 255 / 0.5) 50%,
-    transparent 56%
-  );
+  background:
+    linear-gradient(
+      112deg,
+      transparent 12%,
+      rgb(var(--coral) / 0.2) 12%,
+      rgb(var(--coral) / 0.2) 20%,
+      transparent 20%
+    ),
+    linear-gradient(
+      112deg,
+      transparent 24%,
+      rgb(var(--accent) / 0.16) 24%,
+      rgb(var(--accent) / 0.16) 32%,
+      transparent 32%
+    ),
+    linear-gradient(
+      112deg,
+      transparent 78%,
+      rgb(var(--orange) / 0.2) 78%,
+      rgb(var(--orange) / 0.2) 86%,
+      transparent 86%
+    );
 }
 
 /* ---------- Révélation au scroll : scroll-driven CSS pur ----------

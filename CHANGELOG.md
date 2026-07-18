@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **11:57** — **Fonds de section enfin visibles** : les 3 variantes redessinées à intensité réelle — lavis chaud à grandes taches, **barres du logo à -22°**, trame de points technique — et réparties en rotation sur toutes les pages.
 - **11:56** — Titre du hero allégé : 48 → **41,6 px**, graisse `extrabold` → `bold`, interlignage et crénage resserrés (plus élégant, moins massif).
 - **11:40** — Site plus vivant : **CTA principal qui respire** en continu, survols de cartes et boutons enrichis (lift + halo chaud), **pictogrammes animés plus amples et plus rapides**.
 - **11:26** — **Fonds travaillés sur toutes les sections de toutes les pages** : système unique dérivé de la DA (lavis chaud, halos corail/orange, trame de points estompée, voile diagonal), en 3 variantes alternées.

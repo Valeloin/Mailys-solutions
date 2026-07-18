@@ -227,7 +227,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 5. LES BÉNÉFICES ========== */}
-      <section aria-labelledby="benefices" className="sec sec-clean">
+      <section aria-labelledby="benefices" className="sec sec-deep">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="benefices"
@@ -253,7 +253,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 6. NOTRE MÉTHODE ========== */}
-      <section id="methode" aria-labelledby="methode-titre" className="sec sec-warm">
+      <section id="methode" aria-labelledby="methode-titre" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="methode-titre"
@@ -271,7 +271,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 7. POURQUOI NOUS CHOISIR ========== */}
-      <section aria-labelledby="pourquoi" className="sec sec-clean">
+      <section aria-labelledby="pourquoi" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="pourquoi"
@@ -295,7 +295,7 @@ export default async function ServicePage({
       </section>
 
       {/* ========== 8. FAQ ========== */}
-      <section aria-labelledby="faq" className="sec sec-warm">
+      <section aria-labelledby="faq" className="sec sec-deep">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="faq"

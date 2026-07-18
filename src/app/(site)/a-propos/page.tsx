@@ -70,7 +70,7 @@ export default async function AProposPage() {
         </div>
       </section>
 
-      <section aria-labelledby="apropos-methode" className="sec sec-warm">
+      <section aria-labelledby="apropos-methode" className="sec sec-deep">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
           <h2
             id="apropos-methode"
