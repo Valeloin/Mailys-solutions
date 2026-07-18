@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **12:20** — **Trame de points supprimée** : la variante claire des fonds devient blanche et aérée, avec de larges lavis corail/orange dans les angles. Plus aucun motif répété.
 - **12:05** — **Tous les textes passent en noir** : titres, corps et texte secondaire (fini le bordeaux et le gris chaud). Le bordeaux reste réservé aux ombres et au décor.
 - **12:03** — Puces de services : les numéros **01 → 02 → 03 → 04 grossissent l'un après l'autre** (vague en boucle, virage au rouge), sur l'accueil et la page Services.
 - **11:57** — **Fonds de section enfin visibles** : les 3 variantes redessinées à intensité réelle — lavis chaud à grandes taches, **barres du logo à -22°**, trame de points technique — et réparties en rotation sur toutes les pages.

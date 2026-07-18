@@ -2279,42 +2279,25 @@ body {
     linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
 }
 
-/* --- C · Trame technique + lavis d'angle ---
-       Trame de points visible qui s'efface vers le centre (la
-       lecture reste nette) + lavis coloré dans les angles.
-       Évoque l'outil métier, le logiciel. --- */
+/* --- C · Claire et aérée ---
+       Fond blanc traversé par de larges lavis colorés dans les
+       angles (corail en haut à droite, orange en bas à gauche).
+       Aucun motif répété : c'est la respiration du rythme, en
+       contraste avec le crème de A et les barres de B.
+       (La trame de points a été retirée le 2026-07-18 : rejetée.) */
 .sec-clean::before {
   background:
     radial-gradient(
-      52% 80% at 100% 0%,
-      rgb(var(--coral) / 0.24),
-      transparent 60%
-    ),
-    radial-gradient(
-      46% 70% at 0% 100%,
-      rgb(var(--orange) / 0.2),
+      70% 95% at 100% 0%,
+      rgb(var(--coral) / 0.3),
       transparent 62%
     ),
-    #fffdfc;
-}
-.sec-clean::after {
-  background-image: radial-gradient(
-    rgb(var(--bordeaux) / 0.15) 1.3px,
-    transparent 1.3px
-  );
-  background-size: 18px 18px;
-  /* La trame s'efface au centre : elle habille les bords sans
-     jamais passer derrière le corps de texte. */
-  -webkit-mask-image: radial-gradient(
-    ellipse 62% 58% at 50% 50%,
-    transparent 30%,
-    #000 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 62% 58% at 50% 50%,
-    transparent 30%,
-    #000 100%
-  );
+    radial-gradient(
+      62% 85% at 0% 100%,
+      rgb(var(--orange) / 0.26),
+      transparent 64%
+    ),
+    #ffffff;
 }
 
 /* --- B · Barres du logo à -22° ---
