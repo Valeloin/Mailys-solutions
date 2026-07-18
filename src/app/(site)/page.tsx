@@ -173,7 +173,7 @@ export default async function HomePage() {
           <Kicker>{c.services.kicker}</Kicker>
           <h2
             id="services-title"
-            className="mt-4 max-w-2xl text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
+            className="mt-4 max-w-2xl text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl sm:normal-case"
           >
             {c.services.title}
           </h2>
@@ -242,7 +242,7 @@ export default async function HomePage() {
             <Kicker>Le constat</Kicker>
             <h2
               id="probleme-title"
-              className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+              className="mt-5 text-3xl font-bold uppercase tracking-tight text-foreground sm:text-4xl sm:normal-case"
             >
               {c.probleme.title}
             </h2>
@@ -295,7 +295,7 @@ export default async function HomePage() {
           <Kicker>{c.methode.kicker}</Kicker>
           <h2
             id="methode-title"
-            className="mt-3 text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
+            className="mt-3 text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl sm:normal-case"
           >
             {c.methode.title}
           </h2>
@@ -313,7 +313,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
           <h2
             id="pourquoi-title"
-            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+            className="text-3xl font-bold uppercase tracking-tight text-foreground sm:text-4xl sm:normal-case"
           >
             {c.pourquoi.title}
           </h2>
