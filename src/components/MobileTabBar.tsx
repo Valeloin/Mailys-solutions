@@ -81,7 +81,7 @@ export default function MobileTabBar() {
       {/* Aucun filet de séparation : le bandeau doit se lire comme la
           seconde ligne du header, pas comme une barre rapportée sous lui.
           Même gouttière que la ligne du logo pour aligner les deux. */}
-      <div className="mx-auto grid max-w-content grid-cols-4 px-2 pb-1.5 sm:px-4">
+      <div className="mx-auto grid max-w-content grid-cols-4 gap-0.5 px-2 pb-1 sm:px-4">
         {ONGLETS.map((o) => {
           const actif = o.prefixe
             ? pathname.startsWith(o.href)
@@ -107,7 +107,10 @@ export default function MobileTabBar() {
               >
                 {o.icon}
               </svg>
-              <span className="text-[11.5px] font-semibold tracking-[0.01em]">
+              {/* Libellé toujours affiché — y compris à 320 px, où il se
+                  resserre plutôt que de disparaître : ces 4 repères
+                  doivent rester lisibles en permanence. */}
+              <span className="text-[11px] font-semibold tracking-[-0.01em] min-[360px]:text-[11.5px] min-[360px]:tracking-[0.01em]">
                 {o.label}
               </span>
               {/* Filet de marque sous l'onglet actif */}

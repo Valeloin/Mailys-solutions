@@ -161,8 +161,14 @@ export default function Header() {
       <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
-      <div className="mx-auto grid h-[4.25rem] max-w-content grid-cols-[1fr_auto] items-center px-4 sm:px-6 lg:grid-cols-[1fr_auto_1fr]">
-        <Link href="/" className="justify-self-start">
+      {/* Ligne 1 nettement plus basse sur téléphone : 56 px au lieu de 68.
+          Le header est sticky — chaque pixel gagné ici l'est sur toute la
+          hauteur de lecture, en permanence. */}
+      <div className="mx-auto grid h-14 max-w-content grid-cols-[1fr_auto] items-center px-3 sm:px-6 lg:h-[4.25rem] lg:grid-cols-[1fr_auto_1fr]">
+        <Link
+          href="/"
+          className="origin-left scale-[0.88] justify-self-start sm:scale-95 lg:scale-100"
+        >
           <Logo />
         </Link>
 
@@ -268,17 +274,18 @@ export default function Header() {
             rétréci : cartes pleine largeur, pictogramme dans un carré
             teinté, titre + sous-titre, chevron. Cibles largement au-delà
             des 44 px. Toujours <details> natif — aucun JavaScript. */}
-        {/* Bloc d'action mobile : devis à portée directe + menu complet */}
-        <div className="flex items-center gap-2 justify-self-end lg:hidden">
+        {/* Bloc d'action mobile : devis à portée directe + menu complet.
+            Resserré pour laisser respirer le logo sur les petits écrans. */}
+        <div className="flex items-center gap-1.5 justify-self-end lg:hidden">
           <Link
             href="/contact"
-            className="btn-cta flex h-11 items-center rounded-xl px-4 text-[13px] font-semibold text-white"
+            className="btn-cta flex h-10 items-center rounded-lg px-3.5 text-[13px] font-semibold text-white"
           >
             Devis
           </Link>
         <details className="group/menu">
           <summary
-            className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-border bg-background transition-colors hover:border-coral [&::-webkit-details-marker]:hidden"
+            className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-background transition-colors hover:border-coral [&::-webkit-details-marker]:hidden"
             aria-label="Ouvrir le menu"
           >
             {/* Barres qui se croisent en X à l'ouverture */}
@@ -291,7 +298,7 @@ export default function Header() {
 
           <nav
             aria-label="Navigation mobile"
-            className="fixed inset-x-0 bottom-0 top-[119px] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="fixed inset-x-0 bottom-0 top-[105px] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
             <div className="mx-auto max-w-lg space-y-7 px-4 py-6">
               {/* ----- Pages ----- */}
