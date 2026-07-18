@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
-import MobileTabBar from "@/components/MobileTabBar";
 import { SERVICES } from "@/lib/services";
 
 const NAV = [
@@ -19,6 +21,108 @@ const SERVICE_LINKS = SERVICES.map((s) => ({
   href: `/services/${s.slug}`,
 }));
 
+// Onglets mobiles : 4 repères de navigation rapide sur téléphone,
+// affichés côte à côte avec le logo sur la même ligne du header.
+type MobileOnglet = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  prefixe?: boolean;
+};
+
+const ONGLETS_MOBILE: MobileOnglet[] = [
+  {
+    href: "/",
+    label: "Accueil",
+    icon: (
+      <>
+        <path d="M4 10.5 12 4l8 6.5" />
+        <path d="M6 10v9h12v-9" />
+      </>
+    ),
+  },
+  {
+    href: "/services",
+    label: "Services",
+    prefixe: true,
+    icon: (
+      <>
+        <rect x="4" y="4" width="7" height="7" rx="1.6" />
+        <rect x="13" y="4" width="7" height="7" rx="1.6" />
+        <rect x="4" y="13" width="7" height="7" rx="1.6" />
+        <rect x="13" y="13" width="7" height="7" rx="1.6" />
+      </>
+    ),
+  },
+  {
+    href: "/realisations",
+    label: "Projets",
+    icon: (
+      <>
+        <rect x="3.5" y="5" width="17" height="13" rx="2" />
+        <path d="M3.5 14l4.5-4 3.5 3 3-3.5 6 5.5" />
+      </>
+    ),
+  },
+  {
+    href: "/blog",
+    label: "Blog",
+    prefixe: true,
+    icon: (
+      <>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <path d="M8 9h8M8 13h8M8 17h5" />
+      </>
+    ),
+  },
+];
+
+function MobileOnglets() {
+  const pathname = usePathname();
+
+  return (
+    <div className="grid grid-cols-4 gap-0.5 lg:hidden">
+      {ONGLETS_MOBILE.map((o) => {
+        const actif = o.prefixe
+          ? pathname.startsWith(o.href)
+          : pathname === o.href;
+        return (
+          <Link
+            key={o.href}
+            href={o.href}
+            aria-current={actif ? "page" : undefined}
+            className={`relative flex h-9 items-center justify-center gap-1 rounded transition-colors ${
+              actif ? "text-accent" : "text-muted"
+            }`}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              {o.icon}
+            </svg>
+            <span className="text-[10px] font-semibold">
+              {o.label}
+            </span>
+            <span
+              aria-hidden="true"
+              className={`absolute inset-x-1.5 bottom-0 h-[2px] rounded-t-full transition-opacity duration-200 ${
+                actif ? "brand-hairline opacity-100" : "opacity-0"
+              }`}
+            />
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 // Header 100 % HTML/CSS (aucun JavaScript envoyé au navigateur).
 // Composition en trois zones : logo | navigation centrée | action.
 // Navigation en petites capitales espacées (épuré mais travaillé),
@@ -32,16 +136,19 @@ export default function Header() {
       <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
-      {/* Ligne 1 nettement plus basse sur téléphone : 56 px au lieu de 68.
-          Le header est sticky — chaque pixel gagné ici l'est sur toute la
-          hauteur de lecture, en permanence. */}
-      <div className="mx-auto grid h-14 max-w-content grid-cols-[1fr_auto] items-center px-3 sm:px-6 lg:h-[4.25rem] lg:grid-cols-[1fr_auto_1fr]">
+      {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,
+          tout rentre dans h-11 (44 px). */}
+      <div className="mx-auto grid h-11 max-w-content grid-cols-[auto_1fr] gap-1.5 items-center px-2 sm:px-4 lg:h-[4.25rem] lg:grid-cols-[1fr_auto_1fr] lg:gap-7 lg:px-6">
         <Link
           href="/"
-          className="origin-left scale-[0.88] justify-self-start sm:scale-95 lg:scale-100"
+          className="origin-left scale-[0.8] sm:scale-85 lg:scale-100 justify-self-start shrink-0"
         >
           <Logo />
         </Link>
+
+        {/* Onglets mobiles : Accueil / Services / Projets / Blog sur une ligne
+            avec le logo. Masqués sur desktop (lg:) où la nav complète s'affiche. */}
+        <MobileOnglets />
 
         {/* Navigation desktop, centrée — petites capitales espacées */}
         <nav
@@ -141,9 +248,6 @@ export default function Header() {
         </div>
 
       </div>
-
-      {/* Bandeau d'onglets : navigation rapide, téléphone et tablette */}
-      <MobileTabBar />
     </header>
   );
 }
