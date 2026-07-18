@@ -53,22 +53,26 @@ export default async function HomePage() {
             texte + vitrine défilante, puis sommaire des 4 expertises.
             Seul le contenu texte reste celui de l'accueil. */}
         <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
-          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
-            {/* Colonne texte : contenu de l'accueil, inchangé */}
-            <div>
-              <div className="rise rise-1">
+          <div className="grid items-center gap-0 lg:grid-cols-[1fr_minmax(0,30rem)] lg:gap-12">
+            {/* Colonne texte. En mobile, `contents` la dissout : ses enfants
+                deviennent des cellules de la grille, ce qui permet de glisser
+                la vitrine entre le titre et le texte (ordre 3). Sans cela elle
+                se retrouve sous les boutons, hors écran sur téléphone.
+                Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
+            <div className="contents lg:block">
+              <div className="rise rise-1 order-1">
                 <Kicker>{c.hero.kicker}</Kicker>
               </div>
-              <h1 className="mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+              <h1 className="order-2 mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
                 {c.hero.h1}
               </h1>
-              <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+              <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
                 <Rich text={c.hero.subtitle} />
               </p>
               {/* Mobile-first : boutons pleine largeur empilés (sinon ils
                   s'alignent au contenu et laissent un vide à droite),
                   puis côte à côte dès qu'il y a la place. */}
-              <div className="rise rise-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+              <div className="rise rise-3 order-5 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                 <Link
                   href="/contact"
                   className="btn-cta w-full rounded-xl px-7 py-3.5 text-center font-semibold text-white sm:w-auto"
@@ -85,8 +89,12 @@ export default async function HomePage() {
             </div>
 
             {/* Vitrine défilante : titre et onglets segmentés
-                synchronisés (mêmes horloges CSS) */}
-            <div className="relative" aria-hidden="true">
+                synchronisés (mêmes horloges CSS).
+                Ordre 3 en mobile → juste sous le titre, donc vue d'emblée. */}
+            <div
+              className="relative order-3 mt-8 lg:order-none lg:mt-0"
+              aria-hidden="true"
+            >
               <div className="glow-warm absolute -inset-12 rounded-full" />
               {/* Titre de la scène en cours (cross-slide pv-title-N) */}
               <div className="relative mb-3 h-9 max-[374px]:h-14">
