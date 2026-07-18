@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **12:03** — Puces de services : les numéros **01 → 02 → 03 → 04 grossissent l'un après l'autre** (vague en boucle, virage au rouge), sur l'accueil et la page Services.
 - **11:57** — **Fonds de section enfin visibles** : les 3 variantes redessinées à intensité réelle — lavis chaud à grandes taches, **barres du logo à -22°**, trame de points technique — et réparties en rotation sur toutes les pages.
 - **11:56** — Titre du hero allégé : 48 → **41,6 px**, graisse `extrabold` → `bold`, interlignage et crénage resserrés (plus élégant, moins massif).
 - **11:40** — Site plus vivant : **CTA principal qui respire** en continu, survols de cartes et boutons enrichis (lift + halo chaud), **pictogrammes animés plus amples et plus rapides**.

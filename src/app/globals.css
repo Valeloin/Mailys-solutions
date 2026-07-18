@@ -16,10 +16,14 @@
    ============================================================ */
 :root {
   --background: #ffffff;
-  --foreground: #1a1a1a;
+  /* Tous les TEXTES du site sont noirs (demande du 2026-07-18) :
+     titres, corps et texte secondaire. --bordeaux reste réservé au
+     DÉCOR (ombres chaudes, fonds, filets) et n'habille plus aucun
+     texte — sinon les ombres perdraient leur chaleur. */
+  --foreground: #000000;
   --surface: #fbf6f4;
   --border: #f0e2dd;
-  --muted: #6e605c;
+  --muted: #000000;
   --accent: 225 29 42; /* rouge #E11D2A */
   --accent-dark: 185 18 31; /* rouge foncé (survol) */
   --bordeaux: 91 15 26; /* #5B0F1A */
@@ -74,6 +78,25 @@ body {
   }
   50% {
     transform: scale(1.03);
+  }
+}
+
+/* ---------- Numéros des puces de services ----------
+   01 grossit, puis 02, puis 03, puis 04 : une vague qui parcourt
+   la rangée en boucle. Le décalage est porté par .num-pop-N. */
+@keyframes num-pop {
+  0% {
+    transform: scale(1);
+    color: rgb(var(--orange-text));
+  }
+  7% {
+    transform: scale(1.4);
+    color: rgb(var(--accent));
+  }
+  16%,
+  100% {
+    transform: scale(1);
+    color: rgb(var(--orange-text));
   }
 }
 
@@ -200,6 +223,20 @@ body {
     }
   }
 
+  /* --- Numéros des puces : le transform exige inline-block --- */
+  .num-pop {
+    display: inline-block;
+    transform-origin: center;
+  }
+  /* Le décalage de chaque numéro est porté en style inline
+     (animationDelay) : une classe construite dynamiquement ne
+     serait pas vue par le scan Tailwind et serait purgée. */
+  @media (prefers-reduced-motion: no-preference) {
+    .num-pop {
+      animation: num-pop 4.8s ease-in-out infinite;
+    }
+  }
+
   /* --- Lien de navigation : soulignement dégradé qui se déploie --- */
   .nav-link {
     background-image: linear-gradient(
@@ -232,7 +269,7 @@ body {
 }
 /* Le gras des textes reprend le bordeaux des titres */
 .rich-links strong {
-  color: rgb(var(--bordeaux));
+  color: var(--foreground);
 }
 
 /* ---------- Typographie des articles de blog (contenu Markdown) ---------- */
@@ -244,13 +281,13 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: rgb(var(--bordeaux));
+  color: var(--foreground);
 }
 .article-content h3 {
   margin-top: 1.75rem;
   font-size: 1.2rem;
   font-weight: 700;
-  color: rgb(var(--bordeaux));
+  color: var(--foreground);
 }
 .article-content p {
   margin-top: 1rem;

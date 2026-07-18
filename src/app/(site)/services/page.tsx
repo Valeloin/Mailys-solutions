@@ -55,7 +55,7 @@ export default async function ServicesPage() {
               <div className="rise rise-1">
                 <Kicker>Nos expertises</Kicker>
               </div>
-              <h1 className="mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+              <h1 className="mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
                 {c.h1}
               </h1>
               <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -118,9 +118,12 @@ export default async function ServicesPage() {
               <a
                 key={s.slug}
                 href={`#service-${s.slug}`}
-                className="group flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-muted shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)] transition-colors hover:border-coral hover:text-bordeaux"
+                className="group flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-muted shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)] transition-colors hover:border-coral hover:text-foreground"
               >
-                <span className="font-bold text-orange-text">
+                <span
+                  className="num-pop font-bold text-orange-text"
+                  style={{ animationDelay: `${i * 1.2}s` }}
+                >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {s.name}
@@ -171,7 +174,7 @@ export default async function ServicesPage() {
                       Expertise
                     </span>
                   </div>
-                  <h2 className="mt-4 text-2xl font-bold tracking-tight text-bordeaux transition-colors group-hover:text-accent sm:text-3xl">
+                  <h2 className="mt-4 text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-accent sm:text-3xl">
                     <Link
                       href={`/services/${s.slug}`}
                       className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
