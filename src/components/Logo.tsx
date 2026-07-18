@@ -21,7 +21,7 @@ export function LogoMark({ className = "h-8 w-auto" }: { className?: string }) {
 export default function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <span className="flex items-center gap-2.5">
-      <LogoMark className={compact ? "h-7 w-auto" : "h-8 w-auto"} />
+      <LogoMark className={compact ? "h-9 w-auto" : "h-12 w-auto"} />
       <span className="flex flex-col leading-none">
         <span className="text-[15px] font-extrabold tracking-[0.08em] text-foreground">
           MAILYS
