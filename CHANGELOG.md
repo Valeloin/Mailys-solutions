@@ -8,6 +8,7 @@
 
 ## Session — 17 juillet 2026 · 21h36
 
+- **10:42** — Menu déroulant Services aligné sur la DA du header (filet dégradé, label « Nos expertises », points du logo, « Tous les services » en capitales).
 - **22:28** — Script du hook auto (`scripts/changelog-hook.sh`) prêt à activer.
 - **21:36** — Journal cliquable (`/changelog`), suivi **par session**, mise à jour auto au push.
 

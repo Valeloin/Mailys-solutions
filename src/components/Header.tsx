@@ -12,10 +12,11 @@ const NAV = [
 ];
 
 // Sous-pages du menu Services (dérivées de la source de vérité).
-const SERVICE_LINKS = [
-  { name: "Tous les services", href: "/services" },
-  ...SERVICES.map((s) => ({ name: s.name, href: `/services/${s.slug}` })),
-];
+// « Tous les services » est traité à part, en pied de menu.
+const SERVICE_LINKS = SERVICES.map((s) => ({
+  name: s.name,
+  href: `/services/${s.slug}`,
+}));
 
 // Header 100 % HTML/CSS (aucun JavaScript envoyé au navigateur).
 // Composition en trois zones : logo | navigation centrée | action.
@@ -69,18 +70,42 @@ export default function Header() {
                 {/* Panneau : invisible par défaut, révélé au survol/focus.
                     Le pont haut évite la coupure du survol sous le filet. */}
                 <div className="invisible absolute left-1/2 top-full z-20 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                  <div className="w-72 overflow-hidden rounded-xl border border-border bg-background shadow-[0_24px_48px_-24px_rgb(var(--bordeaux)/0.35)]">
-                    <span aria-hidden="true" className="brand-hairline block h-0.5" />
-                    <div className="p-2">
+                  <div className="w-[19.5rem] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_28px_56px_-28px_rgb(var(--bordeaux)/0.4)]">
+                    {/* Filet signature, comme en couronnement du header */}
+                    <span aria-hidden="true" className="brand-hairline block h-1" />
+                    <div className="p-2.5">
+                      {/* Label façon kicker : même grammaire que la DA */}
+                      <p className="px-3 pb-1.5 pt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-text">
+                        Nos expertises
+                      </p>
                       {SERVICE_LINKS.map((sub) => (
                         <Link
                           key={sub.href}
                           href={sub.href}
-                          className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-surface hover:text-coral"
+                          className="group/i flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-surface hover:text-accent"
                         >
+                          {/* Point dégradé : écho des points du logo */}
+                          <span
+                            aria-hidden="true"
+                            className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-orange to-accent opacity-60 transition-opacity group-hover/i:opacity-100"
+                          />
                           {sub.name}
                         </Link>
                       ))}
+                      <span aria-hidden="true" className="my-2 block h-px bg-border" />
+                      {/* Pied de menu : capitales espacées, comme la nav */}
+                      <Link
+                        href="/services"
+                        className="group/a flex items-center justify-between rounded-lg px-3 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-accent transition-colors hover:bg-surface"
+                      >
+                        Tous les services
+                        <span
+                          aria-hidden="true"
+                          className="inline-block transition-transform duration-200 group-hover/a:translate-x-1"
+                        >
+                          →
+                        </span>
+                      </Link>
                     </div>
                   </div>
                 </div>
