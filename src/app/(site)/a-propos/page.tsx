@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import { getAproposContent, getMethodSteps } from "@/lib/sections";
@@ -31,19 +30,6 @@ export default async function AProposPage() {
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-        <Breadcrumb items={[{ name: "À propos", href: "/a-propos" }]} />
-      </div>
-
-      <section className="sec sec-warm">
-        <div className="mx-auto max-w-content px-4 py-12 sm:px-6">
-          <h1 className="max-w-3xl text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            {c.h1}
-          </h1>
-
-          <div className="rise rise-2 mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
-            {c.paragraphs.map((p) => (
-              <p key={p.slice(0, 40)}>
-                <Rich text={p} />
               </p>
             ))}
           </div>

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
 import { SITE } from "@/lib/site";
@@ -79,12 +78,6 @@ export default async function BlogPostPage({
       />
 
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-        <Breadcrumb
-          items={[
-            { name: "Blog", href: "/blog" },
-            { name: post.title, href: `/blog/${post.slug}` },
-          ]}
-        />
       </div>
 
       <article className="mx-auto max-w-content px-4 py-12 sm:px-6">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumb from "@/components/Breadcrumb";
 import Rich from "@/components/Rich";
 import { SITE } from "@/lib/site";
 import { getContactContent } from "@/lib/sections";
@@ -79,15 +78,6 @@ export default async function ContactPage({
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-        <Breadcrumb items={[{ name: "Contact", href: "/contact" }]} />
-      </div>
-
-      <section className="sec sec-warm">
-        <div className="mx-auto max-w-content px-4 py-10 sm:px-6 sm:py-12">
-        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-          {/* ================= COLONNE FORMULAIRE ================= */}
-          <div className="card relative overflow-hidden rounded-3xl border border-border bg-background p-6 sm:p-9">
-            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1.5" />
 
             <h1 className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
               {c.h1}

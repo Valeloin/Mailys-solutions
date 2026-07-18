@@ -9,7 +9,6 @@ import {
   getWhyUs,
 } from "@/lib/sections";
 import { SITE } from "@/lib/site";
-import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
 import { Check, Kicker, MobileCtaBar, ProblemItem } from "@/components/ui";
@@ -95,12 +94,6 @@ export default async function ServicePage({
       />
 
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-        <Breadcrumb
-          items={[
-            { name: "Services", href: "/services" },
-            { name: service.name, href: `/services/${service.slug}` },
-          ]}
-        />
       </div>
 
       {/* ========== 1. HERO ========== */}

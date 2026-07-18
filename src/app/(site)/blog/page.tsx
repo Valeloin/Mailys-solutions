@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumb";
 import CtaSection from "@/components/CtaSection";
 import BlogShowcase from "@/components/BlogShowcase";
 import { Kicker } from "@/components/ui";
@@ -57,14 +56,6 @@ export default async function BlogPage() {
   return (
     <>
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
-        <Breadcrumb items={[{ name: "Blog", href: "/blog" }]} />
-      </div>
-
-      {/* ================= HERO ÉDITORIAL ================= */}
-      <section className="sec sec-warm relative overflow-hidden border-b border-border">
-        {/* Décor : barres fantômes du logo */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-16 right-[10%] hidden h-56 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
           <div className="absolute -bottom-28 -left-10 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
         </div>
 
