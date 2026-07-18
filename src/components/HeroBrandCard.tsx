@@ -14,7 +14,7 @@ export default function HeroBrandCard() {
   return (
     <div
       aria-hidden="true"
-      className="hero-panel relative aspect-square w-full overflow-hidden rounded-[28px] shadow-window"
+      className="hero-panel relative aspect-[4/3] w-full overflow-hidden rounded-[28px] shadow-window"
     >
       {/* Halos chauds qui respirent (scintillement d'opacité, pas de scale) */}
       <div className="hero-glow hero-glow-1" />
@@ -26,10 +26,12 @@ export default function HeroBrandCard() {
       <div className="hero-ghost hero-ghost-2" />
 
       {/* Carte blanche centrale : grand carré, le logo complet */}
-      <div className="hero-card absolute left-1/2 top-1/2 flex aspect-square w-[66%] max-w-[22rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 rounded-[26px]">
+      {/* Bordure identique en pixels sur les 4 côtés : la carte prend
+          tout l'espace restant → elle suit le format paysage du cadre. */}
+      <div className="hero-card absolute inset-8 flex flex-col items-center justify-center gap-5 rounded-[26px] sm:inset-12">
         <svg
           viewBox="0 0 132 104"
-          className="h-24 w-auto sm:h-28"
+          className="h-16 w-auto sm:h-20"
           aria-hidden="true"
           focusable="false"
         >
@@ -67,10 +69,10 @@ export default function HeroBrandCard() {
           />
         </svg>
         <div className="flex flex-col items-center leading-none">
-          <span className="text-4xl font-extrabold tracking-[0.13em] text-bordeaux sm:text-5xl">
+          <span className="text-3xl font-extrabold tracking-[0.13em] text-bordeaux sm:text-4xl">
             MAILYS
           </span>
-          <span className="mt-2.5 text-sm font-semibold tracking-[0.44em] text-coral sm:text-base">
+          <span className="mt-2 text-xs font-semibold tracking-[0.44em] text-coral sm:text-sm">
             SOLUTIONS
           </span>
         </div>
