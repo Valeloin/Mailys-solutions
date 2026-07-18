@@ -13,6 +13,42 @@ import { useEffect, useRef, useState } from "react";
 
 const MIN_MS = 650;
 
+/** Sélecteur de tous les calques de la vitrine du hero (scènes du SVG,
+    titres en cross-slide, puces de segment) : trois jeux d'éléments
+    séparés, chacun sur sa propre animation CSS infinie de 33,6 s, sans
+    horloge commune entre eux. Tant que rien ne les interrompt ils
+    restent synchronisés, mais après une mise en veille, un changement
+    d'application ou un onglet repassé au premier plan, les navigateurs
+    mobiles ne relancent pas toujours des animations indépendantes au
+    même instant — d'où le décalage observé (titre et scène affichée
+    ne correspondent plus). */
+const CALQUES_VITRINE =
+  ".pv-scene-1,.pv-scene-2,.pv-scene-3,.pv-scene-4," +
+  ".pv-title-1,.pv-title-2,.pv-title-3,.pv-title-4," +
+  ".pv-trans,.pv-spin-vis,.pv-ok,.pv-burst";
+
+/** Relance tous les calques au même instant : on coupe l'animation,
+    on force un reflow (la lecture de getBoundingClientRect oblige le
+    navigateur à appliquer le changement avant la suite), puis on la
+    réactive. Les trois jeux d'éléments repartent alors de 0 % sur le
+    même top, ce qui les remet en phase — sans cette étape le second
+    style.animation = "" reprendrait parfois l'ancienne animation là
+    où elle avait été coupée plutôt que de la relancer à zéro. */
+function resynchroniserVitrine() {
+  const calques = document.querySelectorAll<HTMLElement | SVGElement>(
+    CALQUES_VITRINE
+  );
+  if (!calques.length) return;
+  calques.forEach((el) => {
+    el.style.animation = "none";
+  });
+  // Un seul reflow suffit pour tous les éléments déjà coupés ci-dessus.
+  void document.body.getBoundingClientRect();
+  calques.forEach((el) => {
+    el.style.animation = "";
+  });
+}
+
 /** Referme le menu mobile du header. Le <details> est natif, donc son
     état survit aux navigations client de Next.js (le header vit dans le
     layout et n'est jamais remonté) : sans ça, le volet reste ouvert
@@ -29,6 +65,23 @@ export default function PageTransition() {
   const shownAt = useRef(0);
   const failsafe = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+
+  // Resynchronise la vitrine : au montage (premier affichage de la
+  // page), quand l'onglet redevient visible, et quand la page est
+  // restaurée depuis le bfcache (geste précédent/suivant). Ce sont
+  // précisément les moments où les calques peuvent avoir dérivé.
+  useEffect(() => {
+    resynchroniserVitrine();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") resynchroniserVitrine();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", resynchroniserVitrine);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", resynchroniserVitrine);
+    };
+  }, [pathname]);
 
   // Affiche le voile au clic sur un lien interne (autre page)
   useEffect(() => {
