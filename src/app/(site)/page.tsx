@@ -12,7 +12,7 @@ import {
   getMethodSteps,
   getWhyUs,
 } from "@/lib/sections";
-import { Kicker, Check, MobileCtaBar, ProblemItem } from "@/components/ui";
+import { Kicker, MobileCtaBar, ProblemItem } from "@/components/ui";
 
 // ============================================================
 // ACCUEIL — requête principale :
@@ -49,85 +49,89 @@ export default async function HomePage() {
           <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
           <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
         </div>
-        <div className="mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1fr_minmax(0,30rem)]">
-          <div className="relative">
-            <div className="rise rise-1">
-              <Kicker>{c.hero.kicker}</Kicker>
-            </div>
-            <h1 className="mt-6 max-w-3xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
-              {c.hero.h1}
-            </h1>
-            <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              <Rich text={c.hero.subtitle} />
-            </p>
-            <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
-              >
-                {c.hero.ctaPrimary}
-              </Link>
-              <Link
-                href="/services"
-                className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
-              >
-                {c.hero.ctaSecondary}
-              </Link>
-            </div>
-            <ul className="rise rise-4 mt-10 flex flex-wrap gap-x-4 gap-y-3 text-sm font-medium text-muted">
-              {c.hero.reassurance.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)]"
+        {/* Structure reprise du hero de la page Services : colonne
+            texte + vitrine défilante, puis sommaire des 4 expertises.
+            Seul le contenu texte reste celui de l'accueil. */}
+        <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
+            {/* Colonne texte : contenu de l'accueil, inchangé */}
+            <div>
+              <div className="rise rise-1">
+                <Kicker>{c.hero.kicker}</Kicker>
+              </div>
+              <h1 className="mt-6 max-w-2xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-bordeaux sm:text-5xl">
+                {c.hero.h1}
+              </h1>
+              <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                <Rich text={c.hero.subtitle} />
+              </p>
+              <div className="rise rise-3 mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/contact"
+                  className="btn-cta rounded-xl px-7 py-3.5 font-semibold text-white"
                 >
-                  <Check />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+                  {c.hero.ctaPrimary}
+                </Link>
+                <Link
+                  href="/services"
+                  className="btn-ghost rounded-xl border border-border bg-background px-7 py-3.5 font-semibold"
+                >
+                  {c.hero.ctaSecondary}
+                </Link>
+              </div>
+            </div>
 
-          {/* Vitrine défilante : les 4 vignettes des services en boucle,
-              titre et onglets segmentés synchronisés (mêmes horloges CSS).
-              Bloc repris à l'identique du hero de la page Services. */}
-          <div className="relative" aria-hidden="true">
-            {/* Carte de fond : dégradé chaud corail → rouge → orange
-                de la DA (classe .hero-panel, halos compris). */}
-            <div className="hero-panel relative overflow-hidden rounded-[28px] px-5 py-7 shadow-window sm:px-8 sm:py-9">
-              <div className="hero-glow hero-glow-1" />
-              <div className="hero-glow hero-glow-2" />
-
+            {/* Vitrine défilante : titre et onglets segmentés
+                synchronisés (mêmes horloges CSS) */}
+            <div className="relative" aria-hidden="true">
+              <div className="glow-warm absolute -inset-12 rounded-full" />
               {/* Titre de la scène en cours (cross-slide pv-title-N) */}
               <div className="relative mb-3 h-9 max-[374px]:h-14">
                 {services.map((s, i) => (
                   <span
                     key={s.slug}
-                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-white drop-shadow-[0_1px_6px_rgb(var(--bordeaux)/0.35)]`}
+                    className={`pv-title-${i + 1} absolute inset-0 flex items-center justify-center text-center text-2xl font-bold leading-tight tracking-tight text-orange`}
                   >
                     {s.name}
                   </span>
                 ))}
               </div>
               {/* Onglets segmentés : le segment actif suit la scène */}
-              <div className="relative mb-5 flex justify-center gap-2">
+              <div className="mb-5 flex justify-center gap-2">
                 {[1, 2, 3, 4].map((n) => (
                   <span
                     key={n}
-                    className="relative h-1.5 w-8 overflow-hidden rounded-full bg-white/30"
+                    className="relative h-1.5 w-8 overflow-hidden rounded-full bg-bordeaux/10"
                   >
-                    <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-white`} />
+                    <span className={`pv-scene-${n} absolute inset-0 rounded-full bg-accent/70`} />
                   </span>
                 ))}
               </div>
-              {/* Maquette navigateur, posée sur le dégradé */}
-              <div className="relative rounded-2xl border border-white/40 bg-background p-2 shadow-window">
+              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
                 <HeroShowcase />
               </div>
-
-              {/* Liseré interne (arête de lumière + hairline) */}
-              <div className="hero-ring" />
             </div>
           </div>
+
+          {/* Sommaire cliquable : les 4 expertises, chacune vers sa page
+              (sur l'accueil il n'y a pas d'ancre interne à viser). */}
+          <nav
+            aria-label="Nos services"
+            className="rise rise-4 mt-10 flex flex-wrap gap-2.5"
+          >
+            {services.map((s, i) => (
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className="group flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-muted shadow-[0_2px_8px_-4px_rgb(var(--bordeaux)/0.12)] transition-colors hover:border-coral hover:text-bordeaux"
+              >
+                <span className="font-bold text-orange-text">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {s.name}
+              </Link>
+            ))}
+          </nav>
         </div>
       </section>
 
