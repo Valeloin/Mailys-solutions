@@ -68,7 +68,7 @@ export default async function HomePage() {
                   téléphone, 48 px dès le desktop) au lieu de rester bloqué
                   à 36 px sur toute la plage mobile, où il devenait
                   disproportionné. */}
-              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.75rem,7vw,3rem)] font-extrabold leading-[1.15] tracking-tight text-bordeaux">
+              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-bordeaux">
                 {c.hero.h1}
               </h1>
               <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -274,7 +274,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= MÉTHODE ================= */}
-      <section aria-labelledby="methode-title" className="sec sec-clean">
+      <section aria-labelledby="methode-title" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-14 sm:px-6 sm:py-16">
           <Kicker>{c.methode.kicker}</Kicker>
           <h2
@@ -293,7 +293,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= POURQUOI NOUS ================= */}
-      <section aria-labelledby="pourquoi-title" className="sec sec-warm">
+      <section aria-labelledby="pourquoi-title" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-20 sm:px-6 sm:py-24">
           <h2
             id="pourquoi-title"
