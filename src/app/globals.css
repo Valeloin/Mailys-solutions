@@ -2469,3 +2469,153 @@ summary,
     }
   }
 }
+
+/* ---------- 7. Décor animé du hero sur téléphone ----------
+   Les barres fantômes du décor sont réservées au desktop (lg:block) :
+   sur téléphone le haut de page se retrouvait sans aucun relief. On
+   rejoue ici le motif du logo — barres inclinées et points — à une
+   échelle et des positions pensées pour le portrait, avec une dérive
+   très lente qui anime le fond sans jamais disputer la lecture.
+   Transform et opacity uniquement : composité par le GPU, zéro
+   repaint. Inerte sous prefers-reduced-motion. */
+
+.hero-decor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-decor span {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+}
+
+/* Barres inclinées, écho des deux fûts du logo */
+.hero-bar-1 {
+  top: -3rem;
+  right: -2.5rem;
+  height: 20rem;
+  width: 5rem;
+  transform: rotate(-22deg);
+  background: rgb(var(--coral) / 0.07);
+}
+.hero-bar-2 {
+  top: 2rem;
+  right: 2.5rem;
+  height: 14rem;
+  width: 3.25rem;
+  transform: rotate(-22deg);
+  background: rgb(var(--accent) / 0.05);
+}
+.hero-bar-3 {
+  bottom: -5rem;
+  left: -3rem;
+  height: 18rem;
+  width: 4.5rem;
+  transform: rotate(-22deg);
+  background: rgb(var(--orange) / 0.06);
+}
+
+/* Halos chauds très diffus */
+.hero-halo-1,
+.hero-halo-2 {
+  filter: blur(44px);
+}
+.hero-halo-1 {
+  top: -4rem;
+  left: -3rem;
+  height: 15rem;
+  width: 15rem;
+  background: rgb(var(--coral) / 0.16);
+}
+.hero-halo-2 {
+  bottom: 4rem;
+  right: -4rem;
+  height: 13rem;
+  width: 13rem;
+  background: rgb(var(--orange) / 0.14);
+}
+
+/* Points du logo, en rappel discret */
+.hero-dot-1,
+.hero-dot-2 {
+  height: 0.5rem;
+  width: 0.5rem;
+  background: rgb(var(--orange) / 0.5);
+}
+.hero-dot-1 {
+  top: 22%;
+  right: 12%;
+}
+.hero-dot-2 {
+  top: 58%;
+  left: 8%;
+  background: rgb(var(--coral) / 0.5);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-bar-1 {
+    animation: derive-bar-a 17s ease-in-out infinite;
+  }
+  .hero-bar-2 {
+    animation: derive-bar-b 21s ease-in-out infinite;
+  }
+  .hero-bar-3 {
+    animation: derive-bar-a 19s ease-in-out infinite reverse;
+  }
+  .hero-halo-1 {
+    animation: halo-respire 13s ease-in-out infinite;
+  }
+  .hero-halo-2 {
+    animation: halo-respire 16s ease-in-out infinite reverse;
+  }
+  .hero-dot-1 {
+    animation: point-flotte 9s ease-in-out infinite;
+  }
+  .hero-dot-2 {
+    animation: point-flotte 11s ease-in-out infinite reverse;
+  }
+}
+
+@keyframes derive-bar-a {
+  0%,
+  100% {
+    transform: rotate(-22deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-17deg) translateY(-1.5rem);
+  }
+}
+@keyframes derive-bar-b {
+  0%,
+  100% {
+    transform: rotate(-22deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-27deg) translateY(1.25rem);
+  }
+}
+@keyframes halo-respire {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.14);
+  }
+}
+@keyframes point-flotte {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-0.9rem);
+  }
+}
