@@ -112,7 +112,7 @@ export default async function BlogPage() {
           </div>
 
           {/* Décor animé : la pile de cartes d'article */}
-          <div className="relative hidden lg:block" aria-hidden="true">
+          <div className="relative hidden 2xl:block" aria-hidden="true">
             <div className="glow-warm absolute -inset-10 rounded-full" />
             <BlogShowcase />
             {/* Chips flottantes de méta d'article */}
