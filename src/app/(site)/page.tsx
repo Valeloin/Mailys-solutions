@@ -73,24 +73,18 @@ export default async function HomePage() {
                 se retrouve sous les boutons, hors écran sur téléphone.
                 Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
             <div className="contents lg:block">
-              <div className="rise rise-1 order-1">
-                <Kicker>{c.hero.kicker}</Kicker>
-              </div>
-              {/* Taille fluide plutôt que deux paliers : le titre suit
-                  continûment la largeur de l'écran (28 px sur un petit
-                  téléphone, 48 px dès le desktop) au lieu de rester bloqué
-                  à 36 px sur toute la plage mobile, où il devenait
-                  disproportionné. */}
-              <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
-                {c.hero.h1}
-              </h1>
-              <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                <Rich text={c.hero.subtitle} />
-              </p>
-              {/* Mobile-first : boutons pleine largeur empilés (sinon ils
-                  s'alignent au contenu et laissent un vide à droite),
-                  puis côte à côte dès qu'il y a la place. */}
-              <div className="rise rise-3 order-5 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+                <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+                <div className="rise rise-1 order-1">
+                  <Kicker>{c.hero.kicker}</Kicker>
+                </div>
+                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
+                  {c.hero.h1}
+                </h1>
+                <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                  <Rich text={c.hero.subtitle} />
+                </p>
+                <div className="rise rise-3 order-5 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                 <Link
                   href="/contact"
                   className="btn-cta w-full rounded-xl px-7 py-3.5 text-center font-semibold text-white sm:w-auto"
@@ -103,6 +97,7 @@ export default async function HomePage() {
                 >
                   {c.hero.ctaSecondary}
                 </Link>
+              </div>
               </div>
             </div>
 

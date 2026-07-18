@@ -6,6 +6,9 @@
 
 ---
 
+## Session — 18 juillet 2026 · 08h00
+- Hero : habillage DA (card avec filet, border) appliqué à tous les héros du site (page d'accueil, page Services, pages services individuelles)
+
 ## Session — 17 juillet 2026 · 21h36
 
 - **12:20** — **Trame de points supprimée** : la variante claire des fonds devient blanche et aérée, avec de larges lavis corail/orange dans les angles. Plus aucun motif répété.

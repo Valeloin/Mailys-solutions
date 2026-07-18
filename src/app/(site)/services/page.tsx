@@ -42,7 +42,8 @@ export default async function ServicesPage() {
         <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
             {/* Colonne texte */}
-            <div>
+            <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+              <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
               <div className="rise rise-1">
                 <Kicker>Nos expertises</Kicker>
               </div>
