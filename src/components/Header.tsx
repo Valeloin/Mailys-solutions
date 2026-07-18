@@ -18,6 +18,135 @@ const SERVICE_LINKS = SERVICES.map((s) => ({
   href: `/services/${s.slug}`,
 }));
 
+// ---------- Briques du panneau tactile ----------
+// Sous-titres : sur téléphone une carte a la place de dire où elle mène,
+// là où une barre de navigation desktop doit se contenter d'un mot.
+const NAV_SUBTITLES: Record<string, string> = {
+  Accueil: "Vue d'ensemble",
+  Réalisations: "Nos projets clients",
+  "À propos": "Qui nous sommes",
+  Blog: "Guides et conseils",
+  Contact: "Parlons de votre projet",
+};
+
+// Pictogrammes au trait, en currentColor : chacun prend le ton de sa
+// pastille. Même facture que les icônes de constat (ui.tsx).
+const NAV_ICONS: Record<string, React.ReactNode> = {
+  Accueil: (
+    <>
+      <path d="M4 10.5 12 4l8 6.5" />
+      <path d="M6 10v9h12v-9" />
+    </>
+  ),
+  Réalisations: (
+    <>
+      <rect x="3.5" y="5" width="17" height="13" rx="2" />
+      <path d="M3.5 14l4.5-4 3.5 3 3-3.5 6 5.5" />
+    </>
+  ),
+  "À propos": (
+    <>
+      <circle cx="12" cy="8.5" r="3.5" />
+      <path d="M5 19.5c1.2-3.4 4-5 7-5s5.8 1.6 7 5" />
+    </>
+  ),
+  Blog: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <path d="M8 9h8M8 13h8M8 17h5" />
+    </>
+  ),
+  Contact: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3.5 7l8.5 6 8.5-6" />
+    </>
+  ),
+  Grille: (
+    <>
+      <rect x="4" y="4" width="7" height="7" rx="1.6" />
+      <rect x="13" y="4" width="7" height="7" rx="1.6" />
+      <rect x="4" y="13" width="7" height="7" rx="1.6" />
+      <rect x="13" y="13" width="7" height="7" rx="1.6" />
+    </>
+  ),
+};
+
+// Tons chauds cyclés par position — même principe que les cartes constat.
+const MENU_TONES = [
+  "bg-coral/[0.15] text-[#D8494F]",
+  "bg-orange/[0.15] text-orange-text",
+  "bg-accent/[0.12] text-accent",
+  "bg-bordeaux/[0.08] text-foreground",
+] as const;
+
+/** Carte de navigation tactile : pastille + libellé (+ sous-titre) + chevron.
+    Hauteur ~66 px — très au-dessus du seuil de 44 px, confortable au pouce. */
+function MenuCard({
+  href,
+  title,
+  subtitle,
+  icon,
+  badge,
+  tone = 0,
+}: {
+  href: string;
+  title: string;
+  subtitle?: string;
+  icon?: React.ReactNode;
+  badge?: string;
+  tone?: number;
+}) {
+  const t = MENU_TONES[tone % MENU_TONES.length];
+  return (
+    <Link
+      href={href}
+      className="group/c flex items-center gap-3.5 rounded-2xl border border-border bg-surface px-3.5 py-3 transition-[transform,border-color,box-shadow] duration-200 active:scale-[0.985] hover:border-coral/50 hover:shadow-[0_10px_24px_-16px_rgb(var(--bordeaux)/0.3)]"
+    >
+      <span
+        aria-hidden="true"
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[13px] font-extrabold ${t}`}
+      >
+        {icon ? (
+          <svg
+            viewBox="0 0 24 24"
+            className="h-[21px] w-[21px]"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {icon}
+          </svg>
+        ) : (
+          badge
+        )}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[15px] font-semibold text-foreground">
+          {title}
+        </span>
+        {subtitle && (
+          <span className="mt-0.5 block truncate text-xs text-muted">{subtitle}</span>
+        )}
+      </span>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        className="h-4 w-4 shrink-0 text-muted transition-transform duration-200 group-hover/c:translate-x-0.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </Link>
+  );
+}
+
 // Header 100 % HTML/CSS (aucun JavaScript envoyé au navigateur).
 // Composition en trois zones : logo | navigation centrée | action.
 // Navigation en petites capitales espacées (épuré mais travaillé),
@@ -133,61 +262,79 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Navigation mobile/tablette — <details> natif, sans JavaScript */}
-        <details className="relative justify-self-end lg:hidden">
+        {/* ---------- Navigation tactile (téléphone / tablette) ----------
+            Panneau plein écran à cartes, et non un menu déroulant desktop
+            rétréci : cartes pleine largeur, pictogramme dans un carré
+            teinté, titre + sous-titre, chevron. Cibles largement au-delà
+            des 44 px. Toujours <details> natif — aucun JavaScript. */}
+        <details className="group/menu justify-self-end lg:hidden">
           <summary
-            className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border transition-colors hover:border-coral [&::-webkit-details-marker]:hidden"
+            className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-border bg-background transition-colors hover:border-coral [&::-webkit-details-marker]:hidden"
             aria-label="Ouvrir le menu"
           >
-            <span aria-hidden="true" className="space-y-1.5">
-              <span className="block h-0.5 w-5 bg-foreground"></span>
-              <span className="block h-0.5 w-5 bg-foreground"></span>
-              <span className="block h-0.5 w-5 bg-foreground"></span>
+            {/* Barres qui se croisent en X à l'ouverture */}
+            <span aria-hidden="true" className="relative block h-4 w-5">
+              <span className="absolute left-0 top-0 block h-0.5 w-5 rounded-full bg-foreground transition-transform duration-300 group-open/menu:top-[7px] group-open/menu:rotate-45" />
+              <span className="absolute left-0 top-[7px] block h-0.5 w-5 rounded-full bg-foreground transition-opacity duration-200 group-open/menu:opacity-0" />
+              <span className="absolute left-0 top-[14px] block h-0.5 w-5 rounded-full bg-foreground transition-transform duration-300 group-open/menu:top-[7px] group-open/menu:-rotate-45" />
             </span>
           </summary>
+
           <nav
             aria-label="Navigation mobile"
-            className="absolute right-0 top-12 w-60 overflow-hidden rounded-xl border border-border bg-background shadow-[0_24px_48px_-24px_rgb(var(--bordeaux)/0.3)]"
+            className="fixed inset-x-0 bottom-0 top-[4.25rem] z-40 overflow-y-auto overscroll-contain border-t border-border bg-background pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
-            <span aria-hidden="true" className="brand-hairline block h-0.5" />
-            <div className="p-2">
-              {NAV.map((item) =>
-                item.name === "Services" ? (
-                  <div key={item.href}>
-                    <Link
+            <div className="mx-auto max-w-lg space-y-7 px-4 py-6">
+              {/* ----- Pages ----- */}
+              <section>
+                <p className="px-1 pb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-text">
+                  Navigation
+                </p>
+                <div className="space-y-2">
+                  {NAV.filter((i) => i.name !== "Services").map((item, i) => (
+                    <MenuCard
+                      key={item.href}
                       href={item.href}
-                      className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground hover:bg-surface"
-                    >
-                      {item.name}
-                    </Link>
-                    {/* Sous-pages de services, légèrement en retrait */}
-                    <div className="ml-3 border-l border-border pl-2">
-                      {SERVICE_LINKS.slice(1).map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className="block rounded-lg px-3.5 py-2 text-[13px] font-medium text-muted hover:bg-surface hover:text-foreground"
-                        >
-                          {sub.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-foreground hover:bg-surface"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              )}
+                      title={item.name}
+                      subtitle={NAV_SUBTITLES[item.name]}
+                      icon={NAV_ICONS[item.name]}
+                      tone={i}
+                    />
+                  ))}
+                </div>
+              </section>
+
+              {/* ----- Services, développés : sur téléphone on ne cache
+                      pas les pages qui portent le référencement ----- */}
+              <section>
+                <p className="px-1 pb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-orange-text">
+                  Nos expertises
+                </p>
+                <div className="space-y-2">
+                  {SERVICE_LINKS.map((sub, i) => (
+                    <MenuCard
+                      key={sub.href}
+                      href={sub.href}
+                      title={sub.name}
+                      badge={String(i + 1).padStart(2, "0")}
+                      tone={i}
+                    />
+                  ))}
+                  <MenuCard
+                    href="/services"
+                    title="Tous les services"
+                    subtitle="Vue d'ensemble des 4 expertises"
+                    icon={NAV_ICONS.Grille}
+                    tone={3}
+                  />
+                </div>
+              </section>
+
               <Link
                 href="/contact"
-                className="btn-cta mt-2 block rounded-lg px-3 py-2.5 text-center text-sm font-semibold text-white"
+                className="btn-cta flex items-center justify-center rounded-2xl px-5 py-4 text-center font-semibold text-white"
               >
-                Demander un devis
+                Demander un devis gratuit
               </Link>
             </div>
           </nav>
