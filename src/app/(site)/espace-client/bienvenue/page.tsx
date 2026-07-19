@@ -41,10 +41,6 @@ export default async function BienvenuePage({
     <section className="sec sec-clean min-h-[calc(100vh-4rem)]">
       <div className="mx-auto max-w-md px-4 py-16 sm:px-6 sm:py-24">
         <div className="card reveal relative rounded-2xl border border-border bg-background p-6 sm:p-8">
-          <span
-            aria-hidden="true"
-            className="brand-hairline absolute inset-x-0 top-0 h-1 rounded-t-2xl"
-          />
 
           <h1 className="text-2xl font-bold text-foreground">Bienvenue</h1>
           <p className="mt-2 text-sm text-muted">

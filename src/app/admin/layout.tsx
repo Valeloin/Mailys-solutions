@@ -43,7 +43,6 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-surface">
       <header className="relative border-b border-border bg-background">
-        <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
         <div className="mx-auto flex h-14 max-w-content flex-wrap items-center justify-between gap-3 px-4 sm:px-6">
           <p className="text-sm font-bold">
             Admin <span className="text-coral">Mailys Solutions</span>

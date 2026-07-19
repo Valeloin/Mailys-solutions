@@ -64,10 +64,6 @@ export default async function TicketPage({
         </Link>
 
         <div className="card reveal relative mt-5 rounded-2xl border border-border bg-background p-6 sm:p-8">
-          <span
-            aria-hidden="true"
-            className="brand-hairline absolute inset-x-0 top-0 h-1 rounded-t-2xl"
-          />
 
           <p className="text-xs font-bold text-accent">{ticket.number}</p>
           <h1 className="mt-1 text-xl font-bold text-foreground sm:text-2xl">

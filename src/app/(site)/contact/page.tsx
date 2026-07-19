@@ -204,7 +204,6 @@ export default async function ContactPage({
           <aside className="relative overflow-hidden rounded-3xl bg-bordeaux p-7 text-white sm:p-9">
             {/* Décors : filet + barres du logo + points */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              <span className="brand-hairline absolute inset-x-0 top-0 h-1.5" />
               <div className="absolute -right-8 -top-16 h-56 w-16 -rotate-[22deg] rounded-full bg-white/[0.05]" />
               <div className="absolute -right-1 -top-20 h-56 w-16 -rotate-[22deg] rounded-full bg-coral/[0.12]" />
               <div className="pv-dot absolute bottom-8 right-10 h-2.5 w-2.5 rounded-full bg-orange/60" />

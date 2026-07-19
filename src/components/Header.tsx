@@ -113,7 +113,7 @@ function MobileOnglets() {
             <span
               aria-hidden="true"
               className={`absolute inset-x-1.5 bottom-0 h-[2px] rounded-t-full transition-opacity duration-200 ${
-                actif ? "brand-hairline opacity-100" : "opacity-0"
+                actif ? "bg-accent opacity-100" : "opacity-0"
               }`}
             />
           </Link>
@@ -132,8 +132,6 @@ function MobileOnglets() {
 export default function Header() {
   return (
     <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background">
-      {/* Filet signature de marque : corail → rouge → orange */}
-      <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,
@@ -185,8 +183,6 @@ export default function Header() {
                     Le pont haut évite la coupure du survol sous le filet. */}
                 <div className="invisible absolute left-1/2 top-full z-20 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
                   <div className="w-[19.5rem] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_28px_56px_-28px_rgb(var(--bordeaux)/0.4)]">
-                    {/* Filet signature, comme en couronnement du header */}
-                    <span aria-hidden="true" className="brand-hairline block h-1" />
                     <div className="p-2.5">
                       {/* Label façon kicker : même grammaire que la DA */}
                       <p className="px-3 pb-1.5 pt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-text">

@@ -136,16 +136,6 @@ body {
     }
   }
 
-  /* --- Filet dégradé signature (header, footer, carte solution, panneau CTA) --- */
-  .brand-hairline {
-    background-image: linear-gradient(
-      90deg,
-      rgb(var(--coral)),
-      rgb(var(--accent)) 45%,
-      rgb(var(--orange))
-    );
-  }
-
   /* --- Halo chaud très diffus derrière le mockup du hero --- */
   .glow-warm {
     background: radial-gradient(

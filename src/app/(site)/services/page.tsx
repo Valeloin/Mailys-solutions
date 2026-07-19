@@ -44,7 +44,6 @@ export default async function ServicesPage() {
           <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
             {/* Colonne texte */}
             <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
-              <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
               <div className="rise rise-1">
                 <Kicker>Nos expertises</Kicker>
               </div>
@@ -139,11 +138,6 @@ export default async function ServicesPage() {
               id={`service-${s.slug}`}
               className="card reveal group relative scroll-mt-24 overflow-hidden rounded-3xl border border-border bg-background p-6 hover:border-coral sm:p-8 lg:p-10"
             >
-              {/* Filet dégradé signature révélé au survol */}
-              <span
-                aria-hidden="true"
-                className="brand-hairline absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-              />
               <div
                 className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-12 ${
                   i % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""

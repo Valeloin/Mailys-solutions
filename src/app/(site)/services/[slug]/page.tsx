@@ -104,8 +104,7 @@ export default async function ServicePage({
           <div className="absolute -top-32 right-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
         </div>
         <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
-          <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
-            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+          <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
             <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
               {service.h1}
             </h1>
@@ -189,8 +188,7 @@ export default async function ServicePage({
       {/* ========== 4. LA SOLUTION ========== */}
       <section aria-labelledby="solution" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
-          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
-            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
             <h2
               id="solution"
               className="max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl"

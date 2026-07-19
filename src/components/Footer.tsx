@@ -12,8 +12,6 @@ export default async function Footer() {
   ]);
   return (
     <footer className="relative border-t border-border bg-surface">
-      {/* Le filet d'ouverture du header est repris en fermeture : la page est encadrée. */}
-      <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-0.5" />
       <div className="mx-auto grid max-w-content gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
           <Logo />

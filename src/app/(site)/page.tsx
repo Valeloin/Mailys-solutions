@@ -73,8 +73,7 @@ export default async function HomePage() {
                 se retrouve sous les boutons, hors écran sur téléphone.
                 Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
             <div className="contents lg:block">
-              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
-                <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
                 <div className="rise rise-1 order-1">
                   <Kicker>{c.hero.kicker}</Kicker>
                 </div>
@@ -252,8 +251,7 @@ export default async function HomePage() {
           </div>
 
           {/* ---------- DROITE : la réponse (panneau premium chaud, épuré) ---------- */}
-          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
-            <span aria-hidden="true" className="brand-hairline absolute inset-x-0 top-0 h-1" />
+          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
             {/* Décor chaud, net : lavis diagonal + halo orangé en haut à
                 droite (sans barre fantôme ni reflet — comme la maquette). */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
