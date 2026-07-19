@@ -56,16 +56,29 @@ export default function ClientTicketForm() {
   const [monte, setMonte] = useState(false);
   useEffect(() => setMonte(true), []);
 
-  const close = useCallback(() => {
-    setOpen(false);
+  /** Remet le formulaire à blanc, sans toucher à l'ouverture de la modale. */
+  const vider = useCallback(() => {
     setFields(EMPTY);
     setFiles([]);
     setErrors({});
     setGlobalError("");
     setCreated(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
-    openerRef.current?.focus();
   }, []);
+
+  const close = useCallback(() => {
+    setOpen(false);
+    vider();
+    openerRef.current?.focus();
+  }, [vider]);
+
+  /** Enchaîne un second ticket sans repasser par le bouton d'ouverture. */
+  const reprendre = useCallback(() => {
+    vider();
+    // Le champ n'existe qu'une fois la confirmation remplacée par le
+    // formulaire : on attend donc le rendu suivant pour lui donner le focus.
+    setTimeout(() => firstFieldRef.current?.focus(), 0);
+  }, [vider]);
 
   useEffect(() => {
     if (!open) return;
@@ -181,13 +194,22 @@ export default function ClientTicketForm() {
                   <span className="font-bold text-accent">{created.number}</span>{" "}
                   — nous revenons vers vous rapidement.
                 </p>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="btn-cta mt-6 rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
-                >
-                  Fermer
-                </button>
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={reprendre}
+                    className="btn-ghost rounded-xl border border-border bg-background px-5 py-2.5 text-sm font-semibold"
+                  >
+                    Déclarer un autre ticket
+                  </button>
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="btn-cta rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
+                  >
+                    Fermer
+                  </button>
+                </div>
               </div>
             ) : (
               <>
