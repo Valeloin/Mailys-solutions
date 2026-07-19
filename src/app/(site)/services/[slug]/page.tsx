@@ -11,6 +11,7 @@ import {
 import { SITE } from "@/lib/site";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Check, Kicker, MobileCtaBar, ProblemItem } from "@/components/ui";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
@@ -93,7 +94,18 @@ export default async function ServicePage({
         }}
       />
 
+      {/* Le composant existait, balisé Schema.org et accessible, mais
+          n'était importé nulle part : ce conteneur vide marquait son
+          emplacement et n'injectait plus qu'un espacement fantôme. Sur
+          une fiche service, le seul retour vers le hub passait par le
+          menu déroulant du header — indisponible sur mobile. */}
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+        <Breadcrumb
+          items={[
+            { name: "Services", href: "/services" },
+            { name: service.name, href: `/services/${service.slug}` },
+          ]}
+        />
       </div>
 
       {/* ========== 1. HERO ========== */}
@@ -104,7 +116,7 @@ export default async function ServicePage({
           <div className="absolute -top-32 right-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
         </div>
         <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
-          <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+          <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
             <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
               {service.h1}
             </h1>
@@ -188,7 +200,7 @@ export default async function ServicePage({
       {/* ========== 4. LA SOLUTION ========== */}
       <section aria-labelledby="solution" className="sec sec-warm">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
-          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
+          <div className="card relative overflow-hidden rounded-2xl border border-border bg-background p-8 sm:p-10">
             <h2
               id="solution"
               className="max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl"

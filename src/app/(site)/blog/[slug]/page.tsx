@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
+import Breadcrumb from "@/components/Breadcrumb";
 import { SITE } from "@/lib/site";
 import {
   getPublishedPosts,
@@ -77,7 +78,15 @@ export default async function BlogPostPage({
         }}
       />
 
+      {/* Le retour vers le blog n'existait qu'en tout bas de l'article :
+          après une longue lecture, remonter était le seul chemin. */}
       <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+        <Breadcrumb
+          items={[
+            { name: "Blog", href: "/blog" },
+            { name: post.title, href: `/blog/${post.slug}` },
+          ]}
+        />
       </div>
 
       <article className="mx-auto max-w-content px-4 py-12 sm:px-6">
