@@ -228,11 +228,6 @@ export default function BugReportButton() {
             aria-labelledby="bugtrack-title"
             className="relative my-auto w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-window sm:p-8"
           >
-            <span
-              aria-hidden="true"
-              className="brand-hairline absolute inset-x-0 top-0 h-1 rounded-t-2xl"
-            />
-
             {ticket ? (
               /* ---------- Confirmation ---------- */
               <div className="py-4 text-center">
