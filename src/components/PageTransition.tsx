@@ -11,7 +11,17 @@ import { useEffect, useRef, useState } from "react";
 // pour que l'animation se lise, garde-fou à 5 s).
 // ============================================================
 
-const MIN_MS = 650;
+// Délai de grâce : en deçà, la navigation aboutit avant qu'on ait eu le
+// temps de lire quoi que ce soit — montrer le voile ne ferait qu'ajouter
+// un clignotement. Les pages services et l'accueil sont rendues
+// statiquement et arrivent presque toujours sous ce seuil.
+const GRACE_MS = 180;
+
+// Une fois le voile affiché, il reste assez longtemps pour se lire.
+// Il valait 650 ms, mais imposées à TOUTE navigation, y compris celles
+// déjà terminées : parcourir quatre pages coûtait 2,6 s d'attente
+// ajoutée à un site par ailleurs rapide.
+const MIN_MS = 400;
 
 /** Sélecteur de tous les calques de la vitrine du hero (scènes du SVG,
     titres en cross-slide, puces de segment) : trois jeux d'éléments
@@ -64,6 +74,8 @@ export default function PageTransition() {
   const [visible, setVisible] = useState(false);
   const shownAt = useRef(0);
   const failsafe = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** Délai de grâce armé au clic, désarmé si la page arrive avant. */
+  const grace = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
 
   // Resynchronise la vitrine : au montage (premier affichage de la
@@ -103,8 +115,13 @@ export default function PageTransition() {
       // site public, pas un écran de chargement du back-office.
       if (url.pathname.startsWith("/admin")) return;
 
-      shownAt.current = Date.now();
-      setVisible(true);
+      // On n'affiche pas tout de suite : on arme un délai. Si la page
+      // suivante arrive avant, le voile n'apparaît jamais.
+      if (grace.current) clearTimeout(grace.current);
+      grace.current = setTimeout(() => {
+        shownAt.current = Date.now();
+        setVisible(true);
+      }, GRACE_MS);
       if (failsafe.current) clearTimeout(failsafe.current);
       failsafe.current = setTimeout(() => setVisible(false), 5000);
     };
@@ -117,6 +134,12 @@ export default function PageTransition() {
   // navigations sans clic de lien (boutons Précédent/Suivant du navigateur).
   useEffect(() => {
     closeHeaderMenu();
+    // La page est arrivée : on désarme le délai. S'il n'avait pas encore
+    // expiré, le voile n'aura jamais été montré — c'est le cas courant.
+    if (grace.current) {
+      clearTimeout(grace.current);
+      grace.current = null;
+    }
     if (!shownAt.current) return;
     const elapsed = Date.now() - shownAt.current;
     const timer = setTimeout(

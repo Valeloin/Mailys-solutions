@@ -261,6 +261,28 @@ body {
   }
 }
 
+/* ---------- Focus clavier visible partout ----------
+   Une seule règle :focus-visible existait dans tout le fichier, pour
+   .nav-link. Tout le reste — boutons pleins, CTA, onglets, liens du
+   pied de page, <summary> des FAQ, panneau déroulant du menu Services —
+   dépendait de l'anneau par défaut du navigateur, qui se confond avec
+   le bord des boutons pleins. On perdait sa position au clavier.
+
+   currentColor : l'anneau prend la couleur du texte de l'élément, donc
+   rien de nouveau n'entre dans la palette. Le décalage l'éloigne du
+   bord pour qu'il reste lisible sur les fonds sombres comme clairs. */
+:where(a, button, summary, [tabindex], input, select, textarea):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: inherit;
+}
+
+/* Le CTA principal est blanc sur dégradé rouge : currentColor y donne un
+   anneau blanc collé au bouton. On l'écarte davantage pour le détacher. */
+.btn-cta:focus-visible {
+  outline-offset: 4px;
+}
+
 /* ---------- Liens dans les textes édités via l'admin ---------- */
 .rich-links a {
   color: rgb(var(--accent));
