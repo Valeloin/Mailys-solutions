@@ -9,7 +9,7 @@
 ## Session — 18 juillet 2026 · 08h00
 - Hero : habillage DA (card avec filet, border) appliqué à tous les héros du site (page d'accueil, page Services, pages services individuelles)
 - Corrections : repair broken pages (a-propos, blog, contact, realisations, services)
-- BugTrack : bouton "Signaler un bug" dans l'espace admin, proxy API serveur (`/api/bugtrack`) qui protège le site_key et exige une session admin
+- Page contact : restauration de la grille (formulaire + panneau latéral) qui manquait suite à une correction précédente
 
 ## Session — 17 juillet 2026 · 21h36
 

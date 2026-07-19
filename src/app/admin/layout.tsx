@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getServerClient } from "@/lib/supabase/server";
 import { logout } from "./actions";
-import BugReportButton from "@/components/BugReportButton";
 
 // Coque de l'administration — jamais indexée, jamais liée
 // depuis le site public (accès direct : /admin).
@@ -54,17 +53,14 @@ export default async function AdminLayout({
                   </Link>
                 ))}
               </nav>
-              <div className="flex items-center gap-2">
-                <BugReportButton />
-                <form action={logout}>
-                  <button
-                    type="submit"
-                    className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-coral hover:text-foreground"
-                  >
-                    Se déconnecter
-                  </button>
-                </form>
-              </div>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-coral hover:text-foreground"
+                >
+                  Se déconnecter
+                </button>
+              </form>
             </>
           )}
         </div>
