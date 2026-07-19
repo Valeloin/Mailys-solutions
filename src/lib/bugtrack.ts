@@ -38,19 +38,23 @@ export const ATTACHMENT_TYPES = [
   "text/plain",
 ] as const;
 
-/** Statuts renvoyés par BugTrack, dans l'ordre du cycle de vie. */
+/** Étapes du cycle de vie, dans l'ordre — celles qui se parcourent.
+    « Réouvert » n'y figure pas : ce n'est pas une étape mais un retour
+    en arrière, déclenché quand une correction livrée n'a pas tenu. */
 export const STATUSES = [
   "Nouveau",
   "En analyse",
   "En cours",
   "En attente d'informations",
-  "Corrigé",
   "Livré",
-  "Fermé",
+  "Clos",
 ] as const;
 
+/** Statut hors parcours : le ticket repart dans le circuit de traitement. */
+export const REOPENED = "Réouvert";
+
 /** Statuts après lesquels plus rien n'est attendu du client. */
-export const CLOSED_STATUSES: readonly string[] = ["Fermé"];
+export const CLOSED_STATUSES: readonly string[] = ["Clos"];
 
 // Formes renvoyées par l'API, déclarées ici plutôt que dans le module
 // serveur : les composants d'interface en ont besoin, et ils ne doivent

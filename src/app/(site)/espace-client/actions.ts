@@ -80,6 +80,33 @@ export async function setPassword(formData: FormData): Promise<void> {
   redirect("/espace-client?bienvenue=1");
 }
 
+/** Changement de mot de passe depuis l'espace, par un client déjà connecté. */
+export async function changePassword(formData: FormData): Promise<void> {
+  const supabase = await getServerClient();
+  if (!supabase) redirect("/espace-client/connexion?error=config");
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/espace-client/connexion");
+
+  const password = String(formData.get("password") || "");
+  const confirm = String(formData.get("confirm") || "");
+
+  if (password.length < 8) redirect("/espace-client/compte?error=court");
+  if (password !== confirm) redirect("/espace-client/compte?error=different");
+
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) {
+    console.error("[compte] refus de Supabase —", error.message);
+    redirect(
+      `/espace-client/compte?error=refus&motif=${encodeURIComponent(error.message)}`
+    );
+  }
+
+  redirect("/espace-client/compte?change=1");
+}
+
 /**
  * Envoi du lien de réinitialisation, par notre SMTP.
  *
