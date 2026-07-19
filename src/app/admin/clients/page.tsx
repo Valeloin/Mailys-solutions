@@ -196,14 +196,19 @@ export default async function AdminClientsPage({
                           : "Invitation en attente"}
                     </span>
 
-                    {!c.confirmed && !c.suspended && (
+                    {/* Proposé aussi aux comptes actifs : un client peut
+                        avoir confirmé son adresse sans jamais choisir de
+                        mot de passe, et se retrouver bloqué dehors. */}
+                    {!c.suspended && (
                       <form action={resendInvite}>
                         <input type="hidden" name="email" value={c.email} />
                         <button
                           type="submit"
                           className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-coral hover:text-foreground"
                         >
-                          Renvoyer l&apos;invitation
+                          {c.confirmed
+                            ? "Envoyer un lien d'accès"
+                            : "Renvoyer l'invitation"}
                         </button>
                       </form>
                     )}

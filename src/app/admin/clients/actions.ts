@@ -145,7 +145,15 @@ export async function restoreClient(formData: FormData): Promise<void> {
   redirect("/admin/clients?restore=1");
 }
 
-/** Renvoie l'invitation à un compte qui n'a jamais été activé. */
+/**
+ * Renvoie un lien d'accès, quel que soit l'état du compte.
+ *
+ * Utile dans deux situations distinctes mais qui appellent la même
+ * réponse : le client n'a jamais reçu son invitation, ou il l'a bien
+ * reçue mais n'est jamais allé au bout — son compte est alors confirmé
+ * sans mot de passe, et il ne peut plus entrer. Sans cette action,
+ * l'administrateur n'aurait aucun moyen de le dépanner.
+ */
 export async function resendInvite(formData: FormData): Promise<void> {
   await requireAdmin();
 
@@ -156,22 +164,29 @@ export async function resendInvite(formData: FormData): Promise<void> {
   if (!admin) redirect("/admin/clients?error=config");
 
   const origin = await currentOrigin();
+  const redirectTo = `${origin}/auth/callback?next=/espace-client/bienvenue`;
 
-  // Le compte existe déjà : un lien d'invitation serait refusé. On
-  // fabrique un lien de récupération, qui mène au même endroit — le
-  // client choisit son mot de passe et entre dans son espace.
-  const { data, error } = await admin.auth.admin.generateLink({
-    type: "recovery",
-    email,
-    options: { redirectTo: `${origin}/auth/callback?next=/espace-client/bienvenue` },
-  });
-
-  if (error || !data?.properties?.action_link) {
-    redirect("/admin/clients?error=creation");
+  // Un lien d'invitation est refusé pour un compte déjà créé, un lien
+  // de récupération pour un compte qui n'existe pas encore côté auth.
+  // On tente donc le second puis le premier : les deux mènent au même
+  // écran, où le client choisit son mot de passe.
+  let link: string | null = null;
+  for (const type of ["recovery", "invite"] as const) {
+    const { data } = await admin.auth.admin.generateLink({
+      type,
+      email,
+      options: { redirectTo },
+    });
+    if (data?.properties?.action_link) {
+      link = data.properties.action_link;
+      break;
+    }
   }
 
+  if (!link) redirect("/admin/clients?error=creation");
+
   try {
-    await sendClientInvitation(email, data.properties.action_link);
+    await sendClientInvitation(email, link);
   } catch {
     redirect("/admin/clients?error=envoi");
   }
