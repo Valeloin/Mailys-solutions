@@ -232,24 +232,16 @@ export default function Header() {
           )}
         </nav>
 
-        {/* Actions, séparées par un filet vertical */}
+        {/* Accès client, séparé de la navigation par un filet vertical.
+            whitespace-nowrap : sans lui le libellé se casse en plusieurs
+            lignes dès que la barre se resserre. */}
         <div className="hidden items-center gap-4 justify-self-end lg:flex">
           <span aria-hidden="true" className="h-5 w-px bg-border" />
-          {/* Discret face au CTA : les clients savent qu'ils le cherchent,
-              les prospects doivent voir le devis d'abord. */}
-          {/* whitespace-nowrap : sans lui le libellé se casse en trois
-              lignes et écrase le CTA dès que la barre se resserre. */}
           <Link
             href="/espace-client"
             className="nav-link whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
           >
             Espace client
-          </Link>
-          <Link
-            href="/contact"
-            className="btn-cta rounded-full px-5 py-2.5 text-sm font-semibold text-white"
-          >
-            Demander un devis
           </Link>
         </div>
 
