@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getServerClient } from "@/lib/supabase/server";
 import { getAdminClient } from "@/lib/supabase/admin";
+import { sendClientInvitation } from "@/lib/mailer";
 import { ADMIN_EMAILS } from "@/lib/site";
 
 // ============================================================
@@ -69,15 +70,30 @@ export async function inviteClient(formData: FormData): Promise<void> {
   if (!admin) redirect("/admin/clients?error=config");
 
   const origin = await currentOrigin();
-  const { error } = await admin.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${origin}/auth/callback?next=/espace-client/bienvenue`,
+
+  // generateLink crée le compte et fabrique le lien signé, sans rien
+  // envoyer : l'email part par notre SMTP, pas par celui de Supabase,
+  // qui est limité à quelques envois par heure.
+  const { data, error } = await admin.auth.admin.generateLink({
+    type: "invite",
+    email,
+    options: { redirectTo: `${origin}/auth/callback?next=/espace-client/bienvenue` },
   });
 
-  if (error) {
-    // Supabase renvoie une erreur explicite quand l'adresse a déjà un
-    // compte : c'est le cas le plus fréquent, on le distingue.
-    const code = /already|exist/i.test(error.message) ? "existe" : "envoi";
+  if (error || !data?.properties?.action_link) {
+    const code = /already|exist|registered/i.test(error?.message ?? "")
+      ? "existe"
+      : "creation";
     redirect(`/admin/clients?error=${code}`);
+  }
+
+  try {
+    await sendClientInvitation(email, data.properties.action_link);
+  } catch {
+    // Le compte existe désormais mais l'email n'est pas parti : on le dit,
+    // sinon l'écran annoncerait une invitation que le client ne recevra
+    // jamais. « Renvoyer l'invitation » permet de réessayer.
+    redirect("/admin/clients?error=envoi");
   }
 
   revalidatePath("/admin/clients");
@@ -140,10 +156,25 @@ export async function resendInvite(formData: FormData): Promise<void> {
   if (!admin) redirect("/admin/clients?error=config");
 
   const origin = await currentOrigin();
-  const { error } = await admin.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${origin}/auth/callback?next=/espace-client/bienvenue`,
+
+  // Le compte existe déjà : un lien d'invitation serait refusé. On
+  // fabrique un lien de récupération, qui mène au même endroit — le
+  // client choisit son mot de passe et entre dans son espace.
+  const { data, error } = await admin.auth.admin.generateLink({
+    type: "recovery",
+    email,
+    options: { redirectTo: `${origin}/auth/callback?next=/espace-client/bienvenue` },
   });
-  if (error) redirect("/admin/clients?error=envoi");
+
+  if (error || !data?.properties?.action_link) {
+    redirect("/admin/clients?error=creation");
+  }
+
+  try {
+    await sendClientInvitation(email, data.properties.action_link);
+  } catch {
+    redirect("/admin/clients?error=envoi");
+  }
 
   revalidatePath("/admin/clients");
   redirect("/admin/clients?invite=1");

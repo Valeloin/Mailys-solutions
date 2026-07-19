@@ -1,4 +1,5 @@
 import { getAdminClient, isAdminClientConfigured } from "@/lib/supabase/admin";
+import { isMailerConfigured } from "@/lib/mailer";
 import { ADMIN_EMAILS } from "@/lib/site";
 import { formatDate } from "@/lib/blog";
 import { inviteClient, revokeClient, restoreClient, resendInvite } from "./actions";
@@ -19,7 +20,9 @@ const ERRORS: Record<string, string> = {
   email: "Cette adresse email n'est pas valide.",
   admin: "Cette adresse est déjà celle d'un administrateur. Un compte ne peut pas être à la fois administrateur et client.",
   existe: "Un compte existe déjà pour cette adresse. Utilisez « Renvoyer l'invitation » si le client ne l'a jamais reçue.",
-  envoi: "L'invitation n'a pas pu être envoyée. Vérifiez la configuration email du projet Supabase.",
+  creation: "Le compte n'a pas pu être créé. Réessayez.",
+  envoi:
+    "Le compte est créé, mais l'email n'a pas pu partir : vérifiez les réglages SMTP. Utilisez « Renvoyer l'invitation » pour réessayer.",
   suspension: "L'opération a échoué. Réessayez.",
   config: "La clé de service Supabase est absente : la gestion des accès est désactivée.",
 };
@@ -107,10 +110,25 @@ export default async function AdminClientsPage({
         </div>
       ) : (
         <>
+          {/* Le compte se créerait, mais le client ne recevrait jamais son
+              lien : autant le dire avant la première invitation. */}
+          {!isMailerConfigured() && (
+            <p className="mt-6 rounded-xl border border-border border-l-4 border-l-orange bg-background p-4 text-sm text-foreground">
+              <strong className="font-semibold">Envoi d&apos;emails non configuré.</strong>{" "}
+              Les invitations partent par la boîte Mailys (SMTP), pas par
+              Supabase. Renseignez{" "}
+              <code className="font-mono text-xs">SMTP_HOST</code>,{" "}
+              <code className="font-mono text-xs">SMTP_PORT</code>,{" "}
+              <code className="font-mono text-xs">SMTP_USER</code> et{" "}
+              <code className="font-mono text-xs">SMTP_PASS</code> pour que les
+              clients reçoivent leur lien.
+            </p>
+          )}
+
           {/* ---------- Inviter ---------- */}
           <form
             action={inviteClient}
-            className="mt-8 rounded-2xl border border-border bg-background p-5"
+            className="mt-6 rounded-2xl border border-border bg-background p-5"
           >
             <label
               htmlFor="invite-email"

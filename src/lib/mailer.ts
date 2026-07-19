@@ -1,5 +1,106 @@
 import nodemailer from "nodemailer";
 
+// ============================================================
+// Envoi des emails du site, par le SMTP de la boîte Mailys.
+//
+// Les emails de l'espace client (invitation, réinitialisation)
+// passent ici et non par le service intégré de Supabase : celui-ci
+// est limité à quelques envois par heure et n'est pas prévu pour
+// la production. Supabase ne sert qu'à fabriquer le lien signé,
+// c'est notre boîte qui le porte — avec notre mise en forme.
+// ============================================================
+
+/** Vrai si le SMTP est renseigné. Sans lui, aucune invitation ne part. */
+export function isMailerConfigured(): boolean {
+  const { SMTP_HOST, SMTP_USER, SMTP_PASS } = process.env;
+  return Boolean(SMTP_HOST && SMTP_USER && SMTP_PASS);
+}
+
+function getTransporter() {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return null;
+
+  const port = Number(SMTP_PORT || 465);
+  return nodemailer.createTransport({
+    host: SMTP_HOST,
+    port,
+    // 465 = SSL implicite ; 587 = STARTTLS, négocié après connexion.
+    secure: port === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+}
+
+/** Gabarit commun : la même grammaire visuelle que le site. */
+function layout(title: string, body: string, cta: { href: string; label: string }) {
+  return `
+<div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#1a1a1a">
+  <div style="height:4px;border-radius:2px;background:linear-gradient(90deg,#ff6b6b,#e11d2a 45%,#f97316)"></div>
+  <h1 style="margin:28px 0 0;font-size:20px;font-weight:700">${title}</h1>
+  ${body}
+  <p style="margin:28px 0">
+    <a href="${cta.href}" style="display:inline-block;background:#e11d2a;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 22px;border-radius:12px">${cta.label}</a>
+  </p>
+  <p style="margin:24px 0 0;font-size:12px;line-height:1.6;color:#666">
+    Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br>
+    <span style="word-break:break-all">${cta.href}</span>
+  </p>
+  <p style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e8e0dd;font-size:12px;color:#666">
+    Mailys Solutions — applications métier sur mesure pour PME
+  </p>
+</div>`.trim();
+}
+
+/**
+ * Invitation à rejoindre l'espace client.
+ * `link` est le lien signé fabriqué par Supabase : il vaut connexion,
+ * il ne doit donc jamais être relayé ailleurs qu'au destinataire.
+ */
+export async function sendClientInvitation(to: string, link: string): Promise<void> {
+  const transporter = getTransporter();
+  if (!transporter) throw new Error("SMTP non configuré");
+
+  await transporter.sendMail({
+    from: `"Mailys Solutions" <${process.env.SMTP_USER}>`,
+    to,
+    subject: "Votre accès à l'espace client Mailys Solutions",
+    html: layout(
+      "Bienvenue dans votre espace client",
+      `<p style="margin:16px 0 0;font-size:14px;line-height:1.7">
+         Nous vous avons ouvert un accès à votre espace client. Vous pourrez y
+         déclarer un ticket et suivre son traitement à tout moment.
+       </p>
+       <p style="margin:12px 0 0;font-size:14px;line-height:1.7">
+         Cliquez ci-dessous pour choisir votre mot de passe.
+       </p>`,
+      { href: link, label: "Choisir mon mot de passe" }
+    ),
+  });
+}
+
+/** Lien de réinitialisation du mot de passe. */
+export async function sendPasswordReset(to: string, link: string): Promise<void> {
+  const transporter = getTransporter();
+  if (!transporter) throw new Error("SMTP non configuré");
+
+  await transporter.sendMail({
+    from: `"Mailys Solutions" <${process.env.SMTP_USER}>`,
+    to,
+    subject: "Réinitialiser votre mot de passe",
+    html: layout(
+      "Réinitialiser votre mot de passe",
+      `<p style="margin:16px 0 0;font-size:14px;line-height:1.7">
+         Vous avez demandé à réinitialiser le mot de passe de votre espace
+         client. Ce lien est valable une heure.
+       </p>
+       <p style="margin:12px 0 0;font-size:14px;line-height:1.7">
+         Si vous n'êtes pas à l'origine de cette demande, ignorez cet email :
+         votre mot de passe actuel reste valable.
+       </p>`,
+      { href: link, label: "Choisir un nouveau mot de passe" }
+    ),
+  });
+}
+
 // Notification email des demandes de contact (optionnelle).
 // Sans SMTP configuré, la fonction ne fait rien : le message est
 // de toute façon enregistré en base et visible dans /admin/messages.
