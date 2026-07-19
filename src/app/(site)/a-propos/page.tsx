@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CtaSection from "@/components/CtaSection";
 import Rich from "@/components/Rich";
 import { getAproposContent, getMethodSteps } from "@/lib/sections";
-import { BrandDots } from "@/components/ui";
+import { BrandDots, Kicker } from "@/components/ui";
 import MethodSteps from "@/components/MethodSteps";
 
 // ============================================================
@@ -29,8 +29,32 @@ export default async function AProposPage() {
 
   return (
     <>
-      <section aria-labelledby="valeurs" className="sec sec-clean">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+      {/* La page ouvrait directement sur « Ce qui guide notre façon de
+          travailler » : aucun h1, aucune présentation. Le titre et les
+          trois paragraphes existaient dans les contenus, ils n'étaient
+          simplement jamais rendus — une page « À propos » qui ne disait
+          pas qui nous sommes, et un sommaire de titres sans racine. */}
+      <section aria-labelledby="apropos-title" className="sec sec-clean">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+          <Kicker>Qui nous sommes</Kicker>
+          <h1
+            id="apropos-title"
+            className="mt-4 max-w-3xl text-balance text-4xl font-bold leading-[1.1] tracking-[-0.025em] text-foreground sm:text-5xl"
+          >
+            {c.h1}
+          </h1>
+          <div className="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-muted">
+            {c.paragraphs.map((p, i) => (
+              <p key={i}>
+                <Rich text={p} />
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="valeurs" className="sec sec-deep">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2 id="valeurs" className="text-3xl font-bold tracking-tight text-foreground">
             {c.valeursTitle}
           </h2>
@@ -49,8 +73,11 @@ export default async function AProposPage() {
         </div>
       </section>
 
-      <section aria-labelledby="apropos-methode" className="sec sec-deep">
-        <div className="mx-auto max-w-content px-4 py-16 sm:px-6">
+      {/* Alternance des tons reprise de l'accueil : clair → profond →
+          chaud. Deux bandes identiques côte à côte se lisaient comme une
+          seule section, et la méthode est « chaude » sur l'accueil. */}
+      <section aria-labelledby="apropos-methode" className="sec sec-warm">
+        <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <h2
             id="apropos-methode"
             className="text-3xl font-bold tracking-tight text-foreground"

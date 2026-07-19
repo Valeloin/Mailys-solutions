@@ -29,10 +29,13 @@ export default async function CtaSection({
   title,
   text,
   buttonLabel,
+  hideSecondary = false,
 }: {
   title?: string;
   text?: string;
   buttonLabel?: string;
+  /** Masque le bouton « Voir nos réalisations » — utile sur cette page. */
+  hideSecondary?: boolean;
 }) {
   const c = await getCtaContent();
   const heading = title ?? c.title;
@@ -98,13 +101,16 @@ export default async function CtaSection({
                   →
                 </span>
               </Link>
-              {/* Secondaire : contour clair renforcé */}
-              <Link
-                href="/realisations"
-                className="rounded-xl border border-white/50 px-7 py-3.5 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
-              >
-                {c.secondaryLabel}
-              </Link>
+              {/* Secondaire : contour clair renforcé. Masqué sur la page
+                  /realisations elle-même, où il renverrait au même endroit. */}
+              {!hideSecondary && (
+                <Link
+                  href="/realisations"
+                  className="rounded-xl border border-white/50 px-7 py-3.5 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+                >
+                  {c.secondaryLabel}
+                </Link>
+              )}
             </div>
             {/* Réassurance : agencement plus travaillé, conversion */}
             <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium text-white/85">
