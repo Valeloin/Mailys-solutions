@@ -32,7 +32,12 @@ export async function loginClient(formData: FormData): Promise<void> {
     // Supabase distingue le compte suspendu des mauvais identifiants :
     // le client mérite de savoir laquelle des deux situations le concerne.
     const code = /banned|disabled/i.test(error.message) ? "suspendu" : "identifiants";
-    redirect(`/espace-client/connexion?error=${code}`);
+    // L'email est renvoyé pour être réaffiché : le champ repartait vide,
+    // et c'était l'adresse professionnelle complète à ressaisir après
+    // chaque faute de frappe sur le mot de passe.
+    redirect(
+      `/espace-client/connexion?error=${code}&email=${encodeURIComponent(email)}`
+    );
   }
 
   redirect("/espace-client");

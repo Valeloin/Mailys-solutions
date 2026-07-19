@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { loginClient, requestPasswordReset } from "../actions";
 
 export const metadata: Metadata = {
@@ -25,9 +26,9 @@ const labelClass =
 export default async function ConnexionPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; reinit?: string }>;
+  searchParams: Promise<{ error?: string; reinit?: string; email?: string }>;
 }) {
-  const { error, reinit } = await searchParams;
+  const { error, reinit, email } = await searchParams;
 
   return (
     <section className="sec sec-clean min-h-[calc(100vh-4rem)]">
@@ -68,6 +69,7 @@ export default async function ConnexionPage({
                 name="email"
                 required
                 autoComplete="email"
+                defaultValue={email ?? ""}
                 placeholder="vous@entreprise.fr"
                 className={fieldClass}
               />
@@ -82,6 +84,9 @@ export default async function ConnexionPage({
                 name="password"
                 required
                 autoComplete="current-password"
+                // L'email étant réaffiché, c'est le mot de passe qu'il
+                // faut retaper : le curseur y va directement.
+                autoFocus={error === "identifiants"}
                 className={fieldClass}
               />
             </div>
@@ -120,10 +125,28 @@ export default async function ConnexionPage({
             </form>
           </details>
 
-          <p className="mt-6 text-xs leading-relaxed text-muted">
-            Vous n&apos;avez pas encore d&apos;accès ? Les comptes sont créés par
-            nos soins : contactez-nous et nous vous enverrons une invitation.
-          </p>
+          {/* Il n'existe pas d'inscription libre : les comptes sont ouverts
+              par invitation. Quelqu'un qui arrive ici sans compte cherche
+              donc un bouton qui n'existe pas — et cette explication était
+              le plus petit texte de la page, en gris, avec un
+              « contactez-nous » qui n'était même pas un lien. Elle est
+              maintenant lisible, encadrée, et mène quelque part. */}
+          <div className="mt-8 rounded-xl border border-border bg-surface p-4">
+            <p className="text-sm font-semibold text-foreground">
+              Vous n&apos;avez pas encore d&apos;accès ?
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">
+              Il n&apos;y a pas d&apos;inscription en ligne : nous ouvrons
+              nous-mêmes les accès, puis vous recevez une invitation par email
+              pour choisir votre mot de passe.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-3 inline-block rounded-xl border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-coral hover:text-accent"
+            >
+              Demander un accès
+            </Link>
+          </div>
         </div>
       </div>
     </section>
