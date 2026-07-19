@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getServerClient } from "@/lib/supabase/server";
-import { getThread, listTickets } from "@/lib/bugtrack-server";
+import { getHistory, getThread, listTickets } from "@/lib/bugtrack-server";
 import {
   CLOSED_STATUSES,
   PRIORITY_LABELS,
   REOPENED,
   STATUSES,
+  visibleHistory,
   type Priority,
 } from "@/lib/bugtrack";
 import ClientTicketThread from "@/components/ClientTicketThread";
+import ClientTicketActions from "@/components/ClientTicketActions";
 
 export const metadata: Metadata = {
   title: "Votre ticket",
@@ -63,6 +65,11 @@ export default async function TicketPage({
   const list = await listTickets(user.id);
   const ticket = list.ok ? list.data.find((t) => t.id === id) : undefined;
   if (!ticket) notFound();
+
+  const history = await getHistory(id, user.id);
+  // Un historique indisponible n'est pas un motif d'échec de la page :
+  // c'est une information de contexte, elle disparaît sans bruit.
+  const etapes = history.ok ? visibleHistory(history.data) : [];
 
   const thread = await getThread(id, user.id);
   const messages = thread.ok ? thread.data : [];
@@ -127,6 +134,46 @@ export default async function TicketPage({
             {aFaire}
           </p>
         )}
+
+        {/* Les transitions que le client déclenche lui-même, proposées
+            depuis le seul statut d'où l'API les accepte. Depuis « Livré »,
+            on ne propose pas la réouverture : le ticket n'est pas clos, un
+            correctif qui ne tient pas se signale dans la conversation. */}
+        {ticket.status === "Livré" && (
+          <ClientTicketActions ticketId={id} action="close" />
+        )}
+        {ticket.status === "Clos" && (
+          <ClientTicketActions ticketId={id} action="reopen" />
+        )}
+
+        {etapes.length > 0 && (
+          <div className="mt-8 border-t border-border pt-6">
+            <h3 className="text-xs font-bold uppercase tracking-wide text-muted">
+              Historique
+            </h3>
+            <ol className="mt-3 space-y-2.5">
+              {etapes.map((e) => (
+                <li
+                  key={`${e.changed_at}-${e.new_value}`}
+                  className="flex items-baseline gap-3 text-sm"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-border"
+                  />
+                  <span className="text-foreground">
+                    {e.field_changed === "creation"
+                      ? "Ticket ouvert"
+                      : e.new_value}
+                  </span>
+                  <span className="ml-auto shrink-0 text-xs text-muted">
+                    {formatDay(e.changed_at)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
 
       <div className="mt-8">
@@ -138,7 +185,11 @@ export default async function TicketPage({
             {threadError}
           </p>
         ) : (
+          // Remonté à chaque changement de statut : le fil garde ses
+          // messages dans un état local, et la réouverture en ajoute un
+          // (le motif) qu'un simple rafraîchissement ne ferait pas voir.
           <ClientTicketThread
+            key={ticket.status}
             ticketId={id}
             initialMessages={messages}
             closed={closed}

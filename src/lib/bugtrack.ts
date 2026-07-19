@@ -77,6 +77,26 @@ export type BugtrackMessage = {
   created_at: string;
 };
 
+/** Une étape du parcours du ticket. `changed_by` n'est volontairement
+    jamais renvoyé par l'API : savoir QUE le statut a changé suffit au
+    client, savoir QUI l'a changé ne le regarde pas. */
+export type BugtrackHistoryEntry = {
+  field_changed: string;
+  old_value: string | null;
+  new_value: string;
+  changed_at: string;
+};
+
+/** Ce que le client a le droit de voir de l'historique : la création et
+    les changements de statut. Les arbitrages de priorité sont internes. */
+export function visibleHistory(
+  entries: BugtrackHistoryEntry[]
+): BugtrackHistoryEntry[] {
+  return entries.filter(
+    (e) => e.field_changed === "creation" || e.field_changed === "status"
+  );
+}
+
 export type ReportFields = {
   title: string;
   description: string;

@@ -1,11 +1,12 @@
 import {
   PRIORITIES,
+  type BugtrackHistoryEntry,
   type BugtrackMessage,
   type BugtrackTicket,
   type Priority,
 } from "@/lib/bugtrack";
 
-export type { BugtrackMessage, BugtrackTicket };
+export type { BugtrackHistoryEntry, BugtrackMessage, BugtrackTicket };
 
 // ============================================================
 // Appels à l'API BugTrack — serveur uniquement.
@@ -85,6 +86,17 @@ function fromError(status: number, body: unknown): Result<never> {
   }
   if (status === 404) {
     return { ok: false, status: 404, error: "Ticket introuvable." };
+  }
+  // Transition refusée : le statut a changé côté BugTrack depuis
+  // l'affichage de la page. Le 409 est propagé tel quel — l'appelant
+  // recharge plutôt que d'exposer ce conflit au client.
+  if (status === 409) {
+    return {
+      ok: false,
+      status: 409,
+      error:
+        payload?.error || "Ce ticket a changé d'état, la page va se recharger.",
+    };
   }
   return {
     ok: false,
@@ -221,6 +233,77 @@ export async function getThread(
     const body = await res.json().catch(() => null);
     if (!res.ok) return fromError(res.status, body);
     return { ok: true, data: (body?.messages ?? []) as BugtrackMessage[] };
+  } catch {
+    return INJOIGNABLE;
+  }
+}
+
+export async function getHistory(
+  ticketId: string,
+  userId: string
+): Promise<Result<BugtrackHistoryEntry[]>> {
+  const conf = readConfig();
+  if (!conf.ok) return conf;
+  const { apiUrl, siteKey } = conf.data;
+
+  const url = new URL(`${apiUrl}/api/tickets/${ticketId}/history`);
+  url.searchParams.set("site_key", siteKey);
+  url.searchParams.set("user_id", userId);
+
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) return fromError(res.status, body);
+    return { ok: true, data: (body?.history ?? []) as BugtrackHistoryEntry[] };
+  } catch {
+    return INJOIGNABLE;
+  }
+}
+
+// ---------- Transitions ----------
+
+/** Clôture demandée par le client : c'est lui qui déclare que la
+    correction lui convient. L'API la refuse en 409 hors de « Livré ». */
+export async function closeTicket(
+  ticketId: string,
+  userId: string
+): Promise<Result<{ id: string; status: string }>> {
+  return transition(ticketId, "close", { user_id: userId });
+}
+
+/** Réouverture, possible depuis « Clos » seulement. Le motif est
+    facultatif pour l'API, mais il rejoint la conversation du ticket :
+    sans lui, l'équipe sait qu'on a relancé, pas pourquoi. */
+export async function reopenTicket(
+  ticketId: string,
+  userId: string,
+  message?: string
+): Promise<Result<{ id: string; status: string }>> {
+  const motif = message?.trim();
+  return transition(ticketId, "reopen", {
+    user_id: userId,
+    ...(motif ? { message: motif } : {}),
+  });
+}
+
+async function transition(
+  ticketId: string,
+  action: "close" | "reopen",
+  payload: Record<string, string>
+): Promise<Result<{ id: string; status: string }>> {
+  const conf = readConfig();
+  if (!conf.ok) return conf;
+  const { apiUrl, siteKey } = conf.data;
+
+  try {
+    const res = await fetch(`${apiUrl}/api/tickets/${ticketId}/${action}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ site_key: siteKey, ...payload }),
+    });
+    const body = await res.json().catch(() => null);
+    if (!res.ok || !body?.ticket) return fromError(res.status, body);
+    return { ok: true, data: body.ticket };
   } catch {
     return INJOIGNABLE;
   }
