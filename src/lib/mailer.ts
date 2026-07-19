@@ -30,6 +30,31 @@ function getTransporter() {
   });
 }
 
+/** Adresse de réponse affichée au client.
+    L'expéditeur technique est la boîte SMTP configurée, qui n'est pas
+    forcément une adresse Mailys : sans Reply-To, une réponse du client
+    partait vers cette boîte-là. */
+const REPLY_TO = process.env.CONTACT_NOTIFY_TO || process.env.SMTP_USER;
+
+/** Version texte du message.
+    Un email en HTML seul, sans partie texte, est un point de score
+    anti-spam à lui tout seul — et c'est justement ce qui manquait aux
+    invitations qui n'arrivaient pas. Toute variante multipart doit dire
+    la même chose que le HTML, filtres à l'appui. */
+function texte(title: string, corps: string, cta: { href: string; label: string }) {
+  return [
+    title,
+    "",
+    corps,
+    "",
+    `${cta.label} :`,
+    cta.href,
+    "",
+    "—",
+    "Mailys Solutions — applications métier sur mesure pour PME",
+  ].join("\n");
+}
+
 /** Gabarit commun : la même grammaire visuelle que le site. */
 function layout(title: string, body: string, cta: { href: string; label: string }) {
   return `
@@ -59,10 +84,18 @@ export async function sendClientInvitation(to: string, link: string): Promise<vo
   const transporter = getTransporter();
   if (!transporter) throw new Error("SMTP non configuré");
 
+  const cta = { href: link, label: "Choisir mon mot de passe" };
+
   await transporter.sendMail({
     from: `"Mailys Solutions" <${process.env.SMTP_USER}>`,
+    replyTo: REPLY_TO,
     to,
     subject: "Votre accès à l'espace client Mailys Solutions",
+    text: texte(
+      "Bienvenue dans votre espace client",
+      "Nous vous avons ouvert un accès à votre espace client. Vous pourrez y déclarer un ticket et suivre son traitement à tout moment.\n\nOuvrez le lien ci-dessous pour choisir votre mot de passe.",
+      cta
+    ),
     html: layout(
       "Bienvenue dans votre espace client",
       `<p style="margin:16px 0 0;font-size:14px;line-height:1.7">
@@ -72,7 +105,7 @@ export async function sendClientInvitation(to: string, link: string): Promise<vo
        <p style="margin:12px 0 0;font-size:14px;line-height:1.7">
          Cliquez ci-dessous pour choisir votre mot de passe.
        </p>`,
-      { href: link, label: "Choisir mon mot de passe" }
+      cta
     ),
   });
 }
@@ -82,10 +115,18 @@ export async function sendPasswordReset(to: string, link: string): Promise<void>
   const transporter = getTransporter();
   if (!transporter) throw new Error("SMTP non configuré");
 
+  const cta = { href: link, label: "Choisir un nouveau mot de passe" };
+
   await transporter.sendMail({
     from: `"Mailys Solutions" <${process.env.SMTP_USER}>`,
+    replyTo: REPLY_TO,
     to,
     subject: "Réinitialiser votre mot de passe",
+    text: texte(
+      "Réinitialiser votre mot de passe",
+      "Vous avez demandé à réinitialiser le mot de passe de votre espace client. Ce lien est valable une heure.\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez cet email : votre mot de passe actuel reste valable.",
+      cta
+    ),
     html: layout(
       "Réinitialiser votre mot de passe",
       `<p style="margin:16px 0 0;font-size:14px;line-height:1.7">
@@ -96,7 +137,7 @@ export async function sendPasswordReset(to: string, link: string): Promise<void>
          Si vous n'êtes pas à l'origine de cette demande, ignorez cet email :
          votre mot de passe actuel reste valable.
        </p>`,
-      { href: link, label: "Choisir un nouveau mot de passe" }
+      cta
     ),
   });
 }
