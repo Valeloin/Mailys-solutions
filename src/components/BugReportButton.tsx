@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ATTACHMENT_TYPES,
   PRIORITIES,
@@ -68,6 +69,13 @@ export default function BugReportButton() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [history, setHistory] = useState<HistoryTicket[] | null>(null);
   const [historyError, setHistoryError] = useState("");
+
+  // Rattachée au <body>, pour la même raison que ClientTicketForm : une
+  // section porteuse d'`isolation: isolate` enfermerait le voile dans son
+  // contexte d'empilement. La coque d'admin n'en a pas aujourd'hui, mais
+  // le composant ne doit pas dépendre de l'endroit où on le place.
+  const [monte, setMonte] = useState(false);
+  useEffect(() => setMonte(true), []);
 
   const openerRef = useRef<HTMLButtonElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
@@ -207,7 +215,7 @@ export default function BugReportButton() {
         <span aria-hidden="true">🐛</span> Signaler un bug
       </button>
 
-      {open && (
+      {open && monte && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-bordeaux/40 p-4 sm:items-center"
           onMouseDown={(e) => {
@@ -487,7 +495,8 @@ export default function BugReportButton() {
               </>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

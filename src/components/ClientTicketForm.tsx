@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import {
   ATTACHMENT_TYPES,
@@ -45,6 +46,15 @@ export default function ClientTicketForm() {
   const openerRef = useRef<HTMLButtonElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // La modale est rattachée au <body> et non à l'endroit où ce composant
+  // vit dans la page : les sections du site portent `isolation: isolate`,
+  // qui crée un contexte d'empilement dont aucun z-index ne peut sortir.
+  // Sans ça, le pied de page se peint par-dessus le voile et les boutons
+  // deviennent inatteignables. Le montage différé évite de chercher
+  // `document` pendant le rendu serveur.
+  const [monte, setMonte] = useState(false);
+  useEffect(() => setMonte(true), []);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -148,7 +158,7 @@ export default function ClientTicketForm() {
         Créer un ticket
       </button>
 
-      {open && (
+      {open && monte && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-bordeaux/40 p-4 sm:items-center"
           onMouseDown={(e) => {
@@ -353,7 +363,8 @@ export default function ClientTicketForm() {
               </>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

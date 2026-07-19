@@ -30,7 +30,7 @@ export default async function ConnexionPage({
   const { error, reinit } = await searchParams;
 
   return (
-    <section className="sec sec-clean">
+    <section className="sec sec-clean min-h-[calc(100vh-4rem)]">
       <div className="mx-auto max-w-md px-4 py-16 sm:px-6 sm:py-24">
         <div className="card reveal relative rounded-2xl border border-border bg-background p-6 sm:p-8">
           <span

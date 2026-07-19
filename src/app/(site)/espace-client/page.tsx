@@ -58,7 +58,7 @@ export default async function EspaceClientPage({
   const loadError = result.ok ? null : result.error;
 
   return (
-    <section className="sec sec-clean">
+    <section className="sec sec-clean min-h-[calc(100vh-4rem)]">
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>

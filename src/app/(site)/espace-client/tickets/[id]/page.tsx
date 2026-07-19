@@ -54,7 +54,7 @@ export default async function TicketPage({
   const closed = CLOSED_STATUSES.includes(ticket.status);
 
   return (
-    <section className="sec sec-clean">
+    <section className="sec sec-clean min-h-[calc(100vh-4rem)]">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
         <Link
           href="/espace-client"
