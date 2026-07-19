@@ -66,12 +66,16 @@ export default async function TicketPage({
   const ticket = list.ok ? list.data.find((t) => t.id === id) : undefined;
   if (!ticket) notFound();
 
-  const history = await getHistory(id, user.id);
+  // Les deux appels sont indépendants : les enchaîner ajouterait un
+  // aller-retour à l'affichage de chaque ticket.
+  const [thread, history] = await Promise.all([
+    getThread(id, user.id),
+    getHistory(id, user.id),
+  ]);
+
   // Un historique indisponible n'est pas un motif d'échec de la page :
   // c'est une information de contexte, elle disparaît sans bruit.
   const etapes = history.ok ? visibleHistory(history.data) : [];
-
-  const thread = await getThread(id, user.id);
   const messages = thread.ok ? thread.data : [];
   const threadError = thread.ok ? null : thread.error;
 

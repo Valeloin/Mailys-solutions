@@ -117,8 +117,9 @@ export default function ClientTicketThread({
 
       {closed ? (
         <p className="mt-5 rounded-xl border border-border bg-surface p-4 text-sm text-muted">
-          Ce ticket est clos. Pour un nouveau sujet, créez un ticket depuis
-          votre espace — vous garderez ainsi un historique clair.
+          Ce ticket est clos. Si le problème revient, rouvrez-le depuis le
+          bouton plus haut. Pour un autre sujet, créez un ticket depuis votre
+          espace — vous garderez ainsi un historique clair.
         </p>
       ) : (
         <form onSubmit={onSubmit} className="mt-5">

@@ -94,6 +94,10 @@ export default function ClientTicketActions({
       </p>
 
       {action === "reopen" && (
+        <>
+        <label htmlFor="motif-reouverture" className="sr-only">
+          Motif de la réouverture
+        </label>
         <textarea
           id="motif-reouverture"
           rows={3}
@@ -102,6 +106,7 @@ export default function ClientTicketActions({
           placeholder="Le problème est réapparu quand…"
           className="mt-3 w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-all placeholder:text-muted/70 focus:border-coral focus:bg-background focus:ring-4 focus:ring-coral/15"
         />
+        </>
       )}
 
       {error && (
