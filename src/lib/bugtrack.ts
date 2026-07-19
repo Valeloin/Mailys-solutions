@@ -46,6 +46,10 @@ export const STATUSES = [
   "En analyse",
   "En cours",
   "En attente d'informations",
+  // Le client a fourni ce qu'on lui demandait : la balle nous revient.
+  // C'est bien une étape et non un retour en arrière — le ticket n'a
+  // jamais quitté le circuit, il attendait.
+  "Nouvelles infos",
   "Livré",
   "Clos",
 ] as const;
