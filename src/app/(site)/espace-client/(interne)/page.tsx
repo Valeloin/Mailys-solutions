@@ -49,52 +49,107 @@ export default async function TableauDeBordPage() {
   const enCours = tickets.filter(
     (t) => !CLOSED_STATUSES.includes(t.status)
   ).length;
-  const attente = tickets.filter(
-    (t) => t.status === "En attente d'informations"
-  ).length;
   const clos = tickets.filter((t) => CLOSED_STATUSES.includes(t.status)).length;
-  const reouverts = tickets.filter((t) => t.status === REOPENED).length;
 
   // Les trois plus récents, pour donner à voir sans dupliquer la liste.
   const recents = [...tickets]
     .sort((a, b) => b.updated_at.localeCompare(a.updated_at))
     .slice(0, 3);
 
+  // Les tickets qui attendent quelque chose du client, nommés plutôt que
+  // comptés : annoncer « 2 tickets attendent une réponse » obligeait à les
+  // retrouver soi-même dans une liste non filtrée.
+  const aRepondre = tickets.filter(
+    (t) => t.status === "En attente d'informations"
+  );
+  const rouvertsListe = tickets.filter((t) => t.status === REOPENED);
+
+  // Un échec de lecture n'affiche AUCUN chiffre. Sinon les compteurs
+  // annonçaient « 0 ticket en cours » avec l'autorité de chiffres justes,
+  // sous l'encart d'erreur : un client avec un ticket bloquant lisait
+  // « 0 en cours » et refermait la page rassuré.
+  if (!result.ok) {
+    return (
+      <div
+        role="alert"
+        className="rounded-2xl border border-border border-l-4 border-l-accent bg-background p-6"
+      >
+        <h2 className="font-bold text-foreground">
+          Vos tickets ne sont pas consultables pour l&apos;instant
+        </h2>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
+          {result.error} Vos tickets et vos échanges sont intacts — seul leur
+          affichage a échoué. Si votre demande est urgente,{" "}
+          <Link href="/contact" className="font-semibold underline underline-offset-2">
+            écrivez-nous directement
+          </Link>
+          .
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {!result.ok && (
-        <p
-          role="alert"
-          className="mb-6 rounded-xl border border-border border-l-4 border-l-accent bg-background p-4 text-sm font-semibold text-accent-dark"
-        >
-          {result.error}
-        </p>
+      {/* Ce qui attend le client passe AVANT les compteurs : c'est la
+          seule chose actionnable de la page, elle était sous trois
+          chiffres passifs. */}
+      {aRepondre.length > 0 && (
+        <section className="mb-6 rounded-xl border border-accent/25 bg-accent/[0.06] p-4">
+          <h2 className="text-sm font-bold text-foreground">
+            {aRepondre.length > 1
+              ? `${aRepondre.length} tickets attendent une réponse de votre part`
+              : "Un ticket attend une réponse de votre part"}
+          </h2>
+          <ul className="mt-2 space-y-1.5">
+            {aRepondre.map((t) => (
+              <li key={t.id}>
+                <Link
+                  href={`/espace-client/tickets/${t.id}`}
+                  className="text-sm font-semibold text-accent-dark underline-offset-2 hover:underline"
+                >
+                  {t.number} — {t.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {rouvertsListe.length > 0 && (
+        <section className="mb-6 rounded-xl border border-border bg-background p-4">
+          <h2 className="text-sm font-bold text-foreground">
+            {rouvertsListe.length > 1
+              ? `${rouvertsListe.length} tickets ont été rouverts`
+              : "Un ticket a été rouvert"}
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            La correction livrée n&apos;a pas tenu, nous les avons repris.
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {rouvertsListe.map((t) => (
+              <li key={t.id}>
+                <Link
+                  href={`/espace-client/tickets/${t.id}`}
+                  className="text-sm font-semibold text-foreground underline-offset-2 hover:underline"
+                >
+                  {t.number} — {t.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Compteur valeur={enCours} legende="ticket(s) en cours de traitement" ton="chaud" />
         <Compteur
-          valeur={attente}
+          valeur={aRepondre.length}
           legende="en attente d'une information de votre part"
           ton="attente"
         />
         <Compteur valeur={clos} legende="ticket(s) clos" ton="calme" />
       </div>
-
-      {attente > 0 && (
-        <p className="mt-4 rounded-xl border border-accent/25 bg-accent/[0.06] p-4 text-sm text-foreground">
-          Nous attendons une précision de votre part sur{" "}
-          {attente > 1 ? `${attente} tickets` : "un ticket"}. Votre réponse nous
-          permettra de reprendre le traitement.
-        </p>
-      )}
-
-      {reouverts > 0 && (
-        <p className="mt-4 rounded-xl border border-border bg-background p-4 text-sm text-muted">
-          {reouverts > 1 ? `${reouverts} tickets ont été rouverts` : "Un ticket a été rouvert"} :
-          la correction livrée n&apos;a pas tenu, nous les avons repris.
-        </p>
-      )}
 
       <div className="mt-10">
         <div className="flex items-baseline justify-between gap-4">
