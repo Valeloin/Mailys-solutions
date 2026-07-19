@@ -49,7 +49,9 @@ export const STATUSES = [
   // Le client a fourni ce qu'on lui demandait : la balle nous revient.
   // C'est bien une étape et non un retour en arrière — le ticket n'a
   // jamais quitté le circuit, il attendait.
-  "Nouvelles infos",
+  // Libellé recopié du référentiel BugTrack, au caractère près : un
+  // statut inconnu ne lève aucune erreur, il disparaît de l'affichage.
+  "Informations reçues",
   "Livré",
   "Clos",
 ] as const;
