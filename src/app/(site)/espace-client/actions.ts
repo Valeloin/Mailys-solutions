@@ -98,8 +98,14 @@ export async function requestPasswordReset(formData: FormData): Promise<void> {
       if (data?.properties?.action_link) {
         await sendPasswordReset(email, data.properties.action_link);
       }
-    } catch {
-      // Silencieux à dessein : voir le commentaire ci-dessus.
+    } catch (e) {
+      // Silencieux pour l'utilisateur — voir le commentaire ci-dessus —
+      // mais journalisé : sinon une panne d'envoi passerait inaperçue,
+      // ce formulaire répondant la même chose dans tous les cas.
+      console.error(
+        "[réinitialisation] envoi impossible —",
+        e instanceof Error ? e.message : e
+      );
     }
   }
 

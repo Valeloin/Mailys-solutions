@@ -89,7 +89,16 @@ export async function inviteClient(formData: FormData): Promise<void> {
 
   try {
     await sendClientInvitation(email, data.properties.action_link);
-  } catch {
+  } catch (e) {
+    // Le motif exact est journalisé : sans lui, un échec d'envoi en
+    // production reste indiagnosticable — mot de passe SMTP erroné, port
+    // bloqué, serveur injoignable donnent tous le même écran.
+    console.error(
+      "[invitation] envoi impossible vers",
+      email,
+      "—",
+      e instanceof Error ? e.message : e
+    );
     // Le compte existe désormais mais l'email n'est pas parti : on le dit,
     // sinon l'écran annoncerait une invitation que le client ne recevra
     // jamais. « Renvoyer l'invitation » permet de réessayer.
@@ -187,7 +196,13 @@ export async function resendInvite(formData: FormData): Promise<void> {
 
   try {
     await sendClientInvitation(email, link);
-  } catch {
+  } catch (e) {
+    console.error(
+      "[renvoi] envoi impossible vers",
+      email,
+      "—",
+      e instanceof Error ? e.message : e
+    );
     redirect("/admin/clients?error=envoi");
   }
 
