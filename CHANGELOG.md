@@ -10,6 +10,7 @@
 - Hero : habillage DA (card avec filet, border) appliqué à tous les héros du site (page d'accueil, page Services, pages services individuelles)
 - Corrections : repair broken pages (a-propos, blog, contact, realisations, services)
 - Page contact : restauration de la grille (formulaire + panneau latéral) qui manquait suite à une correction précédente
+- BugTrack : signalement de bugs depuis l'espace admin (modale + pièces jointes + historique), via un relais serveur qui garde la clé du site hors du navigateur
 
 ## Session — 17 juillet 2026 · 21h36
 
