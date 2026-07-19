@@ -1477,47 +1477,26 @@ body {
     transform: scale(1);
   }
 }
+/* Gerbe d'étincelles : les rayons JAILLISSENT de la coche vers l'extérieur.
+   Le retour au centre se fait toujours à opacité 0, donc invisible.
+   (Avant : les rayons attendaient à scale(1.8) et rétrécissaient vers 1 en
+   devenant visibles — ils semblaient foncer vers le cercle.) */
 @keyframes pv-burst {
-  0% {
-    opacity: 0.55;
-    transform: scale(1.25);
-  }
-  1.4%,
-  24.6% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  25.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  26.4%,
-  49.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  50.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  51.4%,
-  74.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  75.2% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  76.4%,
-  99.6% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-  100% {
-    opacity: 0.55;
-    transform: scale(1.25);
-  }
+  /* La 4e gerbe est à cheval sur la boucle : la coche (pv-ok) est visible
+     de 0 à 1,2 %, la gerbe culmine donc à 0,6 %. */
+  0%            { opacity: 0;   transform: scale(0.3); }
+  0.6%          { opacity: 0.9; transform: scale(1); }
+  1.8%          { opacity: 0;   transform: scale(1.8); }
+  2.4%, 24.6%   { opacity: 0;   transform: scale(0.3); }
+  25.2%         { opacity: 0.9; transform: scale(1); }
+  26.4%         { opacity: 0;   transform: scale(1.8); }
+  27%, 49.6%    { opacity: 0;   transform: scale(0.3); }
+  50.2%         { opacity: 0.9; transform: scale(1); }
+  51.4%         { opacity: 0;   transform: scale(1.8); }
+  52%, 74.6%    { opacity: 0;   transform: scale(0.3); }
+  75.2%         { opacity: 0.9; transform: scale(1); }
+  76.4%         { opacity: 0;   transform: scale(1.8); }
+  77%, 100%     { opacity: 0;   transform: scale(0.3); }
 }
 
 /* ---------- Réglages statiques ---------- */

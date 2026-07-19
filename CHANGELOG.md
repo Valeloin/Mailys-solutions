@@ -6,6 +6,18 @@
 
 ---
 
+## Session — 19 juillet 2026 · 22h59
+
+- **Gerbe d'étincelles du hero remise à l'endroit** : les rayons de l'interstitiel jaillissaient à l'envers 3 fois sur 4. Ils attendaient à `scale(1.8)` et rétrécissaient vers `1` en devenant visibles, donc ils semblaient foncer vers la coche au lieu d'en jaillir. Chaque gerbe suit désormais le même sens (centre → apparition → ouverture), et le retour au centre se fait toujours à opacité nulle. Vérifié sur les 4 gerbes du cycle : échelle croissante de 0,38 à 1,77 dans chacune.
+- **Back-office : plus de perte de rédaction.** Une erreur de validation ne vide plus le formulaire d'article (elle redirigeait, un article entier disparaissait quand le slug était pris), un brouillon local survit aux coupures, une garde prévient avant fermeture d'onglet, et la suppression demande confirmation en nommant ce qu'on perd. Tous les boutons d'envoi portent enfin un état occupé — deux clics rapides créaient un doublon.
+- **Une panne ne se présente plus comme un espace vide** : le tableau de bord client n'annonce plus « 0 ticket en cours » quand BugTrack est injoignable. Ajout des écrans de chargement et d'erreur, absents de tout le projet.
+- **Espace client** : les alertes du tableau de bord nomment et lient les tickets concernés au lieu de les compter ; la liste se range par activité réelle et sépare les tickets clos.
+- **Pages réparées** : `/realisations` chargeait son contenu sans le rendre (cul-de-sac atteignable depuis tout le site), `/a-propos` n'avait pas de `h1` ni d'introduction.
+- **Navigation** : le fil d'Ariane, écrit et branché nulle part, est en place sur les fiches services et les articles. Le voile de chargement n'impose plus 650 ms à chaque clic — il ne s'affiche que si la page tarde vraiment.
+- **Accessibilité** : focus clavier visible sur tout le site (une seule règle existait dans 2 600 lignes de CSS).
+- **Connexion** : l'écran explique enfin qu'il n'y a pas d'inscription libre, avec un bouton « Demander un accès ». L'email saisi n'est plus perdu après un refus.
+- **Emails d'accès** : ajout d'une partie texte et d'une adresse de réponse. L'expéditeur reste à aligner sur le domaine du site (hors dépôt).
+
 ## Session — 18 juillet 2026 · 08h00
 - Hero : habillage DA (card avec filet, border) appliqué à tous les héros du site (page d'accueil, page Services, pages services individuelles)
 - Corrections : repair broken pages (a-propos, blog, contact, realisations, services)
