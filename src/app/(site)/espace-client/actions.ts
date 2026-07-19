@@ -66,7 +66,16 @@ export async function setPassword(formData: FormData): Promise<void> {
   }
 
   const { error } = await supabase.auth.updateUser({ password });
-  if (error) redirect("/espace-client/bienvenue?error=enregistrement");
+  if (error) {
+    console.error("[mot de passe] refus de Supabase —", error.message);
+    // Le motif est traduit et montré : il porte sur le mot de passe que
+    // l'utilisateur vient de choisir, donc il lui est utile et ne révèle
+    // rien qu'il ne sache déjà. Un message générique le laisserait
+    // réessayer indéfiniment la même valeur refusée.
+    redirect(
+      `/espace-client/bienvenue?error=refus&motif=${encodeURIComponent(error.message)}`
+    );
+  }
 
   redirect("/espace-client?bienvenue=1");
 }
