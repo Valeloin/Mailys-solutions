@@ -49,6 +49,30 @@ export const STATUSES = [
   "Fermé",
 ] as const;
 
+/** Statuts après lesquels plus rien n'est attendu du client. */
+export const CLOSED_STATUSES: readonly string[] = ["Fermé"];
+
+// Formes renvoyées par l'API, déclarées ici plutôt que dans le module
+// serveur : les composants d'interface en ont besoin, et ils ne doivent
+// jamais importer le fichier qui lit la clé du site.
+export type BugtrackTicket = {
+  id: string;
+  number: string;
+  title: string;
+  status: string;
+  priority: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type BugtrackMessage = {
+  id: string;
+  author_type: "admin" | "user";
+  author_name: string;
+  message: string;
+  created_at: string;
+};
+
 export type ReportFields = {
   title: string;
   description: string;
