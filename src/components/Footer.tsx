@@ -70,6 +70,13 @@ export default async function Footer() {
                 {SITE.email}
               </a>
             </li>
+            {/* Seul accès à l'espace client sur téléphone : la barre
+                d'onglets du header est limitée à quatre entrées. */}
+            <li>
+              <Link href="/espace-client" className="text-sm text-foreground underline-offset-2 transition-colors hover:text-accent hover:underline">
+                Mon espace client
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>

@@ -11,6 +11,7 @@
 - Corrections : repair broken pages (a-propos, blog, contact, realisations, services)
 - Page contact : restauration de la grille (formulaire + panneau latéral) qui manquait suite à une correction précédente
 - BugTrack : signalement de bugs depuis l'espace admin (modale + pièces jointes + historique), via un relais serveur qui garde la clé du site hors du navigateur
+- Espace client (phase 1/2) : authentification, invitation des clients depuis l'admin, connexion et choix du mot de passe. Les tickets arrivent à la phase suivante.
 
 ## Session — 17 juillet 2026 · 21h36
 

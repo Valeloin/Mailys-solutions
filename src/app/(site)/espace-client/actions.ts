@@ -1,0 +1,90 @@
+"use server";
+
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { getServerClient } from "@/lib/supabase/server";
+import { ADMIN_EMAILS } from "@/lib/site";
+
+// ============================================================
+// Authentification de l'espace client.
+// Distincte de celle de l'administration : un compte client n'a
+// jamais accès au back-office, et réciproquement.
+// ============================================================
+
+export async function loginClient(formData: FormData): Promise<void> {
+  const supabase = await getServerClient();
+  if (!supabase) redirect("/espace-client/connexion?error=config");
+
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
+
+  // Un administrateur passe par /admin/login : le laisser entrer ici
+  // lui donnerait une session d'espace client, sans intérêt et source
+  // de confusion sur le rôle réellement actif.
+  if (ADMIN_EMAILS.includes(email)) {
+    redirect("/espace-client/connexion?error=admin");
+  }
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    // Supabase distingue le compte suspendu des mauvais identifiants :
+    // le client mérite de savoir laquelle des deux situations le concerne.
+    const code = /banned|disabled/i.test(error.message) ? "suspendu" : "identifiants";
+    redirect(`/espace-client/connexion?error=${code}`);
+  }
+
+  redirect("/espace-client");
+}
+
+export async function logoutClient(): Promise<void> {
+  const supabase = await getServerClient();
+  if (supabase) await supabase.auth.signOut();
+  redirect("/espace-client/connexion");
+}
+
+/** Choix du mot de passe après invitation, ou changement depuis l'espace. */
+export async function setPassword(formData: FormData): Promise<void> {
+  const supabase = await getServerClient();
+  if (!supabase) redirect("/espace-client/connexion?error=config");
+
+  // La session vient du lien d'invitation déjà échangé par /auth/callback.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/espace-client/connexion?error=lien");
+
+  const password = String(formData.get("password") || "");
+  const confirm = String(formData.get("confirm") || "");
+
+  if (password.length < 8) {
+    redirect("/espace-client/bienvenue?error=court");
+  }
+  if (password !== confirm) {
+    redirect("/espace-client/bienvenue?error=different");
+  }
+
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) redirect("/espace-client/bienvenue?error=enregistrement");
+
+  redirect("/espace-client?bienvenue=1");
+}
+
+/** Envoi du lien de réinitialisation. */
+export async function requestPasswordReset(formData: FormData): Promise<void> {
+  const supabase = await getServerClient();
+  if (!supabase) redirect("/espace-client/connexion?error=config");
+
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${proto}://${host}/auth/callback?next=/espace-client/bienvenue`,
+  });
+
+  // Réponse identique que l'adresse existe ou non : sinon ce formulaire
+  // permettrait de découvrir qui a un compte.
+  redirect("/espace-client/connexion?reinit=1");
+}
