@@ -45,7 +45,18 @@ export async function logout(): Promise<void> {
 
 // ---------- Articles de blog ----------
 
-export async function savePost(formData: FormData): Promise<void> {
+/** Ce que l'action rend au formulaire quand elle n'a PAS abouti.
+    Le succès ne passe pas par là : il redirige. */
+export type PostFormState = { error?: string };
+
+// Une erreur de validation ne redirige plus. Un redirect remontait la page,
+// le formulaire était reconstruit avec ses defaultValue, et tout le texte
+// rédigé disparaissait — un article entier perdu parce que le slug était
+// pris. Sans navigation, le formulaire reste monté et la saisie survit.
+export async function savePost(
+  _prev: PostFormState,
+  formData: FormData
+): Promise<PostFormState> {
   const supabase = await requireClient();
 
   const id = String(formData.get("id") || "").trim();
@@ -58,10 +69,10 @@ export async function savePost(formData: FormData): Promise<void> {
   const meta_description = String(formData.get("meta_description") || "").trim();
   const published = formData.get("published") === "on";
 
-  if (!title) redirect(`/admin/articles/${id || "nouveau"}?error=titre`);
+  if (!title) return { error: "titre" };
 
   const slug = slugify(rawSlug || title);
-  if (!slug) redirect(`/admin/articles/${id || "nouveau"}?error=slug`);
+  if (!slug) return { error: "slug" };
 
   // published_at : posé à la première publication, conservé ensuite.
   let published_at: string | null = null;
@@ -95,8 +106,7 @@ export async function savePost(formData: FormData): Promise<void> {
     : await supabase.from("blog_posts").insert(row);
 
   if (error) {
-    const code = error.code === "23505" ? "slug-pris" : "sauvegarde";
-    redirect(`/admin/articles/${id || "nouveau"}?error=${code}`);
+    return { error: error.code === "23505" ? "slug-pris" : "sauvegarde" };
   }
 
   // Le site public se met à jour immédiatement.
@@ -104,7 +114,20 @@ export async function savePost(formData: FormData): Promise<void> {
   revalidatePath(`/blog/${slug}`);
   revalidatePath("/sitemap.xml");
 
-  redirect("/admin/articles?saved=1");
+  // En édition on reste sur l'article : la rédaction se fait par passes
+  // (écrire, enregistrer, relire, corriger) et repartir à la liste
+  // coûtait trois clics et la position de lecture à chaque passe.
+  // À la création, on rejoint l'article créé plutôt que la liste, pour
+  // enchaîner sans le rechercher.
+  if (id) redirect(`/admin/articles/${id}?saved=1`);
+
+  const { data: cree } = await supabase
+    .from("blog_posts")
+    .select("id")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  redirect(cree?.id ? `/admin/articles/${cree.id}?saved=1` : "/admin/articles?saved=1");
 }
 
 export async function deletePost(formData: FormData): Promise<void> {
