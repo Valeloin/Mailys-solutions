@@ -12,6 +12,7 @@
 - Page contact : restauration de la grille (formulaire + panneau latéral) qui manquait suite à une correction précédente
 - BugTrack : signalement de bugs depuis l'espace admin (modale + pièces jointes + historique), via un relais serveur qui garde la clé du site hors du navigateur
 - Espace client (phase 1/2) : authentification, invitation des clients depuis l'admin, connexion et choix du mot de passe. Les tickets arrivent à la phase suivante.
+- Correctifs issus du test réel : lecture du jeton d'invitation renvoyé dans le fragment d'URL, et cloisonnement admin/client resserré (la navigation d'administration et la route BugTrack vérifient désormais l'email, plus la seule présence d'une session).
 
 ## Session — 17 juillet 2026 · 21h36
 

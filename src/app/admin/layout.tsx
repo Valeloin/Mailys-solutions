@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getServerClient } from "@/lib/supabase/server";
 import { logout } from "./actions";
 import BugReportButton from "@/components/BugReportButton";
+import { ADMIN_EMAILS } from "@/lib/site";
 
 // Coque de l'administration — jamais indexée, jamais liée
 // depuis le site public (accès direct : /admin).
@@ -26,12 +27,17 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const supabase = await getServerClient();
-  let userEmail: string | null = null;
+  let isAdmin = false;
   if (supabase) {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    userEmail = user?.email ?? null;
+    // La qualité d'administrateur se juge sur l'email, jamais sur la
+    // seule présence d'une session : depuis l'ouverture de l'espace
+    // client, un compte connecté n'est plus forcément le tien.
+    isAdmin = Boolean(
+      user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase())
+    );
   }
 
   return (
@@ -42,7 +48,7 @@ export default async function AdminLayout({
           <p className="text-sm font-bold">
             Admin <span className="text-coral">Mailys Solutions</span>
           </p>
-          {userEmail && (
+          {isAdmin && (
             <>
               <nav aria-label="Navigation admin" className="flex flex-wrap items-center gap-4">
                 {NAV.map((item) => (

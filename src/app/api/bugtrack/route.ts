@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerClient } from "@/lib/supabase/server";
+import { ADMIN_EMAILS } from "@/lib/site";
 import {
   attachmentError,
   validateReport,
@@ -10,10 +11,10 @@ import {
 // Signalement de bug → BugTrack.
 // Proxy serveur : la clé du site ne quitte jamais le serveur —
 // le formulaire poste ici, et c'est cette route qui appelle
-// BugTrack. Réservée à l'espace admin (seul espace authentifié
-// du site) : la route exige une session Supabase valide, sans
-// quoi l'endpoint serait ouvert et permettrait de créer des
-// tickets sous notre clé.
+// BugTrack. Réservée à l'administration : la route exige une
+// session dont l'email figure parmi les administrateurs, sans
+// quoi n'importe quel compte client pourrait créer des tickets
+// sous notre clé.
 // ============================================================
 
 type Config = { apiUrl: string; siteKey: string };
@@ -39,18 +40,29 @@ function readConfig(): { config: Config } | { error: string } {
   return { config: { apiUrl: apiUrl!, siteKey: siteKey! } };
 }
 
-/** Session admin courante, ou null. */
-async function currentUser() {
+/**
+ * Administrateur courant, ou null.
+ *
+ * Le contrôle porte sur l'email et non sur la seule présence d'une
+ * session. La distinction est devenue essentielle avec l'ouverture de
+ * l'espace client : cette route a été écrite quand les seuls comptes
+ * du site étaient administrateurs, et se contenter d'une session
+ * laisserait désormais n'importe quel client créer des tickets sous
+ * la clé du site.
+ */
+async function currentAdmin() {
   const supabase = await getServerClient();
   if (!supabase) return null;
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  if (!user?.email) return null;
+  if (!ADMIN_EMAILS.includes(user.email.toLowerCase())) return null;
   return user;
 }
 
 export async function POST(request: Request) {
-  const user = await currentUser();
+  const user = await currentAdmin();
   if (!user) {
     return NextResponse.json(
       { error: "Vous devez être connecté pour signaler un bug." },
@@ -184,7 +196,7 @@ export async function POST(request: Request) {
 
 // ---------- Historique des signalements de l'utilisateur ----------
 export async function GET() {
-  const user = await currentUser();
+  const user = await currentAdmin();
   if (!user) {
     return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
   }
