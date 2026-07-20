@@ -240,10 +240,24 @@ body::before {
   }
 
   /* --- Carte premium : ombre bordeaux chaude, très diffuse --- */
+  /* Les cartes sont désormais les seules surfaces franches de la page,
+     la nappe étant continue derrière elles. Elles doivent donc porter
+     leur relief seules, sans compter sur un contraste de fond.
+
+     Trois couches d'ombre plutôt qu'une : un contact net au ras de la
+     carte, une diffusion moyenne qui la décolle, une portée longue et
+     très douce qui l'ancre. C'est ce dégradé d'ombres qui fait qu'une
+     carte se lit comme posée et non comme collée.
+
+     Le liseré intérieur clair sur l'arête haute simule la lumière qui
+     accroche le bord — le même geste que les ombres chaudes de la DA,
+     dans l'autre sens. */
   .card {
     box-shadow:
-      0 1px 2px rgb(var(--bordeaux) / 0.04),
-      0 16px 40px -24px rgb(var(--bordeaux) / 0.12);
+      inset 0 1px 0 rgb(255 255 255 / 0.9),
+      0 1px 2px rgb(var(--bordeaux) / 0.05),
+      0 8px 18px -10px rgb(var(--bordeaux) / 0.1),
+      0 28px 56px -32px rgb(var(--bordeaux) / 0.16);
     transition:
       transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.25s ease,
@@ -251,12 +265,19 @@ body::before {
   }
   /* Survol plus vivant : la carte se soulève et grandit très légèrement,
      avec un halo chaud qui s'allume sous elle. */
+  /* Le scale(1.012) a été retiré : agrandir une carte rééchantillonne
+     son texte pendant toute la transition, ce qui le rend flou. La
+     montée seule suffit à dire « survolé », et reste nette.
+     Les ombres se creusent dans les mêmes proportions qu'au repos —
+     c'est la continuité entre les deux états qui rend le geste fluide. */
   .card:hover {
-    transform: translateY(-5px) scale(1.012);
+    transform: translateY(-5px);
     box-shadow:
-      0 2px 4px rgb(var(--bordeaux) / 0.05),
-      0 28px 60px -24px rgb(var(--bordeaux) / 0.24),
-      0 0 0 1px rgb(var(--coral) / 0.12);
+      inset 0 1px 0 rgb(255 255 255 / 0.95),
+      0 2px 4px rgb(var(--bordeaux) / 0.06),
+      0 14px 26px -12px rgb(var(--bordeaux) / 0.16),
+      0 40px 72px -34px rgb(var(--bordeaux) / 0.26),
+      0 0 0 1px rgb(var(--coral) / 0.16);
   }
 
   /* Le CTA principal respire en continu ; au survol l'animation

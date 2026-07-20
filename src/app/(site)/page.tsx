@@ -73,11 +73,19 @@ export default async function HomePage() {
                 se retrouve sous les boutons, hors écran sur téléphone.
                 Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
             <div className="contents lg:block">
-              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
                 <div className="rise rise-1 order-1">
                   <Kicker>{c.hero.kicker}</Kicker>
                 </div>
-                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
+                {/* Le calibrage précédent — clamp(1.65rem, 4.6vw, 2.6rem) —
+                    inversait la hiérarchie : à 660 px le h1 tombait à
+                    30,4 px alors que ses propres h2 sont à 36 px. Le titre
+                    de la page était plus petit que ses sous-titres, donc
+                    l'œil entrait par le mauvais endroit.
+                    La borne basse (2,25 rem) tient au-dessus des h2 mobiles
+                    à 30 px, et 6 vw garantit la domination dès 640 px, où
+                    les h2 passent à 36 px. */}
+                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(2.25rem,6vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.028em] text-foreground">
                   {c.hero.h1}
                 </h1>
                 <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -251,7 +259,7 @@ export default async function HomePage() {
           </div>
 
           {/* ---------- DROITE : la réponse (panneau premium chaud, épuré) ---------- */}
-          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
+          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
             {/* Décor chaud, net : lavis diagonal + halo orangé en haut à
                 droite (sans barre fantôme ni reflet — comme la maquette). */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
