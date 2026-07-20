@@ -21,38 +21,111 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const VARIANTES = [
+// ---------- Mesure de lisibilité ----------
+//
+// Angle mort de la première version de cette page : elle jugeait chaque
+// fond isolément, sans jamais poser dessus de texte en couleur chaude.
+// Or c'est exactement ce qui a fait échouer la direction saturée sur le
+// site réel — 68 textes en --accent / --orange-text y tombaient sous
+// 3,2:1. Chaque variante déclare donc son fond le plus défavorable, et
+// la page calcule ce qui reste lisible dessus.
+
+const NOIR: RGB = [0, 0, 0];
+const BLANC: RGB = [255, 255, 255];
+const ORANGE_TEXT: RGB = [185, 62, 12]; // --orange-text
+const ACCENT: RGB = [225, 29, 42]; // --accent
+
+type RGB = [number, number, number];
+
+function luminance([r, g, b]: RGB): number {
+  const c = [r, g, b].map((v) => {
+    const x = v / 255;
+    return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+
+function contraste(a: RGB, b: RGB): number {
+  const [x, y] = [luminance(a) + 0.05, luminance(b) + 0.05];
+  return Math.round((Math.max(x, y) / Math.min(x, y)) * 100) / 100;
+}
+
+const VARIANTES: {
+  id: string;
+  nom: string;
+  note: string;
+  /** Point le plus défavorable du fond, pour le calcul de contraste. */
+  fondPire: RGB;
+}[] = [
   {
     id: "v0",
     nom: "A — Actuel (référence)",
     note: "Deux lavis radiaux corail et orange sur blanc. C'est ce qui est en ligne aujourd'hui.",
+    fondPire: [252, 232, 228],
   },
   {
     id: "v1",
     nom: "B — Papier",
     note: "Base ivoire, grain minéral très fin, lavis repoussés dans les angles. Plus calme, plus éditorial. La couleur ne sert plus de fond mais d'accent.",
+    fondPire: [250, 243, 238],
   },
   {
     id: "v2",
     nom: "C — Encre",
-    note: "Inversion complète : fond bordeaux profond, la chaleur devient lumière. Le logo suit déjà, son lettrage étant en currentColor.",
+    note: "Inversion complète : fond bordeaux profond, la chaleur devient lumière. Le logo suit déjà, son lettrage étant en currentColor. Ici c'est le texte BLANC qu'il faut lire dans le relevé, pas le noir.",
+    fondPire: [28, 15, 18],
   },
   {
     id: "v4",
     nom: "E — Continu (dosage discret)",
     note: "Un seul dégradé rose / orange / rouge qui traverse toute la page au lieu de blocs juxtaposés. Attention : contrairement à A, B et C, ce n'est pas un habillage de bande mais de page entière — il ne s'alterne pas, il porte tout le reste.",
+    fondPire: [253, 230, 220],
   },
   {
     id: "v5",
     nom: "E+ — Continu (dosage franc)",
     note: "Le même dégradé, mais assumé : les trois teintes se voient nettement et se rencontrent au centre de la page. Le blanc ne subsiste qu'en haut.",
+    fondPire: [244, 190, 170],
   },
   {
     id: "v6",
     nom: "E++ — Continu (dosage plein)",
     note: "Le dégradé devient le sujet. Plus aucun blanc franc : la page entière est une descente rose → orange → rouge. À regarder en faisant défiler, et à juger sur la lisibilité du texte autant que sur l'effet.",
+    fondPire: [246, 126, 77],
   },
 ];
+
+/** Relevé de lisibilité d'une variante. Le seuil AA est de 4,5:1 pour du
+    texte courant. Un accent chaud sous ce seuil ne peut pas être posé
+    directement sur le fond : il devra vivre sur une carte, ou céder. */
+function Releve({ fond }: { fond: RGB }) {
+  const mesures = [
+    { nom: "texte noir", valeur: contraste(NOIR, fond) },
+    { nom: "texte blanc", valeur: contraste(BLANC, fond) },
+    { nom: "accent orange", valeur: contraste(ORANGE_TEXT, fond) },
+    { nom: "accent rouge", valeur: contraste(ACCENT, fond) },
+  ];
+  return (
+    <ul className="mt-3 flex flex-wrap gap-2 text-xs">
+      {mesures.map((m) => {
+        const ok = m.valeur >= 4.5;
+        return (
+          <li
+            key={m.nom}
+            className="rounded-full border px-2.5 py-1 font-semibold"
+            style={{
+              background: "rgb(255 255 255 / 0.92)",
+              borderColor: ok ? "rgb(var(--orange) / 0.35)" : "rgb(var(--accent) / 0.5)",
+              color: ok ? "rgb(var(--orange-text))" : "rgb(var(--accent-dark))",
+            }}
+          >
+            {m.nom} {m.valeur.toFixed(2)}:1 {ok ? "✓" : "✗"}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 /** Contenu de démonstration : volontairement identique d'une variante à
     l'autre, pour que seul l'habillage change. Textes repris du site. */
@@ -63,6 +136,19 @@ function Demo() {
       <h2 className="mt-4 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
         Des outils conçus pour votre façon de travailler
       </h2>
+      {/* Texte en couleur chaude posé NU sur le fond, hors carte. C'est
+          le cas que la première version de cette page ne montrait pas,
+          et c'est lui qui a fait échouer la direction saturée : sur le
+          site réel, 68 textes sont dans cette situation. Si ces deux
+          lignes deviennent difficiles à lire, la direction ne tient
+          pas — quel que soit son effet par ailleurs. */}
+      <p className="mt-4 text-sm font-bold uppercase tracking-wider text-orange-text">
+        Accent orange posé sur le fond
+      </p>
+      <p className="mt-1 text-sm font-semibold text-accent">
+        Accent rouge posé sur le fond — lisible ou non ?
+      </p>
+
       <p className="mt-4 max-w-2xl opacity-80">
         Chaque projet raconte la même histoire : une entreprise freinée par ses
         outils, un logiciel conçu pour ses processus réels, des équipes qui
@@ -132,6 +218,7 @@ export default function ApercuDesignPage() {
             <p className="mt-2 max-w-2xl text-sm leading-relaxed opacity-75">
               {v.note}
             </p>
+            <Releve fond={v.fondPire} />
           </div>
           <Demo />
         </section>
