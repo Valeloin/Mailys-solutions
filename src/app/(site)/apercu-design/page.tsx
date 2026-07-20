@@ -39,8 +39,18 @@ const VARIANTES = [
   },
   {
     id: "v4",
-    nom: "E — Continu",
-    note: "Un seul dégradé qui traverse toute la page au lieu de blocs juxtaposés. Attention : contrairement à A, B et C, ce n'est pas un habillage de bande mais de page entière — il ne s'alterne pas, il porte tout le reste.",
+    nom: "E — Continu (dosage discret)",
+    note: "Un seul dégradé rose / orange / rouge qui traverse toute la page au lieu de blocs juxtaposés. Attention : contrairement à A, B et C, ce n'est pas un habillage de bande mais de page entière — il ne s'alterne pas, il porte tout le reste.",
+  },
+  {
+    id: "v5",
+    nom: "E+ — Continu (dosage franc)",
+    note: "Le même dégradé, mais assumé : les trois teintes se voient nettement et se rencontrent au centre de la page. Le blanc ne subsiste qu'en haut.",
+  },
+  {
+    id: "v6",
+    nom: "E++ — Continu (dosage plein)",
+    note: "Le dégradé devient le sujet. Plus aucun blanc franc : la page entière est une descente rose → orange → rouge. À regarder en faisant défiler, et à juger sur la lisibilité du texte autant que sur l'effet.",
   },
 ];
 
@@ -254,6 +264,29 @@ const CSS_VARIANTES = `
     linear-gradient(180deg, #ffffff 0%, #fffaf7 55%, #fdf3ee 100%);
   background-attachment: fixed, fixed, fixed, fixed;
 }
+
+/* E+ — dosage franc : les trois teintes se rencontrent au centre. */
+.v5::before {
+  background:
+    radial-gradient(85% 55% at 50% -5%, rgb(var(--coral) / 0.42), transparent 62%),
+    radial-gradient(75% 50% at 100% 55%, rgb(var(--orange) / 0.36), transparent 64%),
+    radial-gradient(75% 50% at 0% 105%, rgb(var(--accent) / 0.3), transparent 64%),
+    linear-gradient(180deg, #ffffff 0%, #fff4ee 45%, #fde6dc 100%);
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+
+/* E++ — dosage plein : plus aucun blanc franc, le dégradé est le sujet.
+   Les opacités montent, mais le texte reste noir sur fond clair : le
+   contraste se vérifie à l'œil ET au calcul avant de retenir ce dosage. */
+.v6::before {
+  background:
+    radial-gradient(90% 60% at 50% -5%, rgb(var(--coral) / 0.6), transparent 64%),
+    radial-gradient(80% 55% at 100% 50%, rgb(var(--orange) / 0.52), transparent 66%),
+    radial-gradient(80% 55% at 0% 100%, rgb(var(--accent) / 0.42), transparent 66%),
+    linear-gradient(180deg, #fff3ec 0%, #ffe6d8 50%, #ffd9cd 100%);
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+.v6 .apercu-carte { background: rgb(255 255 255 / 0.82); backdrop-filter: blur(3px); }
 
 /* ---------- Composition : les trois retenues ensemble ---------- */
 /* E porte le fond de l'ensemble. Les sections posées dessus ne
