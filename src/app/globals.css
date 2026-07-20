@@ -44,54 +44,6 @@ body {
   background: var(--background);
 }
 
-/* ============================================================
-   FOND DE PAGE — dégradé rose / orange / rouge continu.
-   Retour d'usage : « le site est trop blanc ». Le blanc n'était pas
-   un choix mais un défaut : chaque section repeignait son propre fond
-   clair, et les lavis colorés restaient cantonnés à ses bords.
-   Ici la couleur passe sous TOUT le document, d'un seul tenant, et les
-   sections cessent de la recouvrir (voir .sec-clean plus bas).
-
-   Les trois teintes sont celles de la DA — aucune couleur nouvelle :
-   --coral (rose), --orange, --accent (rouge).
-
-   position: fixed plutôt que background-attachment: fixed — ce dernier
-   force un repaint plein écran à chaque défilement, ce que Safari iOS
-   encaisse mal. Un pseudo-élément fixe est composité par le GPU.
-   z-index négatif + pointer-events: none : il ne capte aucun clic et
-   reste derrière tout le contenu.
-   ============================================================ */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  pointer-events: none;
-  /* Dégradé du bandeau « Parlons de votre projet », étendu à toute la
-     page : orange plein qui bascule vers le rouge profond. C'est le
-     dégradé retenu, et il est déjà dans la DA — mêmes arrêts, mêmes
-     variables, aucune couleur nouvelle.
-
-     Le voile blanc n'est pas un adoucissement décoratif, c'est une
-     contrainte de lisibilité. Mesuré sur le dégradé brut, AUCUNE
-     couleur de texte ne tient d'un bout à l'autre : l'orange donne
-     7,49:1 en noir mais 2,80:1 en blanc, le rouge foncé l'inverse
-     exactement (3,17:1 en noir, 6,63:1 en blanc). Le bandeau d'origine
-     s'en sort parce qu'il est petit et que son texte blanc tombe sur la
-     partie rouge — une page entière n'a pas ce luxe.
-
-     À 25 % de voile, le texte noir repasse partout : 9,56 / 5,93 /
-     4,73, tous au-dessus du seuil AA de 4,5:1. */
-  background:
-    linear-gradient(rgb(255 255 255 / 0.25), rgb(255 255 255 / 0.25)),
-    linear-gradient(
-      135deg,
-      rgb(var(--orange)) 0%,
-      rgb(var(--accent)) 48%,
-      rgb(var(--accent-dark)) 100%
-    );
-}
-
 ::selection {
   background: rgb(var(--coral) / 0.25);
 }
@@ -2316,80 +2268,19 @@ body::before {
        Dégradé crème franc traversé par deux grandes taches
        corail (haut-gauche) et orange (bas-droite). Chaleureux,
        aucun motif géométrique. --- */
-/* .sec-warm devient l'aplat « papier » : une bande opaque ivoire, au
-   grain minéral très fin, qui interrompt le dégradé de page là où l'on
-   lit vraiment. C'est ce qui donne le rythme, maintenant que la couleur
-   est continue en dessous — sans elle, la page serait un seul aplat.
-   Le grain est posé sur ::after, le ::before portant l'aplat. */
-/* .sec-warm renforce le dégradé au lieu de le masquer.
-   Erreur corrigée : cette classe habille le hero, donc le tout premier
-   écran du site. Un aplat opaque y recouvrait intégralement le dégradé
-   de page — on retrouvait exactement le blanc d'avant à l'endroit le
-   plus regardé, et la couleur ne commençait qu'en dessous de la ligne
-   de flottaison. Le voile est donc translucide : il ajoute de la
-   chaleur, il ne repeint rien. */
-/* Sur un fond désormais saturé, le rythme ne se crée plus en
-   réchauffant — tout est déjà chaud — mais en ÉCLAIRCISSANT. .sec-warm
-   pose donc un voile clair translucide : la bande respire, le dégradé
-   reste visible dessous, et le texte noir y gagne encore en lisibilité.
-   (Un lavis corail de plus aurait sur-saturé et fait retomber le
-   contraste sous le seuil.) */
 .sec-warm::before {
-  background: linear-gradient(
-    180deg,
-    rgb(255 255 255 / 0.34),
-    rgb(255 255 255 / 0.22)
-  );
-}
-
-/* ============================================================
-   RÈGLE : sur fond chaud, pas d'accent chaud.
-   Mesuré sur le dégradé retenu, --orange-text tombe entre 1,26:1 et
-   3,18:1, et --accent entre 1,07:1 et 2,71:1 — illisibles. Pour les
-   ramener au seuil AA il faudrait un voile blanc de 90 %, c'est-à-dire
-   effacer le dégradé. Le compromis n'existe pas.
-   Les accents chauds vivent donc sur les CARTES et dans la bascule
-   sombre, où ils gardent tout leur contraste. Posés directement sur le
-   fond, ils passent au noir — qui tient de 4,74:1 à 11,94:1.
-   Les cartes (.card) ne sont pas concernées : elles ont leur propre
-   fond clair opaque, l'accent y reste orange comme prévu par la DA.
-   ============================================================ */
-.sec-clean
-  :is(
-    .text-orange-text,
-    .text-orange,
-    .text-accent,
-    .text-accent-dark,
-    .text-coral
-  ):not(.card *),
-.sec-warm
-  :is(
-    .text-orange-text,
-    .text-orange,
-    .text-accent,
-    .text-accent-dark,
-    .text-coral
-  ):not(.card *) {
-  color: rgb(var(--foreground));
-}
-
-/* Le kicker est déjà une pastille : on la rend opaque plutôt que de
-   noircir son texte. L'accent orange y survit, posé sur un fond clair
-   franc qui se détache du dégradé. */
-.sec-clean .pv-dot,
-.sec-warm .pv-dot {
-  opacity: 1;
-}
-.sec-clean p:has(> .pv-dot),
-.sec-warm p:has(> .pv-dot) {
-  background: rgb(255 255 255 / 0.92);
-  border-color: rgb(var(--orange) / 0.35);
-}
-.sec-clean p:has(> .pv-dot),
-.sec-warm p:has(> .pv-dot),
-.sec-clean p:has(> .pv-dot) *,
-.sec-warm p:has(> .pv-dot) * {
-  color: rgb(var(--orange-text));
+  background:
+    radial-gradient(
+      60% 70% at 8% 0%,
+      rgb(var(--coral) / 0.32),
+      transparent 62%
+    ),
+    radial-gradient(
+      58% 72% at 96% 100%,
+      rgb(var(--orange) / 0.28),
+      transparent 64%
+    ),
+    linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
 }
 
 /* --- C · Claire et aérée ---
@@ -2398,15 +2289,19 @@ body::before {
        Aucun motif répété : c'est la respiration du rythme, en
        contraste avec le crème de A et les barres de B.
        (La trame de points a été retirée le 2026-07-18 : rejetée.) */
-/* .sec-clean ne peint plus rien : c'est elle qui laisse voir le dégradé
-   de page. Elle repeignait un aplat #ffffff qui recouvrait la couleur,
-   ne laissant que deux lavis à ses bords — la cause directe du « trop
-   blanc », répétée sur 14 sections du site.
-   La règle est conservée plutôt que supprimée : les pages continuent de
-   déclarer sec-clean pour marquer leur rythme, et le jour où ce fond
-   doit revenir, il se redéclare ici seul. */
 .sec-clean::before {
-  background: none;
+  background:
+    radial-gradient(
+      70% 95% at 100% 0%,
+      rgb(var(--coral) / 0.3),
+      transparent 62%
+    ),
+    radial-gradient(
+      62% 85% at 0% 100%,
+      rgb(var(--orange) / 0.26),
+      transparent 64%
+    ),
+    #ffffff;
 }
 
 /* --- B · Barres du logo à -22° ---
@@ -2414,62 +2309,8 @@ body::before {
        dans le logo. Le motif le plus identitaire. Les bandes
        sont placées sur les côtés : le centre reste libre pour
        le texte. --- */
-/* .sec-deep devient la bascule sombre : le moment fort de la page.
-   Elle était un crème à peine distinct du blanc — elle ne « basculait »
-   rien. Sur un dégradé de page chaud et continu, c'est le contraste
-   sombre qui crée le relief, pas une nuance de crème de plus.
-
-   Les deux teintes chaudes de la DA y deviennent lumière au lieu de
-   lavis. Le fond n'est pas noir mais bordeaux très sombre : le noir pur
-   couperait la page, cette base garde la parenté avec --bordeaux. */
 .sec-deep::before {
-  background:
-    radial-gradient(
-      58% 70% at 12% 0%,
-      rgb(var(--accent) / 0.4),
-      transparent 62%
-    ),
-    radial-gradient(
-      56% 68% at 92% 100%,
-      rgb(var(--orange) / 0.3),
-      transparent 64%
-    ),
-    linear-gradient(180deg, #1c0f12 0%, #140a0d 100%);
-}
-
-/* Inversion des textes et des surfaces à l'intérieur de la bascule.
-   Le site pose tous ses textes en noir (--foreground) : sans ces
-   reprises, la section serait du noir sur du noir. Les sélecteurs
-   descendants l'emportent sur les utilitaires Tailwind à classe simple,
-   sans !important. */
-.sec-deep {
-  color: #ffffff;
-}
-.sec-deep .text-foreground {
-  color: #ffffff;
-}
-.sec-deep .text-muted {
-  color: rgb(255 255 255 / 0.72);
-}
-/* --orange-text est un orange foncé (#B93E0C) calculé pour rester
-   lisible sur fond CLAIR. Sur fond sombre il devient illisible :
-   on remonte à l'orange pur, qui lui ne passe qu'en clair sur sombre. */
-.sec-deep .text-orange-text {
-  color: rgb(var(--orange));
-}
-.sec-deep .text-accent,
-.sec-deep .text-accent-dark {
-  color: rgb(var(--coral));
-}
-/* Les cartes ne peuvent plus être des aplats blancs : elles
-   découperaient des rectangles aveuglants dans la bascule. */
-.sec-deep .card,
-.sec-deep .bg-background {
-  background: rgb(255 255 255 / 0.06);
-  border-color: rgb(255 255 255 / 0.14);
-}
-.sec-deep .border-border {
-  border-color: rgb(255 255 255 / 0.16);
+  background: linear-gradient(180deg, #fdf6f3 0%, #faeee9 100%);
 }
 .sec-deep::after {
   background:
