@@ -130,7 +130,13 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
+              {/* La vitrine flotte, sans cadre. Elle était enfermée dans
+                  une bordure + un fond + 8 px de marge : sur l'ancien
+                  fond blanc le cadre se confondait avec la page, sur le
+                  fond sombre il dessine un rectangle net autour de
+                  l'animation et l'enferme. L'animation porte déjà sa
+                  propre forme, elle n'a pas besoin qu'on la délimite. */}
+              <div className="relative">
                 <HeroShowcase />
               </div>
             </div>
