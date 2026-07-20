@@ -110,11 +110,6 @@ export default async function ServicePage({
 
       {/* ========== 1. HERO ========== */}
       <section className="sec sec-warm relative overflow-hidden">
-        {/* Décor : les deux barres du logo, fantômes (desktop uniquement) */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-14 -top-24 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
-          <div className="absolute -top-32 right-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
-        </div>
         <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
           <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
             <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
@@ -148,11 +143,6 @@ export default async function ServicePage({
         aria-labelledby="problemes"
         className="sec sec-deep relative overflow-hidden"
       >
-        {/* Décor : barres fantômes du logo, inclinées à -22° */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-16 top-24 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.05] lg:block" />
-          <div className="absolute -right-12 -top-10 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-        </div>
         <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <Kicker>Le constat</Kicker>
           <h2

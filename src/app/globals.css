@@ -2387,14 +2387,23 @@ body::before {
 }
 
 /* Liseré de transition : c'est lui qui donne le rythme, maintenant que
-   les aplats ont disparu. Il s'éteint sur 120 px — une frontière qui se
-   sent sans jamais se lire comme une ligne. */
+   les aplats ont disparu. Une frontière qui se sent sans jamais se
+   lire comme une ligne. */
 .sec::after {
   inset: 0 0 auto 0;
-  height: 120px;
   /* Sur fond sombre, une transition se marque par la LUMIÈRE : un
-     liseré sombre y serait strictement invisible. */
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.05), transparent);
+     liseré sombre y serait strictement invisible.
+     Adouci : à 5 % sur 120 px, la limite se lisait encore comme un
+     trait. À 2,5 % étalés sur 220 px, elle se sent sans se voir — une
+     section n'a pas besoin d'annoncer son bord, seulement de ne pas se
+     confondre avec la précédente. */
+  height: 220px;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.025),
+    rgb(255 255 255 / 0.008) 45%,
+    transparent
+  );
 }
 /* La première section d'une page n'a rien au-dessus d'elle à séparer. */
 .sec:first-of-type::after {

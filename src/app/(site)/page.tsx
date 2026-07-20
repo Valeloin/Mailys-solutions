@@ -43,20 +43,12 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
       <section className="sec sec-warm relative overflow-hidden border-b border-border">
-        {/* Décor : barres fantômes du logo */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
-          <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
-          <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-        </div>
-        {/* Décor propre au portrait : le bloc ci-dessus est réservé aux
-            grands écrans, le haut de page était donc sans relief sur
-            téléphone. Barres, halos et points dérivent lentement
-            (styles .hero-* dans globals.css). */}
+        {/* Décor du hero en portrait. Les barres inclinées ont disparu,
+            ici comme partout ailleurs : posées à 5 % d'opacité, elles se
+            fondaient dans l'ancien fond blanc, mais deviennent des
+            traînées franches en travers du fond sombre. Restent les
+            halos et les points, qui diffusent au lieu de trancher. */}
         <div aria-hidden="true" className="hero-decor lg:hidden">
-          <span className="hero-bar-1" />
-          <span className="hero-bar-2" />
-          <span className="hero-bar-3" />
           <span className="hero-halo-1" />
           <span className="hero-halo-2" />
           <span className="hero-dot-1" />
@@ -232,11 +224,6 @@ export default async function HomePage() {
         aria-labelledby="probleme-title"
         className="sec sec-deep relative overflow-hidden"
       >
-        {/* Décor : barres fantômes du logo, inclinées à -22° */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-16 top-24 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.05] lg:block" />
-          <div className="absolute -right-12 -top-10 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-        </div>
 
         <div className="relative mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-24 md:grid-cols-2">
           {/* ---------- GAUCHE : le constat ---------- */}

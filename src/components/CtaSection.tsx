@@ -59,11 +59,7 @@ export default async function CtaSection({
             {/* Sheen : halo blanc diffus, haut-centre */}
             <div className="absolute left-1/2 top-0 h-64 w-[38rem] -translate-x-1/2 rounded-full bg-white/15 blur-3xl" />
             {/* Triptyque des barres du logo, à droite */}
-            <div className="absolute -right-12 -top-24 h-80 w-24 -rotate-[22deg] rounded-full bg-white/[0.07]" />
-            <div className="absolute -right-2 -top-28 h-80 w-24 -rotate-[22deg] rounded-full bg-white/[0.10]" />
-            <div className="absolute right-20 -top-14 h-56 w-14 -rotate-[22deg] rounded-full bg-white/[0.06]" />
             {/* Écho discret en bas à gauche */}
-            <div className="absolute -bottom-24 -left-10 h-64 w-16 -rotate-[22deg] rounded-full bg-white/[0.06]" />
             {/* Voile sombre chaud en bas : garantit le contraste du texte
                 sur la zone orange claire du dégradé */}
             <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--accent-dark)/0.35)] to-transparent" />

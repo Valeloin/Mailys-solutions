@@ -35,10 +35,6 @@ export default async function ServicesPage() {
   return (
     <>
       <section className="sec sec-warm relative overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
-          <div className="absolute -top-16 right-[14%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-        </div>
 
         <div className="relative mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
           <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,30rem)]">
