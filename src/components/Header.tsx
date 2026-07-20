@@ -111,7 +111,7 @@ function MobileOnglets() {
             // étaient à 36 px : c'est la barre la plus sollicitée du
             // site sur téléphone, et elle était sous le seuil.
             className={`relative flex h-11 flex-col items-center justify-center gap-0.5 rounded transition-colors ${
-              actif ? "text-accent" : "text-muted"
+              actif ? "text-coral" : "text-white/75"
             }`}
           >
             <svg
@@ -150,12 +150,12 @@ function MobileOnglets() {
 // Sur téléphone : logo + bandeau des 4 onglets (MobileTabBar).
 export default function Header() {
   return (
-    // Translucide plutôt qu'opaque : la nappe de fond passe dessous, et
-    // le header cesse de découper une barre blanche franche en haut de
-    // chaque page — même défaut que celui corrigé sur les sections. Le
-    // flou garde les libellés lisibles quel que soit ce qui défile
-    // derrière, et le repli sans flou reste un blanc quasi plein.
-    <header className="relative sticky top-0 z-50 border-b border-border/60 bg-background/85 supports-[backdrop-filter]:bg-background/65 supports-[backdrop-filter]:backdrop-blur-lg">
+    // Opaque, et non translucide. La transparence laissait remonter la
+    // nappe chaude derrière les libellés : leur contraste variait selon
+    // ce qui défilait dessous, et l'ensemble paraissait délavé. Un fond
+    // sombre plein tient les libellés à un contraste constant.
+    // Les liens passent en blanc à 90 % au lieu du gris secondaire.
+    <header className="relative sticky top-0 z-50 border-b border-border bg-[#150c0f]">
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,
@@ -183,7 +183,7 @@ export default function Header() {
               <div key={item.href} className="group relative">
                 <Link
                   href={item.href}
-                  className="nav-link flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground group-hover:text-foreground group-focus-within:text-foreground"
+                  className="nav-link flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.11em] text-white/90 transition-colors hover:text-foreground group-hover:text-foreground group-focus-within:text-foreground"
                   aria-haspopup="true"
                 >
                   {item.name}
@@ -248,7 +248,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
+                className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-white/90 transition-colors hover:text-foreground"
               >
                 {item.name}
               </Link>
@@ -263,7 +263,7 @@ export default function Header() {
           <span aria-hidden="true" className="h-5 w-px bg-border" />
           <Link
             href="/espace-client"
-            className="nav-link whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
+            className="nav-link whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.11em] text-white/90 transition-colors hover:text-foreground"
           >
             Espace client
           </Link>

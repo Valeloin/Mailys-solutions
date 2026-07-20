@@ -2410,6 +2410,30 @@ body::before {
   display: none;
 }
 
+/* --- LE HERO — le dégradé corail / orange / rouge, assombri.
+       C'est le dégradé retenu, repris à pleine saturation puis passé
+       sous un voile sombre : la teinte reste reconnaissable, mais elle
+       descend au niveau de luminosité du reste du site, donc le haut de
+       page ne se détache plus comme une vignette rapportée.
+       Le voile est plus dense en bas qu'en haut : la section s'éteint
+       vers la nappe au lieu de s'arrêter net. --- */
+.sec:first-of-type::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgb(20 10 13 / 0.58) 0%,
+      rgb(20 10 13 / 0.72) 55%,
+      rgb(26 26 26 / 0.9) 100%
+    ),
+    linear-gradient(
+      135deg,
+      rgb(var(--orange)) 0%,
+      rgb(var(--coral)) 38%,
+      rgb(var(--accent)) 72%,
+      rgb(var(--bordeaux)) 100%
+    );
+}
+
 /* --- La bande dense : deux foyers chauds qui montent en intensité.
        Sur fond sombre, la chaleur s'ajoute au lieu de se poser. --- */
 .sec-warm::before {
