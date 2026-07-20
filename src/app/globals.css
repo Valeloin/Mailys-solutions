@@ -2287,13 +2287,29 @@ body::before {
 }
 
 /* ============================================================
-   FONDS DE SECTION — système unique dérivé de la DA.
-   Une seule classe par <section> ; le décor vit dans les
-   pseudo-éléments (aucun DOM ajouté, rien de masqué aux
-   moteurs). Uniquement des dégradés : pas de blur, donc pas
-   besoin d'overflow-hidden et aucun risque de débordement.
-   Rythme d'une page = alternance .sec-warm / .sec-clean ;
-   .sec-deep réservée aux sections de bascule.
+   FONDS — refonte complète.
+
+   Supprimé : les trois habillages peignaient chacun leur propre base
+   OPAQUE et se dégradaient du clair vers le foncé, puis la section
+   suivante repartait au blanc. Quatre marches visibles sur la seule
+   page d'accueil. Les bandes diagonales de .sec-deep, héritées d'une
+   version antérieure, ajoutaient en plus un motif géométrique qui ne
+   dialoguait avec rien d'autre sur le site.
+
+   Le nouveau système tient en trois idées :
+
+   1. UNE SEULE NAPPE sous tout le document (body::before, fixée). La
+      couleur est posée une fois ; aucune section ne la repeint.
+   2. LES SECTIONS NE MODULENT QUE PAR TRANSPARENCE. Aucune base
+      opaque nulle part — une couture devient impossible par
+      construction, et non par réglage.
+   3. LE RYTHME VIENT DES BORDS, PAS DES APLATS. Chaque section porte
+      un liseré supérieur très doux qui marque la transition sans
+      trancher, à la place des ruptures franches d'avant.
+
+   Registre conservé : la chaleur de la DA, en ambiance. Densités
+   calées par le calcul de contraste — l'accent orange doit rester
+   au-dessus du seuil sur le fond le plus chargé.
    ============================================================ */
 .sec {
   position: relative;
@@ -2308,15 +2324,26 @@ body::before {
   pointer-events: none;
 }
 
-/* --- A · Lavis chaud + grandes taches ---
-       Dégradé crème franc traversé par deux grandes taches
-       corail (haut-gauche) et orange (bas-droite). Chaleureux,
-       aucun motif géométrique. --- */
-/* Les trois habillages ne peignent plus AUCUNE base opaque : ils ne
-   font que moduler la nappe continue par transparence. C'est ce qui
-   rend une couture impossible — il n'y a plus de bord à rabouter,
-   seulement une densité qui varie.
-   .sec-warm : la bande dense. Elle rassemble, elle ne recouvre pas. */
+/* Liseré de transition : c'est lui qui donne le rythme, maintenant que
+   les aplats ont disparu. Il s'éteint sur 120 px — une frontière qui se
+   sent sans jamais se lire comme une ligne. */
+.sec::after {
+  inset: 0 0 auto 0;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--bordeaux) / 0.035),
+    transparent
+  );
+}
+/* La première section d'une page n'a rien au-dessus d'elle à séparer. */
+.sec:first-of-type::after {
+  display: none;
+}
+
+/* --- La bande dense : elle rassemble le regard, elle ne recouvre pas.
+       Deux foyers chauds en diagonale, repris de la grammaire d'origine
+       mais en transparence pure. --- */
 .sec-warm::before {
   background:
     radial-gradient(
@@ -2331,15 +2358,8 @@ body::before {
     );
 }
 
-/* --- C · Claire et aérée ---
-       Fond blanc traversé par de larges lavis colorés dans les
-       angles (corail en haut à droite, orange en bas à gauche).
-       Aucun motif répété : c'est la respiration du rythme, en
-       contraste avec le crème de A et les barres de B.
-       (La trame de points a été retirée le 2026-07-18 : rejetée.) */
-/* .sec-clean : la respiration. Un voile clair très léger qui allège la
-   nappe sans jamais la couper — l'aplat #ffffff qu'elle posait était la
-   cause directe de deux des quatre ruptures. */
+/* --- La respiration : un voile clair qui allège la nappe. C'est ici
+       que les textes longs se lisent le plus confortablement. --- */
 .sec-clean::before {
   background: linear-gradient(
     180deg,
@@ -2348,43 +2368,19 @@ body::before {
   );
 }
 
-/* --- B · Barres du logo à -22° ---
-       Les barres de la marque, en très grand, inclinées comme
-       dans le logo. Le motif le plus identitaire. Les bandes
-       sont placées sur les côtés : le centre reste libre pour
-       le texte. --- */
-/* .sec-deep : le point d'appui. La plus dense des trois, mais toujours
-   par transparence — c'est un renforcement de la nappe, pas un aplat
-   posé dessus. */
+/* --- Le point d'appui : la plus dense des trois, toujours en
+       transparence. Elle porte les sections de bascule. --- */
 .sec-deep::before {
-  background: linear-gradient(
-    180deg,
-    rgb(var(--bordeaux) / 0.02),
-    rgb(var(--bordeaux) / 0.03)
-  );
-}
-.sec-deep::after {
   background:
-    linear-gradient(
-      112deg,
-      transparent 12%,
-      rgb(var(--coral) / 0.2) 12%,
-      rgb(var(--coral) / 0.2) 20%,
-      transparent 20%
+    radial-gradient(
+      80% 60% at 50% 0%,
+      rgb(var(--coral) / 0.05),
+      transparent 70%
     ),
     linear-gradient(
-      112deg,
-      transparent 24%,
-      rgb(var(--accent) / 0.16) 24%,
-      rgb(var(--accent) / 0.16) 32%,
-      transparent 32%
-    ),
-    linear-gradient(
-      112deg,
-      transparent 78%,
-      rgb(var(--orange) / 0.2) 78%,
-      rgb(var(--orange) / 0.2) 86%,
-      transparent 86%
+      180deg,
+      rgb(var(--bordeaux) / 0.02),
+      rgb(var(--bordeaux) / 0.03)
     );
 }
 

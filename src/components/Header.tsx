@@ -75,13 +75,29 @@ const ONGLETS_MOBILE: MobileOnglet[] = [
       </>
     ),
   },
+  // Contact en fin de barre : c'est l'action de conversion, et sur
+  // téléphone elle n'existait nulle part dans la navigation.
+  {
+    href: "/contact",
+    label: "Contact",
+    icon: (
+      <>
+        <path d="M4 6.5h16v11H4z" />
+        <path d="m4.6 7.2 7.4 5.4 7.4-5.4" />
+      </>
+    ),
+  },
 ];
 
 function MobileOnglets() {
   const pathname = usePathname();
 
   return (
-    <div className="grid grid-cols-4 gap-0.5 lg:hidden">
+    // Cinq colonnes : Contact rejoint la barre. Sur téléphone, le seul
+    // chemin vers le formulaire passait par le pied de page ou un CTA en
+    // cours de lecture — l'action de conversion principale du site était
+    // absente de la navigation.
+    <div className="grid grid-cols-5 gap-0.5 lg:hidden">
       {ONGLETS_MOBILE.map((o) => {
         const actif = o.prefixe
           ? pathname.startsWith(o.href)
@@ -91,7 +107,10 @@ function MobileOnglets() {
             key={o.href}
             href={o.href}
             aria-current={actif ? "page" : undefined}
-            className={`relative flex h-9 items-center justify-center gap-1 rounded transition-colors ${
+            // h-11 = 44 px, la cible tactile minimale. Les onglets
+            // étaient à 36 px : c'est la barre la plus sollicitée du
+            // site sur téléphone, et elle était sous le seuil.
+            className={`relative flex h-11 flex-col items-center justify-center gap-0.5 rounded transition-colors ${
               actif ? "text-accent" : "text-muted"
             }`}
           >
@@ -131,7 +150,12 @@ function MobileOnglets() {
 // Sur téléphone : logo + bandeau des 4 onglets (MobileTabBar).
 export default function Header() {
   return (
-    <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background">
+    // Translucide plutôt qu'opaque : la nappe de fond passe dessous, et
+    // le header cesse de découper une barre blanche franche en haut de
+    // chaque page — même défaut que celui corrigé sur les sections. Le
+    // flou garde les libellés lisibles quel que soit ce qui défile
+    // derrière, et le repli sans flou reste un blanc quasi plein.
+    <header className="relative sticky top-0 z-50 border-b border-border/60 bg-background/85 supports-[backdrop-filter]:bg-background/65 supports-[backdrop-filter]:backdrop-blur-lg">
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,
