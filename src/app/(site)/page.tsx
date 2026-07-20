@@ -43,12 +43,20 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
       <section className="sec sec-warm relative overflow-hidden border-b border-border">
-        {/* Décor du hero en portrait. Les barres inclinées ont disparu,
-            ici comme partout ailleurs : posées à 5 % d'opacité, elles se
-            fondaient dans l'ancien fond blanc, mais deviennent des
-            traînées franches en travers du fond sombre. Restent les
-            halos et les points, qui diffusent au lieu de trancher. */}
+        {/* Décor : barres fantômes du logo */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
+          <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
+          <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
+        </div>
+        {/* Décor propre au portrait : le bloc ci-dessus est réservé aux
+            grands écrans, le haut de page était donc sans relief sur
+            téléphone. Barres, halos et points dérivent lentement
+            (styles .hero-* dans globals.css). */}
         <div aria-hidden="true" className="hero-decor lg:hidden">
+          <span className="hero-bar-1" />
+          <span className="hero-bar-2" />
+          <span className="hero-bar-3" />
           <span className="hero-halo-1" />
           <span className="hero-halo-2" />
           <span className="hero-dot-1" />
@@ -65,19 +73,11 @@ export default async function HomePage() {
                 se retrouve sous les boutons, hors écran sur téléphone.
                 Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
             <div className="contents lg:block">
-              <div className="card reveal relative rounded-3xl border border-border bg-background p-6 sm:p-8 lg:p-10">
+              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
                 <div className="rise rise-1 order-1">
                   <Kicker>{c.hero.kicker}</Kicker>
                 </div>
-                {/* Le calibrage précédent — clamp(1.65rem, 4.6vw, 2.6rem) —
-                    inversait la hiérarchie : à 660 px le h1 tombait à
-                    30,4 px alors que ses propres h2 sont à 36 px. Le titre
-                    de la page était plus petit que ses sous-titres, donc
-                    l'œil entrait par le mauvais endroit.
-                    La borne basse (2,25 rem) tient au-dessus des h2 mobiles
-                    à 30 px, et 6 vw garantit la domination dès 640 px, où
-                    les h2 passent à 36 px. */}
-                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(2.25rem,6vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.028em] text-foreground">
+                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
                   {c.hero.h1}
                 </h1>
                 <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -130,13 +130,7 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              {/* La vitrine flotte, sans cadre. Elle était enfermée dans
-                  une bordure + un fond + 8 px de marge : sur l'ancien
-                  fond blanc le cadre se confondait avec la page, sur le
-                  fond sombre il dessine un rectangle net autour de
-                  l'animation et l'enferme. L'animation porte déjà sa
-                  propre forme, elle n'a pas besoin qu'on la délimite. */}
-              <div className="relative">
+              <div className="relative rounded-2xl border border-border bg-background p-2 shadow-window">
                 <HeroShowcase />
               </div>
             </div>
@@ -230,6 +224,11 @@ export default async function HomePage() {
         aria-labelledby="probleme-title"
         className="sec sec-deep relative overflow-hidden"
       >
+        {/* Décor : barres fantômes du logo, inclinées à -22° */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-16 top-24 hidden h-72 w-20 -rotate-[22deg] rounded-full bg-coral/[0.05] lg:block" />
+          <div className="absolute -right-12 -top-10 hidden h-72 w-16 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
+        </div>
 
         <div className="relative mx-auto grid max-w-content items-center gap-12 px-4 py-20 sm:px-6 sm:py-24 md:grid-cols-2">
           {/* ---------- GAUCHE : le constat ---------- */}
@@ -252,7 +251,7 @@ export default async function HomePage() {
           </div>
 
           {/* ---------- DROITE : la réponse (panneau premium chaud, épuré) ---------- */}
-          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
+          <div className="reveal group relative overflow-hidden rounded-3xl border border-orange/20 bg-background p-8 shadow-[0_30px_70px_-32px_rgb(var(--accent)/0.3)] sm:p-10">
             {/* Décor chaud, net : lavis diagonal + halo orangé en haut à
                 droite (sans barre fantôme ni reflet — comme la maquette). */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">

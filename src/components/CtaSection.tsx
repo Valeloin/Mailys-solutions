@@ -59,7 +59,11 @@ export default async function CtaSection({
             {/* Sheen : halo blanc diffus, haut-centre */}
             <div className="absolute left-1/2 top-0 h-64 w-[38rem] -translate-x-1/2 rounded-full bg-white/15 blur-3xl" />
             {/* Triptyque des barres du logo, à droite */}
+            <div className="absolute -right-12 -top-24 h-80 w-24 -rotate-[22deg] rounded-full bg-white/[0.07]" />
+            <div className="absolute -right-2 -top-28 h-80 w-24 -rotate-[22deg] rounded-full bg-white/[0.10]" />
+            <div className="absolute right-20 -top-14 h-56 w-14 -rotate-[22deg] rounded-full bg-white/[0.06]" />
             {/* Écho discret en bas à gauche */}
+            <div className="absolute -bottom-24 -left-10 h-64 w-16 -rotate-[22deg] rounded-full bg-white/[0.06]" />
             {/* Voile sombre chaud en bas : garantit le contraste du texte
                 sur la zone orange claire du dégradé */}
             <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--accent-dark)/0.35)] to-transparent" />
@@ -87,13 +91,7 @@ export default async function CtaSection({
               {/* Primaire : blanc plein → contraste maximal sur le chaud */}
               <Link
                 href="/contact"
-                // text-[#1a1a1a] et non text-foreground : ce bouton est
-                // blanc, il lui faut donc un texte SOMBRE. --foreground
-                // désigne la couleur du texte sur le fond du site, qui
-                // est passée au blanc avec la bascule sombre — la suivre
-                // ici donnait du blanc sur blanc, donc un bouton dont le
-                // libellé avait disparu.
-                className="group/btn inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 font-semibold text-[#1a1a1a] shadow-[0_10px_30px_-10px_rgb(var(--accent-dark)/0.7)] transition-transform duration-200 hover:-translate-y-0.5"
+                className="group/btn inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 font-semibold text-foreground shadow-[0_10px_30px_-10px_rgb(var(--accent-dark)/0.7)] transition-transform duration-200 hover:-translate-y-0.5"
               >
                 {button}
                 <span
