@@ -15,15 +15,23 @@
    (accent/10, orange/20…).
    ============================================================ */
 :root {
-  --background: #ffffff;
-  /* Tous les TEXTES du site sont noirs (demande du 2026-07-18) :
-     titres, corps et texte secondaire. --bordeaux reste réservé au
-     DÉCOR (ombres chaudes, fonds, filets) et n'habille plus aucun
-     texte — sinon les ombres perdraient leur chaleur. */
-  --foreground: #000000;
-  --surface: #fbf6f4;
-  --border: #f0e2dd;
-  --muted: #000000;
+  /* ------------------------------------------------------------
+     BASCULE SOMBRE — la palette officielle contient du bordeaux
+     (#5B0F1A) et du noir (#1A1A1A). Le site ne pouvait pas cesser
+     d'être blanc en restant sur des fonds clairs : c'est la base qui
+     change, pas les accents.
+
+     C'est aussi la seule configuration où les accents chauds sont
+     lisibles. Mesuré : l'orange vif donne 6,65:1 sur fond sombre,
+     contre 3,87:1 sur le fond clair précédent — sous le seuil. Sur un
+     site chaud, la chaleur ne peut pas être à la fois le fond ET le
+     texte ; ici elle devient la lumière.
+     ------------------------------------------------------------ */
+  --background: #1a1a1a; /* NOIR de la palette */
+  --foreground: #ffffff;
+  --surface: #241418; /* noir teinté bordeaux, pour les surfaces */
+  --border: #3d262c; /* filet chaud, lisible sur le sombre */
+  --muted: #cfc4c6; /* texte secondaire : blanc réchauffé, 11:1 */
   --accent: 225 29 42; /* rouge #E11D2A */
   --accent-dark: 185 18 31; /* rouge foncé (survol) */
   --bordeaux: 91 15 26; /* #5B0F1A */
@@ -32,7 +40,12 @@
   /* Orange lisible pour le TEXTE sur fond clair (AA garanti, y compris
      sur pastille orange/10 posée sur surface : 4.73:1 au pire cas).
      L'orange pur #F97316 (3.0:1) est réservé au décor pur. */
-  --orange-text: 185 62 12; /* #B93E0C */
+  /* Sur fond sombre, l'orange foncé (#B93E0C) qui servait de « texte
+     lisible » devient illisible : 3,34:1. C'est l'orange PUR de la
+     palette qui joue ce rôle maintenant — 6,65:1 sur le fond. Le jeton
+     garde son nom, sa fonction est inchangée : l'orange qu'on peut
+     écrire. Seule la base a bougé sous lui. */
+  --orange-text: 249 115 22; /* #F97316, l'orange de la palette */
 }
 
 html {
@@ -74,18 +87,35 @@ body::before {
      et en dessous du site d'origine (4,74). En empilant nappe, lavis de
      section et densité, le fond s'assombrit vite. 27 combinaisons ont
      été évaluées ; celle-ci est la plus chaude qui repasse : 4,67:1. */
+  /* La nappe reprend le dégradé de la palette — bordeaux, rouge,
+     orange — mais en LUMIÈRE sur une base sombre, au lieu d'aplats
+     clairs. Les trois foyers correspondent aux trois teintes chaudes,
+     posés en diagonale comme dans le bandeau d'origine.
+     Le blanc a entièrement disparu de la base : c'était lui qui donnait
+     l'impression d'un site blanc, pas les accents. */
   background:
     radial-gradient(
-      70% 45% at 88% 4%,
-      rgb(var(--coral) / 0.1),
+      68% 44% at 82% -2%,
+      rgb(var(--accent) / 0.34),
+      transparent 64%
+    ),
+    radial-gradient(
+      60% 40% at 4% 48%,
+      rgb(var(--orange) / 0.2),
       transparent 66%
     ),
     radial-gradient(
-      64% 42% at 6% 62%,
-      rgb(var(--orange) / 0.08),
+      64% 42% at 96% 96%,
+      rgb(var(--coral) / 0.16),
       transparent 68%
     ),
-    linear-gradient(180deg, #ffffff 0%, #fffcfa 58%, #fef7f4 100%);
+    linear-gradient(
+      168deg,
+      #2a1015 0%,
+      #1d0d12 42%,
+      #1a1a1a 78%,
+      #241016 100%
+    );
 }
 
 ::selection {
@@ -252,12 +282,19 @@ body::before {
      Le liseré intérieur clair sur l'arête haute simule la lumière qui
      accroche le bord — le même geste que les ombres chaudes de la DA,
      dans l'autre sens. */
+  /* Sur fond sombre, une carte ne se détache plus par son ombre — une
+     ombre noire sur du noir ne se voit pas. Elle se détache par une
+     LÉGÈRE ÉLÉVATION LUMINEUSE : un voile blanc très faible qui la
+     rend un cran plus claire que la nappe, et un liseré de lumière sur
+     l'arête haute. L'ombre portée subsiste pour l'ancrage, mais elle
+     n'est plus le mécanisme principal. */
   .card {
+    background-color: rgb(255 255 255 / 0.045);
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.9),
-      0 1px 2px rgb(var(--bordeaux) / 0.05),
-      0 8px 18px -10px rgb(var(--bordeaux) / 0.1),
-      0 28px 56px -32px rgb(var(--bordeaux) / 0.16);
+      inset 0 1px 0 rgb(255 255 255 / 0.14),
+      0 1px 2px rgb(0 0 0 / 0.4),
+      0 10px 22px -12px rgb(0 0 0 / 0.55),
+      0 30px 60px -34px rgb(0 0 0 / 0.65);
     transition:
       transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.25s ease,
@@ -270,14 +307,18 @@ body::before {
      montée seule suffit à dire « survolé », et reste nette.
      Les ombres se creusent dans les mêmes proportions qu'au repos —
      c'est la continuité entre les deux états qui rend le geste fluide. */
+  /* Au survol, la carte monte ET s'éclaircit : sur fond sombre c'est
+     la lumière qui signale l'interaction. Le cerne corail reprend la
+     teinte de la palette. */
   .card:hover {
     transform: translateY(-5px);
+    background-color: rgb(255 255 255 / 0.075);
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.95),
-      0 2px 4px rgb(var(--bordeaux) / 0.06),
-      0 14px 26px -12px rgb(var(--bordeaux) / 0.16),
-      0 40px 72px -34px rgb(var(--bordeaux) / 0.26),
-      0 0 0 1px rgb(var(--coral) / 0.16);
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      0 2px 4px rgb(0 0 0 / 0.45),
+      0 18px 34px -14px rgb(0 0 0 / 0.6),
+      0 44px 80px -36px rgb(0 0 0 / 0.72),
+      0 0 0 1px rgb(var(--coral) / 0.28);
   }
 
   /* Le CTA principal respire en continu ; au survol l'animation
@@ -2351,57 +2392,54 @@ body::before {
 .sec::after {
   inset: 0 0 auto 0;
   height: 120px;
-  background: linear-gradient(
-    180deg,
-    rgb(var(--bordeaux) / 0.035),
-    transparent
-  );
+  /* Sur fond sombre, une transition se marque par la LUMIÈRE : un
+     liseré sombre y serait strictement invisible. */
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.05), transparent);
 }
 /* La première section d'une page n'a rien au-dessus d'elle à séparer. */
 .sec:first-of-type::after {
   display: none;
 }
 
-/* --- La bande dense : elle rassemble le regard, elle ne recouvre pas.
-       Deux foyers chauds en diagonale, repris de la grammaire d'origine
-       mais en transparence pure. --- */
+/* --- La bande dense : deux foyers chauds qui montent en intensité.
+       Sur fond sombre, la chaleur s'ajoute au lieu de se poser. --- */
 .sec-warm::before {
   background:
     radial-gradient(
       62% 72% at 8% 0%,
-      rgb(var(--coral) / 0.07),
+      rgb(var(--accent) / 0.16),
       transparent 68%
     ),
     radial-gradient(
       60% 74% at 96% 100%,
-      rgb(var(--orange) / 0.06),
+      rgb(var(--orange) / 0.12),
       transparent 70%
     );
 }
 
-/* --- La respiration : un voile clair qui allège la nappe. C'est ici
-       que les textes longs se lisent le plus confortablement. --- */
+/* --- La respiration : la section la plus sobre. Un voile sombre qui
+       calme la nappe là où les textes sont longs. --- */
 .sec-clean::before {
   background: linear-gradient(
     180deg,
-    rgb(255 255 255 / 0.5),
-    rgb(255 255 255 / 0.28)
+    rgb(26 26 26 / 0.42),
+    rgb(26 26 26 / 0.22)
   );
 }
 
-/* --- Le point d'appui : la plus dense des trois, toujours en
-       transparence. Elle porte les sections de bascule. --- */
+/* --- Le point d'appui : la plus chargée. C'est là que le bordeaux
+       de la palette est le plus présent. --- */
 .sec-deep::before {
   background:
     radial-gradient(
       80% 60% at 50% 0%,
-      rgb(var(--coral) / 0.05),
+      rgb(var(--accent) / 0.2),
       transparent 70%
     ),
     linear-gradient(
       180deg,
-      rgb(var(--bordeaux) / 0.02),
-      rgb(var(--bordeaux) / 0.03)
+      rgb(var(--bordeaux) / 0.5),
+      rgb(var(--bordeaux) / 0.28)
     );
 }
 

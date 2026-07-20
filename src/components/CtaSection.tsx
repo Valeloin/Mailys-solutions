@@ -91,7 +91,13 @@ export default async function CtaSection({
               {/* Primaire : blanc plein → contraste maximal sur le chaud */}
               <Link
                 href="/contact"
-                className="group/btn inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 font-semibold text-foreground shadow-[0_10px_30px_-10px_rgb(var(--accent-dark)/0.7)] transition-transform duration-200 hover:-translate-y-0.5"
+                // text-[#1a1a1a] et non text-foreground : ce bouton est
+                // blanc, il lui faut donc un texte SOMBRE. --foreground
+                // désigne la couleur du texte sur le fond du site, qui
+                // est passée au blanc avec la bascule sombre — la suivre
+                // ici donnait du blanc sur blanc, donc un bouton dont le
+                // libellé avait disparu.
+                className="group/btn inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 font-semibold text-[#1a1a1a] shadow-[0_10px_30px_-10px_rgb(var(--accent-dark)/0.7)] transition-transform duration-200 hover:-translate-y-0.5"
               >
                 {button}
                 <span
