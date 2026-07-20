@@ -44,6 +44,36 @@ body {
   background: var(--background);
 }
 
+/* ============================================================
+   FOND DE PAGE — dégradé rose / orange / rouge continu.
+   Retour d'usage : « le site est trop blanc ». Le blanc n'était pas
+   un choix mais un défaut : chaque section repeignait son propre fond
+   clair, et les lavis colorés restaient cantonnés à ses bords.
+   Ici la couleur passe sous TOUT le document, d'un seul tenant, et les
+   sections cessent de la recouvrir (voir .sec-clean plus bas).
+
+   Les trois teintes sont celles de la DA — aucune couleur nouvelle :
+   --coral (rose), --orange, --accent (rouge).
+
+   position: fixed plutôt que background-attachment: fixed — ce dernier
+   force un repaint plein écran à chaque défilement, ce que Safari iOS
+   encaisse mal. Un pseudo-élément fixe est composité par le GPU.
+   z-index négatif + pointer-events: none : il ne capte aucun clic et
+   reste derrière tout le contenu.
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(85% 55% at 50% -5%, rgb(var(--coral) / 0.42), transparent 62%),
+    radial-gradient(75% 50% at 100% 55%, rgb(var(--orange) / 0.36), transparent 64%),
+    radial-gradient(75% 50% at 0% 105%, rgb(var(--accent) / 0.3), transparent 64%),
+    linear-gradient(180deg, #ffffff 0%, #fff4ee 45%, #fde6dc 100%);
+}
+
 ::selection {
   background: rgb(var(--coral) / 0.25);
 }
@@ -2268,19 +2298,34 @@ body {
        Dégradé crème franc traversé par deux grandes taches
        corail (haut-gauche) et orange (bas-droite). Chaleureux,
        aucun motif géométrique. --- */
+/* .sec-warm devient l'aplat « papier » : une bande opaque ivoire, au
+   grain minéral très fin, qui interrompt le dégradé de page là où l'on
+   lit vraiment. C'est ce qui donne le rythme, maintenant que la couleur
+   est continue en dessous — sans elle, la page serait un seul aplat.
+   Le grain est posé sur ::after, le ::before portant l'aplat. */
 .sec-warm::before {
   background:
     radial-gradient(
-      60% 70% at 8% 0%,
-      rgb(var(--coral) / 0.32),
-      transparent 62%
+      52% 62% at 8% 0%,
+      rgb(var(--coral) / 0.16),
+      transparent 66%
     ),
     radial-gradient(
-      58% 72% at 96% 100%,
-      rgb(var(--orange) / 0.28),
-      transparent 64%
+      50% 64% at 96% 100%,
+      rgb(var(--orange) / 0.14),
+      transparent 68%
     ),
-    linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
+    #fdfaf7;
+}
+.sec-warm::after {
+  opacity: 0.5;
+  background-image:
+    radial-gradient(rgb(var(--bordeaux) / 0.05) 0.5px, transparent 0.5px),
+    radial-gradient(rgb(var(--bordeaux) / 0.04) 0.5px, transparent 0.5px);
+  background-size: 14px 14px, 14px 14px;
+  background-position:
+    0 0,
+    7px 7px;
 }
 
 /* --- C · Claire et aérée ---
@@ -2289,19 +2334,15 @@ body {
        Aucun motif répété : c'est la respiration du rythme, en
        contraste avec le crème de A et les barres de B.
        (La trame de points a été retirée le 2026-07-18 : rejetée.) */
+/* .sec-clean ne peint plus rien : c'est elle qui laisse voir le dégradé
+   de page. Elle repeignait un aplat #ffffff qui recouvrait la couleur,
+   ne laissant que deux lavis à ses bords — la cause directe du « trop
+   blanc », répétée sur 14 sections du site.
+   La règle est conservée plutôt que supprimée : les pages continuent de
+   déclarer sec-clean pour marquer leur rythme, et le jour où ce fond
+   doit revenir, il se redéclare ici seul. */
 .sec-clean::before {
-  background:
-    radial-gradient(
-      70% 95% at 100% 0%,
-      rgb(var(--coral) / 0.3),
-      transparent 62%
-    ),
-    radial-gradient(
-      62% 85% at 0% 100%,
-      rgb(var(--orange) / 0.26),
-      transparent 64%
-    ),
-    #ffffff;
+  background: none;
 }
 
 /* --- B · Barres du logo à -22° ---
@@ -2309,8 +2350,62 @@ body {
        dans le logo. Le motif le plus identitaire. Les bandes
        sont placées sur les côtés : le centre reste libre pour
        le texte. --- */
+/* .sec-deep devient la bascule sombre : le moment fort de la page.
+   Elle était un crème à peine distinct du blanc — elle ne « basculait »
+   rien. Sur un dégradé de page chaud et continu, c'est le contraste
+   sombre qui crée le relief, pas une nuance de crème de plus.
+
+   Les deux teintes chaudes de la DA y deviennent lumière au lieu de
+   lavis. Le fond n'est pas noir mais bordeaux très sombre : le noir pur
+   couperait la page, cette base garde la parenté avec --bordeaux. */
 .sec-deep::before {
-  background: linear-gradient(180deg, #fdf6f3 0%, #faeee9 100%);
+  background:
+    radial-gradient(
+      58% 70% at 12% 0%,
+      rgb(var(--accent) / 0.4),
+      transparent 62%
+    ),
+    radial-gradient(
+      56% 68% at 92% 100%,
+      rgb(var(--orange) / 0.3),
+      transparent 64%
+    ),
+    linear-gradient(180deg, #1c0f12 0%, #140a0d 100%);
+}
+
+/* Inversion des textes et des surfaces à l'intérieur de la bascule.
+   Le site pose tous ses textes en noir (--foreground) : sans ces
+   reprises, la section serait du noir sur du noir. Les sélecteurs
+   descendants l'emportent sur les utilitaires Tailwind à classe simple,
+   sans !important. */
+.sec-deep {
+  color: #ffffff;
+}
+.sec-deep .text-foreground {
+  color: #ffffff;
+}
+.sec-deep .text-muted {
+  color: rgb(255 255 255 / 0.72);
+}
+/* --orange-text est un orange foncé (#B93E0C) calculé pour rester
+   lisible sur fond CLAIR. Sur fond sombre il devient illisible :
+   on remonte à l'orange pur, qui lui ne passe qu'en clair sur sombre. */
+.sec-deep .text-orange-text {
+  color: rgb(var(--orange));
+}
+.sec-deep .text-accent,
+.sec-deep .text-accent-dark {
+  color: rgb(var(--coral));
+}
+/* Les cartes ne peuvent plus être des aplats blancs : elles
+   découperaient des rectangles aveuglants dans la bascule. */
+.sec-deep .card,
+.sec-deep .bg-background {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(255 255 255 / 0.14);
+}
+.sec-deep .border-border {
+  border-color: rgb(255 255 255 / 0.16);
 }
 .sec-deep::after {
   background:
