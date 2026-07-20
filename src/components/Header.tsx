@@ -155,7 +155,7 @@ export default function Header() {
     // ce qui défilait dessous, et l'ensemble paraissait délavé. Un fond
     // sombre plein tient les libellés à un contraste constant.
     // Les liens passent en blanc à 90 % au lieu du gris secondaire.
-    <header className="relative sticky top-0 z-50 border-b border-border bg-[#150c0f]">
+    <header className="relative sticky top-0 z-50 border-b border-border bg-surface">
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,

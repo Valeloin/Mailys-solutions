@@ -27,10 +27,16 @@
      site chaud, la chaleur ne peut pas être à la fois le fond ET le
      texte ; ici elle devient la lumière.
      ------------------------------------------------------------ */
-  --background: #1a1a1a; /* NOIR de la palette */
+  /* Noir quasi absolu, et UNIQUE. Le #1A1A1A de la palette est un gris
+     NEUTRE : mélangé aux dégradés chauds, il les désature en passant et
+     produit des intermédiaires kaki — le rouge qui traverse un gris
+     perd sa saturation avant d'atteindre le fond. Un noir sans
+     composante grise ne désature rien : les teintes chaudes descendent
+     vers l'extinction en gardant leur ton jusqu'au bout. */
+  --background: #050505;
   --foreground: #ffffff;
-  --surface: #241418; /* noir teinté bordeaux, pour les surfaces */
-  --border: #3d262c; /* filet chaud, lisible sur le sombre */
+  --surface: #0d0809; /* noir à peine tiédi, pour les surfaces */
+  --border: #2a1a1e; /* filet chaud, lisible sur le noir */
   --muted: #cfc4c6; /* texte secondaire : blanc réchauffé, 11:1 */
   --accent: 225 29 42; /* rouge #E11D2A */
   --accent-dark: 185 18 31; /* rouge foncé (survol) */
@@ -109,13 +115,12 @@ body::before {
       rgb(var(--coral) / 0.16),
       transparent 68%
     ),
-    linear-gradient(
-      168deg,
-      #2a1015 0%,
-      #1d0d12 42%,
-      #1a1a1a 78%,
-      #241016 100%
-    );
+    /* Base plate, pas un dégradé. Les quatre arrêts précédents
+       (#2a1015 → #1d0d12 → #1a1a1a → #241016) mélangeaient des bruns
+       chauds à un gris neutre : chaque transition passait par un
+       intermédiaire désaturé, d'où les tons kaki. Un aplat noir laisse
+       les lavis chauds être la seule source de couleur. */
+    #050505;
 }
 
 ::selection {
@@ -2418,20 +2423,21 @@ body::before {
        Le voile est plus dense en bas qu'en haut : la section s'éteint
        vers la nappe au lieu de s'arrêter net. --- */
 .sec:first-of-type::before {
-  background:
-    linear-gradient(
-      180deg,
-      rgb(20 10 13 / 0.58) 0%,
-      rgb(20 10 13 / 0.72) 55%,
-      rgb(26 26 26 / 0.9) 100%
-    ),
-    linear-gradient(
-      135deg,
-      rgb(var(--orange)) 0%,
-      rgb(var(--coral)) 38%,
-      rgb(var(--accent)) 72%,
-      rgb(var(--bordeaux)) 100%
-    );
+  /* Le dégradé ne relie QUE des couleurs de la palette — orange,
+     corail, rouge, bordeaux. Il n'a aucune étape noire : c'est
+     l'opacité de chaque arrêt qui laisse remonter le noir du fond,
+     pas une interpolation vers le noir.
+     La nuance est décisive : un dégradé qui va vers le noir traverse
+     des intermédiaires désaturés, et c'est ce passage qui donnait des
+     tons kaki. Ici la teinte reste pure du premier au dernier arrêt,
+     seule sa présence diminue. */
+  background: linear-gradient(
+    135deg,
+    rgb(var(--orange) / 0.5) 0%,
+    rgb(var(--coral) / 0.42) 34%,
+    rgb(var(--accent) / 0.4) 66%,
+    rgb(var(--bordeaux) / 0.55) 100%
+  );
 }
 
 /* --- La bande dense : deux foyers chauds qui montent en intensité.
@@ -2453,11 +2459,11 @@ body::before {
 /* --- La respiration : la section la plus sobre. Un voile sombre qui
        calme la nappe là où les textes sont longs. --- */
 .sec-clean::before {
-  background: linear-gradient(
-    180deg,
-    rgb(26 26 26 / 0.42),
-    rgb(26 26 26 / 0.22)
-  );
+  /* Aucune couche. Un voile noir aurait été un dégradé vers le noir,
+     exactement ce qu'on proscrit. La respiration se fait donc par
+     l'ABSENCE de lavis : c'est le noir plat du fond qu'on voit, et
+     c'est ce qui la distingue des sections chaudes. */
+  background: none;
 }
 
 /* --- Le point d'appui : la plus chargée. C'est là que le bordeaux
