@@ -2344,9 +2344,16 @@ body {
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
+      /* --reveal-decalage échelonne les éléments d'un même groupe :
+         chacun commence sa révélation un peu plus tard dans sa propre
+         entrée à l'écran, ce qui compose la section au lieu de tout
+         faire apparaître d'un bloc. Posé par <Reveal index={i} />.
+         Sans la variable, la valeur par défaut de 0% redonne
+         exactement le comportement d'origine. */
       animation: rise-in linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 45%;
+      animation-range: entry var(--reveal-decalage, 0%) entry
+        calc(45% + var(--reveal-decalage, 0%));
     }
   }
 }

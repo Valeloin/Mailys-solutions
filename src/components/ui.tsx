@@ -1,3 +1,5 @@
+import { decalageDe } from "@/components/motion/Reveal";
+
 // ============================================================
 // Petites briques visuelles partagées de la grammaire DA :
 // badge kicker (pilule + points du logo), coche orange,
@@ -120,7 +122,13 @@ export function ProblemItem({
   const tone = PROBLEM_TONES[index % PROBLEM_TONES.length];
   const icon = PROBLEM_ICONS[index % PROBLEM_ICONS.length];
   return (
-    <li className="problem-item reveal group flex items-center gap-4 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-orange/40 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]">
+    // L'index échelonne la révélation : la liste se compose ligne à
+    // ligne au lieu d'arriver d'un bloc. Le décalage joue sur
+    // l'animation-range, pas sur le temps — voir motion/Reveal.
+    <li
+      style={{ "--reveal-decalage": decalageDe(index) } as React.CSSProperties}
+      className="problem-item reveal group flex items-center gap-4 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-orange/40 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]"
+    >
       <span
         aria-hidden="true"
         className={`flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[13px] ${tone}`}
