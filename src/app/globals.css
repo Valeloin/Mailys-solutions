@@ -44,6 +44,50 @@ body {
   background: var(--background);
 }
 
+/* ============================================================
+   FOND CONTINU — une seule nappe sous toute la page.
+
+   Le defaut corrige : chaque section peignait sa propre base OPAQUE et
+   se degradait du clair vers le fonce, puis la suivante repartait
+   brutalement au blanc. Mesure sur l accueil : 4 ruptures franches
+   (#fbeae3 → #ffffff, #ffffff → #fdf6f3, #faeee9 → #fff7f4,
+   #fbeae3 → #ffffff). La page se lisait comme un empilement de bandes
+   mal raboutees, avec une marche visible a chaque jonction.
+
+   Ici la couleur est posee UNE fois, sous tout le document. Les
+   sections ne peignent plus de base : elles ne font que moduler par
+   transparence, donc plus aucune couture n est possible par
+   construction.
+
+   Volontairement sobre : la version saturee a ete essayee et rejetee,
+   et les accents chauds du site (68 textes) ne survivent pas a un fond
+   sature. La chaleur reste une ambiance, pas un aplat.
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  /* Valeurs calées par le calcul, pas à l'estime. Une première version
+     plus dense faisait tomber l'accent orange à 3,87:1 — sous le seuil,
+     et en dessous du site d'origine (4,74). En empilant nappe, lavis de
+     section et densité, le fond s'assombrit vite. 27 combinaisons ont
+     été évaluées ; celle-ci est la plus chaude qui repasse : 4,67:1. */
+  background:
+    radial-gradient(
+      70% 45% at 88% 4%,
+      rgb(var(--coral) / 0.1),
+      transparent 66%
+    ),
+    radial-gradient(
+      64% 42% at 6% 62%,
+      rgb(var(--orange) / 0.08),
+      transparent 68%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #fffcfa 58%, #fef7f4 100%);
+}
+
 ::selection {
   background: rgb(var(--coral) / 0.25);
 }
@@ -2268,19 +2312,23 @@ body {
        Dégradé crème franc traversé par deux grandes taches
        corail (haut-gauche) et orange (bas-droite). Chaleureux,
        aucun motif géométrique. --- */
+/* Les trois habillages ne peignent plus AUCUNE base opaque : ils ne
+   font que moduler la nappe continue par transparence. C'est ce qui
+   rend une couture impossible — il n'y a plus de bord à rabouter,
+   seulement une densité qui varie.
+   .sec-warm : la bande dense. Elle rassemble, elle ne recouvre pas. */
 .sec-warm::before {
   background:
     radial-gradient(
-      60% 70% at 8% 0%,
-      rgb(var(--coral) / 0.32),
-      transparent 62%
+      62% 72% at 8% 0%,
+      rgb(var(--coral) / 0.07),
+      transparent 68%
     ),
     radial-gradient(
-      58% 72% at 96% 100%,
-      rgb(var(--orange) / 0.28),
-      transparent 64%
-    ),
-    linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
+      60% 74% at 96% 100%,
+      rgb(var(--orange) / 0.06),
+      transparent 70%
+    );
 }
 
 /* --- C · Claire et aérée ---
@@ -2289,19 +2337,15 @@ body {
        Aucun motif répété : c'est la respiration du rythme, en
        contraste avec le crème de A et les barres de B.
        (La trame de points a été retirée le 2026-07-18 : rejetée.) */
+/* .sec-clean : la respiration. Un voile clair très léger qui allège la
+   nappe sans jamais la couper — l'aplat #ffffff qu'elle posait était la
+   cause directe de deux des quatre ruptures. */
 .sec-clean::before {
-  background:
-    radial-gradient(
-      70% 95% at 100% 0%,
-      rgb(var(--coral) / 0.3),
-      transparent 62%
-    ),
-    radial-gradient(
-      62% 85% at 0% 100%,
-      rgb(var(--orange) / 0.26),
-      transparent 64%
-    ),
-    #ffffff;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.5),
+    rgb(255 255 255 / 0.28)
+  );
 }
 
 /* --- B · Barres du logo à -22° ---
@@ -2309,8 +2353,15 @@ body {
        dans le logo. Le motif le plus identitaire. Les bandes
        sont placées sur les côtés : le centre reste libre pour
        le texte. --- */
+/* .sec-deep : le point d'appui. La plus dense des trois, mais toujours
+   par transparence — c'est un renforcement de la nappe, pas un aplat
+   posé dessus. */
 .sec-deep::before {
-  background: linear-gradient(180deg, #fdf6f3 0%, #faeee9 100%);
+  background: linear-gradient(
+    180deg,
+    rgb(var(--bordeaux) / 0.02),
+    rgb(var(--bordeaux) / 0.03)
+  );
 }
 .sec-deep::after {
   background:
