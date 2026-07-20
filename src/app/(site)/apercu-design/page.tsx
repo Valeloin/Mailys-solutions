@@ -38,14 +38,9 @@ const VARIANTES = [
     note: "Inversion complète : fond bordeaux profond, la chaleur devient lumière. Le logo suit déjà, son lettrage étant en currentColor.",
   },
   {
-    id: "v3",
-    nom: "D — Trame",
-    note: "Blanc franc, structure portée par des bandes diagonales larges — le motif de sec-deep généralisé et assumé. Plus graphique, plus affirmé.",
-  },
-  {
     id: "v4",
     nom: "E — Continu",
-    note: "Un seul dégradé qui traverse toute la page au lieu de blocs juxtaposés. Les sections cessent de se voir comme des bandes.",
+    note: "Un seul dégradé qui traverse toute la page au lieu de blocs juxtaposés. Attention : contrairement à A, B et C, ce n'est pas un habillage de bande mais de page entière — il ne s'alterne pas, il porte tout le reste.",
   },
 ];
 
@@ -131,6 +126,66 @@ export default function ApercuDesignPage() {
           <Demo />
         </section>
       ))}
+
+      {/* ================= COMPOSITION ================= */}
+      {/* Les trois directions retenues ne s'opposent pas, elles se
+          superposent : E porte le fond de la page entière, A et B
+          rythment les sections par-dessus, C sert de bascule. C'est
+          cette combinaison qui remplacerait sec-clean / sec-warm /
+          sec-deep, pas une variante prise isolément. */}
+      <div className="compo">
+        <div className="mx-auto max-w-content px-4 pt-16 sm:px-6">
+          <p className="apercu-etiquette inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">
+            Composition — les trois ensemble
+          </p>
+          <h2 className="mt-3 max-w-2xl text-xl font-bold">
+            Ce que donnerait une vraie page
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed opacity-75">
+            E tient le fond d&apos;un bout à l&apos;autre. Les sections
+            posées dessus n&apos;ont plus besoin de fond propre : elles
+            laissent voir le dégradé. Seules deux exceptions rythment la
+            descente — un aplat papier pour les passages de lecture, et une
+            bascule sombre pour le moment fort.
+          </p>
+        </div>
+
+        <section className="compo-libre">
+          <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-60">
+              Section sans fond propre — le dégradé de page traverse
+            </p>
+          </div>
+          <Demo />
+        </section>
+
+        <section className="compo-papier">
+          <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-60">
+              Aplat papier — passages de lecture
+            </p>
+          </div>
+          <Demo />
+        </section>
+
+        <section className="compo-encre">
+          <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-60">
+              Bascule encre — le moment fort de la page
+            </p>
+          </div>
+          <Demo />
+        </section>
+
+        <section className="compo-libre">
+          <div className="mx-auto max-w-content px-4 pt-8 sm:px-6">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-60">
+              Retour au dégradé de page
+            </p>
+          </div>
+          <Demo />
+        </section>
+      </div>
     </>
   );
 }
@@ -190,15 +245,6 @@ const CSS_VARIANTES = `
 .v2 .apercu-etiquette { background: rgb(255 255 255 / 0.12); }
 .v2 .apercu-ghost { border-color: rgb(255 255 255 / 0.4); }
 
-/* D — Trame : blanc franc, bandes diagonales larges. */
-.v3::before { background: #ffffff; }
-.v3::after {
-  background:
-    linear-gradient(112deg, transparent 6%, rgb(var(--coral) / 0.16) 6%, rgb(var(--coral) / 0.16) 17%, transparent 17%),
-    linear-gradient(112deg, transparent 22%, rgb(var(--accent) / 0.1) 22%, rgb(var(--accent) / 0.1) 29%, transparent 29%),
-    linear-gradient(112deg, transparent 74%, rgb(var(--orange) / 0.18) 74%, rgb(var(--orange) / 0.18) 88%, transparent 88%);
-}
-
 /* E — Continu : un seul dégradé traversant, fixé au défilement. */
 .v4::before {
   background:
@@ -208,4 +254,73 @@ const CSS_VARIANTES = `
     linear-gradient(180deg, #ffffff 0%, #fffaf7 55%, #fdf3ee 100%);
   background-attachment: fixed, fixed, fixed, fixed;
 }
+
+/* ---------- Composition : les trois retenues ensemble ---------- */
+/* E porte le fond de l'ensemble. Les sections posées dessus ne
+   redéfinissent un fond que lorsqu'elles ont une raison de le faire. */
+.compo {
+  position: relative;
+  isolation: isolate;
+  color: var(--foreground);
+}
+.compo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(80% 50% at 50% -10%, rgb(var(--coral) / 0.22), transparent 60%),
+    radial-gradient(70% 45% at 100% 60%, rgb(var(--orange) / 0.18), transparent 62%),
+    radial-gradient(70% 45% at 0% 110%, rgb(var(--accent) / 0.14), transparent 62%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf7 55%, #fdf3ee 100%);
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+.compo .apercu-carte {
+  border-color: rgb(var(--bordeaux) / 0.12);
+  background: var(--background);
+}
+
+/* Sans fond propre : le dégradé de page reste visible. */
+.compo-libre { position: relative; }
+
+/* Aplat papier, opaque, pour les passages de lecture. */
+.compo-papier { position: relative; isolation: isolate; }
+.compo-papier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #fdfaf7;
+}
+.compo-papier::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(rgb(var(--bordeaux) / 0.05) 0.5px, transparent 0.5px),
+    radial-gradient(rgb(var(--bordeaux) / 0.04) 0.5px, transparent 0.5px);
+  background-size: 14px 14px, 14px 14px;
+  background-position: 0 0, 7px 7px;
+}
+
+/* Bascule sombre : le moment fort, une seule fois par page. */
+.compo-encre { position: relative; isolation: isolate; color: #ffffff; }
+.compo-encre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(58% 70% at 12% 0%, rgb(var(--accent) / 0.4), transparent 62%),
+    radial-gradient(56% 68% at 92% 100%, rgb(var(--orange) / 0.3), transparent 64%),
+    linear-gradient(180deg, #1c0f12 0%, #140a0d 100%);
+}
+.compo-encre .apercu-carte {
+  background: rgb(255 255 255 / 0.05);
+  border-color: rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(2px);
+}
+.compo-encre .apercu-ghost { border-color: rgb(255 255 255 / 0.4); }
 `;
