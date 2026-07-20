@@ -2303,29 +2303,25 @@ body::before {
    lit vraiment. C'est ce qui donne le rythme, maintenant que la couleur
    est continue en dessous — sans elle, la page serait un seul aplat.
    Le grain est posé sur ::after, le ::before portant l'aplat. */
+/* .sec-warm renforce le dégradé au lieu de le masquer.
+   Erreur corrigée : cette classe habille le hero, donc le tout premier
+   écran du site. Un aplat opaque y recouvrait intégralement le dégradé
+   de page — on retrouvait exactement le blanc d'avant à l'endroit le
+   plus regardé, et la couleur ne commençait qu'en dessous de la ligne
+   de flottaison. Le voile est donc translucide : il ajoute de la
+   chaleur, il ne repeint rien. */
 .sec-warm::before {
   background:
     radial-gradient(
-      52% 62% at 8% 0%,
-      rgb(var(--coral) / 0.16),
-      transparent 66%
+      58% 68% at 8% 0%,
+      rgb(var(--coral) / 0.26),
+      transparent 64%
     ),
     radial-gradient(
-      50% 64% at 96% 100%,
-      rgb(var(--orange) / 0.14),
-      transparent 68%
-    ),
-    #fdfaf7;
-}
-.sec-warm::after {
-  opacity: 0.5;
-  background-image:
-    radial-gradient(rgb(var(--bordeaux) / 0.05) 0.5px, transparent 0.5px),
-    radial-gradient(rgb(var(--bordeaux) / 0.04) 0.5px, transparent 0.5px);
-  background-size: 14px 14px, 14px 14px;
-  background-position:
-    0 0,
-    7px 7px;
+      56% 70% at 96% 100%,
+      rgb(var(--orange) / 0.24),
+      transparent 66%
+    );
 }
 
 /* --- C · Claire et aérée ---
