@@ -50,12 +50,24 @@ function contraste(a: RGB, b: RGB): number {
   return Math.round((Math.max(x, y) / Math.min(x, y)) * 100) / 100;
 }
 
+const ORANGE_VIF: RGB = [249, 115, 22]; // --orange
+const PANNEAU: RGB = [255, 255, 255];
+
 const VARIANTES: {
   id: string;
   nom: string;
   note: string;
   /** Point le plus défavorable du fond, pour le calcul de contraste. */
   fondPire: RGB;
+  /** Surface sur laquelle les accents sont réellement posés. Diffère du
+      fond quand la direction pose le contenu sur un panneau. */
+  fondAccents?: RGB;
+  /** Teintes d'accent retenues par la direction. --orange-text est un
+      orange foncé calculé pour fond CLAIR : sur fond sombre il faut
+      l'orange vif, sinon la direction échoue pour une raison qui n'a
+      rien à voir avec son fond. */
+  accentChaud?: RGB;
+  accentFroid?: RGB;
 }[] = [
   {
     id: "v0",
@@ -93,17 +105,46 @@ const VARIANTES: {
     note: "Le dégradé devient le sujet. Plus aucun blanc franc : la page entière est une descente rose → orange → rouge. À regarder en faisant défiler, et à juger sur la lisibilité du texte autant que sur l'effet.",
     fondPire: [246, 126, 77],
   },
+  {
+    id: "v7",
+    nom: "F — Panneaux",
+    note: "Le dégradé saturé qu'aime ta sœur, mais le contenu posé sur un panneau clair opaque. Le fond reste pleinement visible autour et entre les panneaux ; les accents chauds retrouvent une surface claire où se lire. C'est la seule direction qui garde la saturation ET les accents.",
+    fondPire: [246, 126, 77],
+    fondAccents: PANNEAU,
+  },
+  {
+    id: "v8",
+    nom: "C+ — Encre, accents vifs",
+    note: "Le fond sombre de C, corrigé : ses accents passent de --orange-text (orange foncé, calculé pour fond clair) à --orange vif. C'était ça qui faisait échouer C, pas son fond. Sur sombre, la chaleur devient enfin lisible.",
+    fondPire: [28, 15, 18],
+    accentChaud: ORANGE_VIF,
+    accentFroid: [255, 107, 107],
+  },
 ];
 
 /** Relevé de lisibilité d'une variante. Le seuil AA est de 4,5:1 pour du
     texte courant. Un accent chaud sous ce seuil ne peut pas être posé
     directement sur le fond : il devra vivre sur une carte, ou céder. */
-function Releve({ fond }: { fond: RGB }) {
+function Releve({
+  fond,
+  fondAccents,
+  accentChaud = ORANGE_TEXT,
+  accentFroid = ACCENT,
+}: {
+  fond: RGB;
+  fondAccents?: RGB;
+  accentChaud?: RGB;
+  accentFroid?: RGB;
+}) {
+  // Les accents ne sont pas toujours posés sur le fond : une direction à
+  // panneaux les met sur une surface claire opaque. On mesure donc là où
+  // ils se trouvent réellement, sinon le relevé condamne à tort.
+  const surfaceAccents = fondAccents ?? fond;
   const mesures = [
     { nom: "texte noir", valeur: contraste(NOIR, fond) },
     { nom: "texte blanc", valeur: contraste(BLANC, fond) },
-    { nom: "accent orange", valeur: contraste(ORANGE_TEXT, fond) },
-    { nom: "accent rouge", valeur: contraste(ACCENT, fond) },
+    { nom: "accent chaud", valeur: contraste(accentChaud, surfaceAccents) },
+    { nom: "accent froid", valeur: contraste(accentFroid, surfaceAccents) },
   ];
   return (
     <ul className="mt-3 flex flex-wrap gap-2 text-xs">
@@ -131,7 +172,7 @@ function Releve({ fond }: { fond: RGB }) {
     l'autre, pour que seul l'habillage change. Textes repris du site. */
 function Demo() {
   return (
-    <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
+    <div className="apercu-panneau mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
       <Kicker>Nos expertises</Kicker>
       <h2 className="mt-4 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
         Des outils conçus pour votre façon de travailler
@@ -218,7 +259,12 @@ export default function ApercuDesignPage() {
             <p className="mt-2 max-w-2xl text-sm leading-relaxed opacity-75">
               {v.note}
             </p>
-            <Releve fond={v.fondPire} />
+            <Releve
+              fond={v.fondPire}
+              fondAccents={v.fondAccents}
+              accentChaud={v.accentChaud}
+              accentFroid={v.accentFroid}
+            />
           </div>
           <Demo />
         </section>
@@ -374,6 +420,58 @@ const CSS_VARIANTES = `
   background-attachment: fixed, fixed, fixed, fixed;
 }
 .v6 .apercu-carte { background: rgb(255 255 255 / 0.82); backdrop-filter: blur(3px); }
+
+/* F — Panneaux : le dégradé saturé reste entier, mais le contenu se
+   pose sur un panneau clair opaque. Le fond se voit tout autour et
+   entre les sections ; les accents chauds retrouvent une surface claire.
+   Seule direction qui garde la saturation ET les accents. */
+.v7::before {
+  background:
+    linear-gradient(rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.08)),
+    linear-gradient(
+      135deg,
+      rgb(var(--orange)) 0%,
+      rgb(var(--accent)) 48%,
+      rgb(var(--accent-dark)) 100%
+    );
+}
+.v7 .apercu-panneau {
+  max-width: 68rem;
+  margin-block: 3rem;
+  border-radius: 1.75rem;
+  background: #ffffff;
+  box-shadow: 0 30px 70px -40px rgb(var(--bordeaux) / 0.55);
+}
+
+/* C+ — Encre, accents vifs. Même fond sombre que C. La correction est
+   dans les ACCENTS : --orange-text (orange foncé pour fond clair) tombe
+   à 3,34:1 sur ce fond, l'orange vif y monte à 6,65:1. C'était la
+   raison de l'échec de C, pas son fond. */
+.v8 {
+  color: #ffffff;
+}
+.v8::before {
+  background:
+    radial-gradient(58% 70% at 12% 0%, rgb(var(--accent) / 0.4), transparent 62%),
+    radial-gradient(56% 68% at 92% 100%, rgb(var(--orange) / 0.3), transparent 64%),
+    linear-gradient(180deg, #1c0f12 0%, #140a0d 100%);
+}
+.v8 .apercu-carte {
+  background: rgb(255 255 255 / 0.05);
+  border-color: rgb(255 255 255 / 0.14);
+}
+.v8 .apercu-etiquette {
+  background: rgb(255 255 255 / 0.12);
+}
+.v8 .apercu-ghost {
+  border-color: rgb(255 255 255 / 0.4);
+}
+.v8 .text-orange-text {
+  color: rgb(var(--orange));
+}
+.v8 .text-accent {
+  color: rgb(var(--coral));
+}
 
 /* ---------- Composition : les trois retenues ensemble ---------- */
 /* E porte le fond de l'ensemble. Les sections posées dessus ne
