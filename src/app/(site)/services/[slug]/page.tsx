@@ -111,7 +111,7 @@ export default async function ServicePage({
       {/* ========== 1. HERO ========== */}
       <section className="sec sec-warm relative overflow-hidden">
         <div className="relative mx-auto max-w-content px-4 py-12 sm:px-6 sm:py-16">
-          <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+          <div className="card reveal relative rounded-3xl border border-border bg-background p-6 sm:p-8 lg:p-10">
             <h1 className="max-w-4xl text-balance text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
               {service.h1}
             </h1>

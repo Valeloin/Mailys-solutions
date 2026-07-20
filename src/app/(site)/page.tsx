@@ -65,7 +65,7 @@ export default async function HomePage() {
                 se retrouve sous les boutons, hors écran sur téléphone.
                 Dès lg, la colonne se reforme et les ordres n'ont plus cours. */}
             <div className="contents lg:block">
-              <div className="card reveal relative border border-border bg-background p-6 sm:p-8 lg:p-10">
+              <div className="card reveal relative rounded-3xl border border-border bg-background p-6 sm:p-8 lg:p-10">
                 <div className="rise rise-1 order-1">
                   <Kicker>{c.hero.kicker}</Kicker>
                 </div>
