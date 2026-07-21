@@ -20,6 +20,15 @@ import { Kicker, MobileCtaBar, ProblemItem } from "@/components/ui";
 // src/lib/sections.ts). Habillage 100 % CSS, zéro JavaScript.
 // ============================================================
 
+// Intitulés courts par service, façon OHIHO (« UNE PAGE UNIQUE,
+// EFFICACE »). Posés au-dessus du titre de chaque rangée. Clés = slug.
+const SERVICE_TAGS: Record<string, string> = {
+  "developpement-application-metier": "Sur mesure, pour vos process",
+  "modernisation-application": "Moderniser sans tout refaire",
+  "digitalisation-processus": "Du papier au numérique",
+  "maintenance-windev-webdev": "Votre appli entre de bonnes mains",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getHomeContent();
   return {
@@ -171,47 +180,75 @@ export default async function HomePage() {
             {c.services.title}
           </h2>
           <p className="mt-4 max-w-2xl text-muted">{c.services.intro}</p>
-          {/* Cartes en format paysage dès lg : les 4 animations
-              tiennent sur un seul écran, deux par deux */}
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
-            {services.map((s) => (
-              <article
-                key={s.slug}
-                className="group card reveal relative overflow-hidden rounded-2xl border border-border bg-surface p-5 hover:border-coral lg:flex lg:flex-row-reverse lg:items-center lg:gap-5"
-              >
-                {/* Vignette animée : la maquette du service en action */}
+
+          {/* Rangées en alternance, structure reprise d'OHIHO : chaque
+              service occupe une ligne pleine, grande vitrine animée d'un
+              côté, texte de l'autre, le côté s'inversant à chaque ligne.
+              Ce format met la maquette au premier plan au lieu de la
+              réduire à une vignette. Les vitrines ne sont plus sur une
+              card à dégradé : c'est l'animation qui porte la couleur, sur
+              la nappe sombre. */}
+          <div className="mt-14 space-y-16 sm:space-y-20 lg:mt-20 lg:space-y-28">
+            {services.map((s, i) => {
+              // Rangée 01 : texte à gauche, vitrine à droite — comme
+              // OHIHO. La vitrine passe donc à droite (order-2) sur les
+              // rangées paires (0, 2), à gauche sur les impaires.
+              const pair = i % 2 === 0;
+              return (
                 <div
-                  aria-hidden="true"
-                  className="mb-4 overflow-hidden rounded-xl border border-border shadow-[0_8px_24px_-16px_rgb(var(--bordeaux)/0.25)] lg:mb-0 lg:w-[44%] lg:shrink-0"
+                  key={s.slug}
+                  className="reveal grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
                 >
-                  <ServicePreview slug={s.slug} />
-                </div>
-                <div className="lg:min-w-0">
-                  <h3 className="text-lg font-bold transition-colors group-hover:text-accent">
-                    {/* Lien « étendu » : le ::after se cale sur l'<article relative>
-                        → toute la carte est cliquable */}
+                  {/* Vitrine animée, en grand. Ordre inversé une ligne
+                      sur deux pour le zigzag. */}
+                  <div
+                    aria-hidden="true"
+                    className={`overflow-hidden rounded-2xl border border-border shadow-[0_30px_60px_-30px_rgb(0_0_0/0.7)] ${
+                      pair ? "lg:order-2" : ""
+                    }`}
+                  >
+                    <ServicePreview slug={s.slug} />
+                  </div>
+
+                  {/* Texte : numéro + intitulé court + titre + description
+                      + lien, sur le modèle des rangées OHIHO. */}
+                  <div className={pair ? "lg:order-1" : ""}>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-3xl font-extrabold text-orange-text">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="h-px w-8 bg-orange/40" aria-hidden="true" />
+                      <span className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                        {SERVICE_TAGS[s.slug] ?? "Notre expertise"}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                      <Link
+                        href={`/services/${s.slug}`}
+                        className="transition-colors hover:text-orange-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                      >
+                        {s.name}
+                      </Link>
+                    </h3>
+                    <p className="mt-4 max-w-xl leading-relaxed text-muted">
+                      {s.heroSubtitle}
+                    </p>
                     <Link
                       href={`/services/${s.slug}`}
-                      className="after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                      className="group/l mt-6 inline-flex items-center gap-2 text-sm font-semibold text-orange-text"
                     >
-                      {s.name}
+                      Découvrir ce service
+                      <span
+                        aria-hidden="true"
+                        className="inline-block transition-transform duration-200 group-hover/l:translate-x-1"
+                      >
+                        →
+                      </span>
                     </Link>
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-muted lg:line-clamp-3">
-                    {s.heroSubtitle}
-                  </p>
-                  <p className="mt-3 text-sm font-semibold text-accent">
-                    Découvrir{" "}
-                    <span
-                      aria-hidden="true"
-                      className="inline-block transition-transform duration-200 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
-                  </p>
+                  </div>
                 </div>
-              </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
