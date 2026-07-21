@@ -257,23 +257,49 @@ body::before {
   }
 
   /* --- Carte premium : ombre bordeaux chaude, très diffuse --- */
+  /* Fond dégradé chaud, sur la base sombre de la carte.
+     Le dégradé descend orange → corail → bordeaux, en diagonale, à
+     opacité modérée : la teinte se voit nettement mais reste assez
+     sombre pour que le texte blanc tienne. Aucune étape noire — le
+     sombre est le bordeaux du dernier arrêt, pas du noir.
+     Le liseré intérieur clair sur l'arête haute donne le relief : sur
+     fond sombre, c'est la lumière qui détache, pas l'ombre. */
   .card {
+    background-image: linear-gradient(
+      145deg,
+      rgb(var(--orange) / 0.22) 0%,
+      rgb(var(--coral) / 0.14) 38%,
+      rgb(var(--accent) / 0.1) 68%,
+      rgb(var(--bordeaux) / 0.28) 100%
+    );
     box-shadow:
-      0 1px 2px rgb(var(--bordeaux) / 0.04),
-      0 16px 40px -24px rgb(var(--bordeaux) / 0.12);
+      inset 0 1px 0 rgb(255 255 255 / 0.1),
+      0 1px 2px rgb(0 0 0 / 0.4),
+      0 10px 24px -12px rgb(0 0 0 / 0.5),
+      0 30px 60px -34px rgb(0 0 0 / 0.6);
     transition:
       transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.25s ease,
       border-color 0.25s ease;
   }
-  /* Survol plus vivant : la carte se soulève et grandit très légèrement,
-     avec un halo chaud qui s'allume sous elle. */
+  /* Au survol : la carte monte, le dégradé s'intensifie, un cerne corail
+     s'allume. Pas de scale — il rend le texte flou pendant la
+     transition. */
   .card:hover {
-    transform: translateY(-5px) scale(1.012);
+    transform: translateY(-5px);
+    background-image: linear-gradient(
+      145deg,
+      rgb(var(--orange) / 0.32) 0%,
+      rgb(var(--coral) / 0.2) 38%,
+      rgb(var(--accent) / 0.16) 68%,
+      rgb(var(--bordeaux) / 0.36) 100%
+    );
     box-shadow:
-      0 2px 4px rgb(var(--bordeaux) / 0.05),
-      0 28px 60px -24px rgb(var(--bordeaux) / 0.24),
-      0 0 0 1px rgb(var(--coral) / 0.12);
+      inset 0 1px 0 rgb(255 255 255 / 0.16),
+      0 2px 4px rgb(0 0 0 / 0.45),
+      0 16px 32px -14px rgb(0 0 0 / 0.55),
+      0 44px 80px -36px rgb(0 0 0 / 0.68),
+      0 0 0 1px rgb(var(--coral) / 0.3);
   }
 
   /* Le CTA principal respire en continu ; au survol l'animation
