@@ -20,14 +20,15 @@ const config: Config = {
         "orange-text": "rgb(var(--orange-text) / <alpha-value>)",
       },
       maxWidth: {
-        // Largeur maîtresse des sections. Fortement élargie (72 → 110rem)
-        // pour occuper l'essentiel des grands écrans et supprimer les
-        // marges vides. Les lignes de texte restent capées ailleurs
-        // (titres, paragraphes, colonnes 0.5fr), donc élargir ne fait
-        // qu'écarter les blocs, pas rallonger les lignes.
+        // Largeur maîtresse des sections. Resserrée à 84rem : 110rem
+        // étirait tout (carte du hero démesurée, intro des services
+        // projetée loin à droite, grandes bandes vides). 84rem garde des
+        // marges franches sur grand écran sans distendre les blocs.
+        // L'agencement interne de chaque section est inchangé — ce levier
+        // ne fait que rapprocher les bords.
         // NB : toute modif de cette valeur exige un REDÉMARRAGE du serveur
         // de dev — Tailwind ne lit sa config qu'au démarrage.
-        content: "110rem",
+        content: "84rem",
       },
     },
   },

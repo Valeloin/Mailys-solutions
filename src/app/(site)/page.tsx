@@ -3,7 +3,6 @@ import Link from "next/link";
 import Rich from "@/components/Rich";
 import ServicePreview from "@/components/ServicePreview";
 import HeroShowcase from "@/components/HeroShowcase";
-import HeroDevices from "@/components/HeroDevices";
 import WhyUsMotif from "@/components/WhyUsMotif";
 import MethodSteps from "@/components/MethodSteps";
 import {
@@ -87,17 +86,6 @@ export default async function HomePage() {
                   {c.hero.ctaSecondary}
                 </Link>
               </div>
-                {/* Scène « appareils » (MethodShowcase d'OHIHO recolorée
-                    Mailys) posée dans la partie droite — longtemps vide —
-                    de la carte. En absolu : ne touche pas au flux du texte.
-                    Masquée sous lg, où la carte se réempile et où la vitrine
-                    défilante occupe déjà l'écran. */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 right-0 hidden w-[50%] items-center pr-2 lg:flex"
-                >
-                  <HeroDevices />
-                </div>
               </div>
             </div>
 
