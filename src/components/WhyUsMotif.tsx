@@ -17,7 +17,7 @@ const MOTIFS: (() => React.ReactNode)[] = [
   // 0 — Un accompagnement de A à Z : le point fait tout le trajet
   () => (
     <>
-      <line x1="8" y1="12" x2="56" y2="12" stroke="rgb(255 255 255 / 0.34)" strokeWidth="2" strokeLinecap="round" />
+      <line x1="8" y1="12" x2="56" y2="12" stroke="rgb(255 255 255 / 0.5)" strokeWidth="2" strokeLinecap="round" />
       <circle cx="8" cy="12" r="3" fill="#ffffff" />
       <circle cx="56" cy="12" r="3" fill="#ffffff" />
       {/* Part exactement du point A (cx=8) et va jusqu'au point Z (cx=56),
@@ -30,19 +30,19 @@ const MOTIFS: (() => React.ReactNode)[] = [
   //     chacun à son rythme — on ajuste finement, sur mesure.
   () => (
     <>
-      <rect x="12" y="3.2" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.3)" />
+      <rect x="12" y="3.2" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.48)" />
       <circle className="pv-wu-knob-1" cx="20" cy="4.5" r="2.6" fill="#ffffff" stroke="#ffffff" strokeWidth="1.4" />
-      <rect x="12" y="10.7" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.3)" />
+      <rect x="12" y="10.7" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.48)" />
       <circle className="pv-wu-knob-2" cx="38" cy="12" r="2.6" fill="#ffffff" stroke="#ffffff" strokeWidth="1.4" />
-      <rect x="12" y="18.2" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.3)" />
+      <rect x="12" y="18.2" width="40" height="2.6" rx="1.3" fill="rgb(255 255 255 / 0.48)" />
       <circle className="pv-wu-knob-3" cx="26" cy="19.5" r="2.6" fill="#ffffff" stroke="#ffffff" strokeWidth="1.4" />
     </>
   ),
   // 2 — La compréhension métier d'abord : la loupe balaye le texte
   () => (
     <>
-      <rect x="10" y="8" width="44" height="3" rx="1.5" fill="rgb(255 255 255 / 0.28)" />
-      <rect x="10" y="14" width="32" height="3" rx="1.5" fill="rgb(255 255 255 / 0.28)" />
+      <rect x="10" y="8" width="44" height="3" rx="1.5" fill="rgb(255 255 255 / 0.45)" />
+      <rect x="10" y="14" width="32" height="3" rx="1.5" fill="rgb(255 255 255 / 0.45)" />
       <g className="pv-wu-scan">
         <circle cx="30" cy="10" r="6" fill="none" stroke="#ffffff" strokeWidth="2" />
         <line x1="34.5" y1="14.5" x2="39" y2="19" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
@@ -64,7 +64,7 @@ const MOTIFS: (() => React.ReactNode)[] = [
         className="pv-wu-line"
         d="M6 14l12 0 6 -7 8 10 6 -5 20 0"
         fill="none"
-        stroke="rgb(255 255 255 / 0.85)"
+        stroke="#ffffff"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -76,10 +76,10 @@ const MOTIFS: (() => React.ReactNode)[] = [
   // 5 — Un logiciel évolutif : les marches montent (données vivantes)
   () => (
     <>
-      <rect className="pv-bar pv-bar-a" x="18" y="12" width="6" height="8" rx="2" fill="rgb(255 255 255 / 0.85)" />
-      <rect className="pv-bar pv-bar-b" x="30" y="7" width="6" height="13" rx="2" fill="rgb(255 255 255 / 0.85)" />
-      <rect className="pv-bar pv-bar-c" x="42" y="3" width="6" height="17" rx="2" fill="rgb(255 255 255 / 0.85)" />
-      <line x1="14" y1="20" x2="52" y2="20" stroke="rgb(255 255 255 / 0.34)" strokeWidth="2" strokeLinecap="round" />
+      <rect className="pv-bar pv-bar-a" x="18" y="12" width="6" height="8" rx="2" fill="#ffffff" />
+      <rect className="pv-bar pv-bar-b" x="30" y="7" width="6" height="13" rx="2" fill="#ffffff" />
+      <rect className="pv-bar pv-bar-c" x="42" y="3" width="6" height="17" rx="2" fill="#ffffff" />
+      <line x1="14" y1="20" x2="52" y2="20" stroke="rgb(255 255 255 / 0.5)" strokeWidth="2" strokeLinecap="round" />
     </>
   ),
 ];

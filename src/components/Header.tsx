@@ -131,7 +131,17 @@ function MobileOnglets() {
 // Sur téléphone : logo + bandeau des 4 onglets (MobileTabBar).
 export default function Header() {
   return (
-    <header className="relative sticky top-0 z-50 border-b border-border/80 bg-background">
+    // Dégradé rouge → orange → rouge, mais ASSOMBRI : même famille que
+    // les cards, un cran plus sombre pour rester un support de
+    // navigation. Un voile sombre superposé descend la luminosité du
+    // dégradé chaud ; les libellés blancs restent nets.
+    <header
+      className="relative sticky top-0 z-50 border-b border-border/80"
+      style={{
+        backgroundImage:
+          "linear-gradient(180deg, rgb(var(--noir-300-rgb) / 0.72), rgb(var(--noir-300-rgb) / 0.82)), linear-gradient(100deg, rgb(var(--accent)) 0%, rgb(var(--orange)) 50%, rgb(var(--accent)) 100%)",
+      }}
+    >
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
       {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,

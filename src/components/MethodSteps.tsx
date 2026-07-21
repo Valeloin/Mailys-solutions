@@ -99,19 +99,16 @@ const ICONS: ((color: string) => React.ReactNode)[] = [
 ];
 
 function MethodIcon({ index }: { index: number }) {
-  // Les icônes étaient en --coral / --orange / --accent — c'est-à-dire
-  // les couleurs DU dégradé de la card. Corail sur corail, orange sur
-  // orange : elles se fondaient. Elles sont désormais BLANCHES, dans une
-  // pastille de verre sombre — même traitement que le numéro juste à
-  // côté. Le tracé se détache, et ses animations (pulse, chevrons,
-  // cochage) redeviennent visibles.
+  // Icône BLANCHE, sans pastille. Elle était en --coral / --orange /
+  // --accent — les couleurs du dégradé qui la porte, donc invisible. Le
+  // blanc se détache du dégradé. Pas de pastille : elle enfermait
+  // l'animation (la loupe qui balaye sortait du cercle et paraissait
+  // coupée). Libre, l'animation a toute sa place.
   const Icon = ICONS[index % ICONS.length];
   return (
-    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[rgb(var(--noir-300-rgb)/0.5)]">
-      <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true" focusable="false">
-        {Icon("#ffffff")}
-      </svg>
-    </span>
+    <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true" focusable="false">
+      {Icon("#ffffff")}
+    </svg>
   );
 }
 

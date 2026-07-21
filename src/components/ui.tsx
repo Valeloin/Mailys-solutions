@@ -76,11 +76,14 @@ export function StepNumber({
 // Chaque item de « problème » reçoit son icône + son ton chaud
 // (cyclés par index). Traits fins en currentColor → l'icône prend
 // la couleur de sa pastille.
+// Pastilles d'icône en verre sombre + tracé blanc — les cartes
+// « problème » portent maintenant le dégradé chaud, une pastille chaude
+// s'y fondrait. Un seul ton suffit désormais, la couleur venant du fond.
 const PROBLEM_TONES = [
-  "bg-coral/[0.15] text-[#D8494F]",
-  "bg-orange/[0.15] text-orange-text",
-  "bg-accent/[0.12] text-accent",
-  "bg-bordeaux/[0.08] text-foreground",
+  "border border-white/15 bg-[rgb(var(--noir-300-rgb)/0.5)] text-white",
+  "border border-white/15 bg-[rgb(var(--noir-300-rgb)/0.5)] text-white",
+  "border border-white/15 bg-[rgb(var(--noir-300-rgb)/0.5)] text-white",
+  "border border-white/15 bg-[rgb(var(--noir-300-rgb)/0.5)] text-white",
 ] as const;
 
 const PROBLEM_ICONS: React.ReactNode[] = [
@@ -127,7 +130,10 @@ export function ProblemItem({
   const tone = PROBLEM_TONES[index % PROBLEM_TONES.length];
   const icon = PROBLEM_ICONS[index % PROBLEM_ICONS.length];
   return (
-    <li className="problem-item reveal group flex items-center gap-4 rounded-2xl border border-border bg-background px-4 py-3.5 shadow-[0_4px_16px_-8px_rgb(var(--bordeaux)/0.2)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-orange/40 hover:shadow-[0_16px_34px_-16px_rgb(var(--bordeaux)/0.28)]">
+    // .card : même dégradé et même relief que les autres cartes du site
+    // (« la totalité des cards »). Le fond plat bg-background et l'ombre
+    // manuelle sont retirés, .card les porte.
+    <li className="problem-item card reveal group flex items-center gap-4 border border-border px-4 py-3.5">
       <span
         aria-hidden="true"
         className={`flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[13px] ${tone}`}

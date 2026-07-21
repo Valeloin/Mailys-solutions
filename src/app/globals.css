@@ -291,7 +291,8 @@ body::before {
       linear-gradient(
         135deg,
         rgb(var(--orange)) 0%,
-        rgb(var(--accent)) 52%,
+        rgb(var(--coral)) 34%,
+        rgb(var(--accent)) 70%,
         rgb(var(--accent-dark)) 100%
       );
     box-shadow:
