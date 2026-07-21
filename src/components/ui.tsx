@@ -8,7 +8,11 @@
 /** Badge « kicker » système : pilule + les deux points du logo (pulsation douce) */
 export function Kicker({ children }: { children: React.ReactNode }) {
   return (
-    <p className="inline-flex items-center gap-2 rounded-full border border-orange/25 bg-orange/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-text">
+    // Verre sombre + texte blanc + bord orange. L'ancien « orange sur
+    // orange à 10 % » disparaissait sur le dégradé chaud des cards. Ici
+    // le badge se lit sur la nappe sombre ET sur une card, et les deux
+    // points colorés restent l'accent vif.
+    <p className="pv-chip inline-flex items-center gap-2 rounded-full border border-orange/50 bg-[rgb(var(--noir-300-rgb)/0.55)] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
       <span aria-hidden="true" className="pv-dot h-1.5 w-1.5 rounded-full bg-orange"></span>
       <span
         aria-hidden="true"
@@ -58,7 +62,10 @@ export function StepNumber({
   return (
     <p
       aria-hidden="true"
-      className={`flex shrink-0 items-center justify-center rounded-full bg-orange/10 text-orange-text ${STEP_SIZES[size]}`}
+      // Verre sombre + numéro orange vif, au lieu d'orange sur orange
+      // à 10 % — invisible sur le dégradé chaud des cards. Le num-pop
+      // reste, il est enfin visible.
+      className={`flex shrink-0 items-center justify-center rounded-full border border-orange/40 bg-[rgb(var(--noir-300-rgb)/0.5)] text-orange ${STEP_SIZES[size]}`}
     >
       {children}
     </p>

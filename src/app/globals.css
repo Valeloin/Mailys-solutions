@@ -271,6 +271,11 @@ body::before {
      Le texte des cards est déjà blanc — les descriptions secondaires
      passent en blanc franc plus bas, réglé après cette règle. */
   .card {
+    /* Rayon porté par la classe elle-même : il était posé au cas par
+       cas dans le HTML, et certaines cards l'oubliaient — d'où des coins
+       vifs. Ici plus aucun coin franc possible. `inherit` sur les
+       enfants n'écrase pas un rayon plus grand déjà mis sur la card. */
+    border-radius: 1.5rem;
     /* Deux couches : un voile chaud qui assombrit le coin orange (là où
        se pose le texte), puis le dégradé orange→rouge. Même technique
        que le bandeau CTA. Le voile est un bordeaux très sombre, pas du
@@ -315,24 +320,19 @@ body::before {
     text-shadow: 0 1px 6px rgb(20 4 8 / 0.35);
   }
 
-  /* Au survol : la carte monte, le dégradé s'assombrit d'un cran vers le
-     rouge (plus dense = texte encore plus sûr), et un cerne clair
-     s'allume. Pas de scale — il rend le texte flou pendant la
-     transition. */
+  /* Au survol : la carte monte seulement, l'ombre se creuse et un cerne
+     clair s'allume. Le dégradé NE CHANGE PAS — la version précédente le
+     remplaçait par un dégradé plus sombre qui recouvrait les animations
+     à l'intérieur (mockups, numéros, icônes). Pas de scale (flou du
+     texte). Le mouvement suffit à dire « survolé ». */
   .card:hover {
-    transform: translateY(-5px);
-    background-image: linear-gradient(
-      135deg,
-      rgb(var(--accent)) 0%,
-      rgb(var(--accent-dark)) 60%,
-      rgb(var(--bordeaux)) 100%
-    );
+    transform: translateY(-6px);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.22),
       0 2px 4px rgb(0 0 0 / 0.45),
-      0 16px 32px -14px rgb(0 0 0 / 0.55),
-      0 44px 80px -36px rgb(0 0 0 / 0.68),
-      0 0 0 1px rgb(255 255 255 / 0.22);
+      0 18px 36px -14px rgb(0 0 0 / 0.55),
+      0 48px 84px -36px rgb(0 0 0 / 0.68),
+      0 0 0 1px rgb(255 255 255 / 0.24);
   }
 
   /* Le CTA principal respire en continu ; au survol l'animation
