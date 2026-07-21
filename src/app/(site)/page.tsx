@@ -153,14 +153,24 @@ export default async function HomePage() {
       {/* ================= SERVICES ================= */}
       <section aria-labelledby="services-title" className="sec sec-clean">
         <div className="mx-auto max-w-content px-4 py-16 sm:px-6 sm:py-20">
-          <Kicker>{c.services.kicker}</Kicker>
-          <h2
-            id="services-title"
-            className="mt-4 max-w-2xl text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl sm:normal-case"
-          >
-            {c.services.title}
-          </h2>
-          <p className="mt-4 max-w-2xl text-muted">{c.services.intro}</p>
+          {/* En-tête sur deux colonnes : titre + kicker à gauche, intro
+              déplacée à droite (elle comblait un vide en haut à droite) et
+              resserrée. Alignés par le bas pour que l'intro accompagne la
+              dernière ligne du titre. En dessous de lg, tout se réempile. */}
+          <div className="lg:flex lg:items-end lg:justify-between lg:gap-12">
+            <div className="lg:max-w-xl">
+              <Kicker>{c.services.kicker}</Kicker>
+              <h2
+                id="services-title"
+                className="mt-4 text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl sm:normal-case"
+              >
+                {c.services.title}
+              </h2>
+            </div>
+            <p className="mt-4 max-w-sm text-muted lg:mt-0 lg:shrink-0">
+              {c.services.intro}
+            </p>
+          </div>
 
           {/* Agencement repris d'OHIHO : deux services par rangée,
               disposés EN MIROIR — texte | vitrine ‖ vitrine | texte. Les
