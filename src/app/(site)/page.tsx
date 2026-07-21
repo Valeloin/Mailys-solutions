@@ -166,10 +166,12 @@ export default async function HomePage() {
               disposés EN MIROIR — texte | vitrine ‖ vitrine | texte. Les
               maquettes animées se rejoignent au centre, encadrées par
               les intitulés. Chaque service est une sous-grille 2 colonnes
-              (texte étroit + vitrine large) ; l'item de droite inverse
-              l'ordre CSS pour poser sa vitrine côté centre. Les vitrines
-              ne sont pas sur une card à dégradé : c'est l'animation qui
-              porte la couleur, sur la nappe sombre. */}
+              où la VITRINE prend le plus de place (0.5fr texte / 1fr
+              vitrine ≈ deux tiers) : ce sont les animations qu'on veut
+              mettre en avant, le texte se resserre autour. L'item de
+              droite inverse l'ordre CSS pour poser sa vitrine côté
+              centre. Les vitrines ne sont pas sur une card à dégradé :
+              c'est l'animation qui porte la couleur, sur la nappe sombre. */}
           <div className="mt-14 grid gap-x-8 gap-y-14 lg:mt-20 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
             {services.map((s, i) => {
               // Item de gauche d'une rangée (i pair) : texte puis vitrine.
@@ -181,10 +183,10 @@ export default async function HomePage() {
               return (
                 <div
                   key={s.slug}
-                  className={`reveal grid items-center gap-6 sm:gap-7 ${
+                  className={`reveal grid items-center gap-6 sm:gap-8 ${
                     mirror
-                      ? "sm:grid-cols-[1fr_0.82fr]"
-                      : "sm:grid-cols-[0.82fr_1fr]"
+                      ? "sm:grid-cols-[1fr_0.5fr]"
+                      : "sm:grid-cols-[0.5fr_1fr]"
                   }`}
                 >
                   {/* Texte : numéro + intitulé court + titre + desc + lien */}
