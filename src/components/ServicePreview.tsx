@@ -19,13 +19,13 @@ export function Chrome({
 }) {
   return (
     <>
-      <rect width="400" height="26" fill="rgb(var(--bordeaux) / 0.05)" />
+      <rect width="400" height="26" fill="rgb(var(--coral) / 0.22)" />
       <circle className="pv-dot" cx="16" cy="13" r="4" fill="rgb(var(--coral))" />
       <circle className="pv-dot" style={{ animationDelay: "0.4s" }} cx="30" cy="13" r="4" fill="rgb(var(--orange))" />
       <circle className="pv-dot" style={{ animationDelay: "0.8s" }} cx="44" cy="13" r="4" fill="rgb(var(--accent))" />
       {url || urlSwap ? (
         <>
-          <rect x="130" y="5" width="160" height="16" rx="8" fill="rgb(var(--bordeaux) / 0.06)" />
+          <rect x="130" y="5" width="160" height="16" rx="8" fill="rgb(var(--orange) / 0.22)" />
           {urlSwap ? (
             <>
               <text
@@ -35,7 +35,7 @@ export function Chrome({
                 textAnchor="middle"
                 fontSize="9"
                 fontWeight="600"
-                fill="rgb(var(--bordeaux) / 0.45)"
+                fill="rgb(var(--accent) / 0.65)"
               >
                 {urlSwap[0]}
               </text>
@@ -46,7 +46,7 @@ export function Chrome({
                 textAnchor="middle"
                 fontSize="9"
                 fontWeight="600"
-                fill="rgb(var(--bordeaux) / 0.45)"
+                fill="rgb(var(--coral) / 0.65)"
               >
                 {urlSwap[1]}
               </text>
@@ -58,14 +58,14 @@ export function Chrome({
               textAnchor="middle"
               fontSize="9"
               fontWeight="600"
-              fill="rgb(var(--bordeaux) / 0.45)"
+              fill="rgb(var(--orange) / 0.65)"
             >
               {url}
             </text>
           )}
         </>
       ) : (
-        <rect x="150" y="7" width="120" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.06)" />
+        <rect x="150" y="7" width="120" height="12" rx="6" fill="rgb(var(--accent) / 0.22)" />
       )}
     </>
   );
@@ -86,23 +86,23 @@ export function AppMetier() {
   return (
     <>
       {/* Barre latérale : l'indicateur d'onglet actif se déplace */}
-      <rect x="0" y="26" width="60" height="194" fill="rgb(var(--bordeaux) / 0.03)" />
+      <rect x="0" y="26" width="60" height="194" fill="rgb(var(--coral) / 0.22)" />
       <rect className="pv-side" x="8" y="41" width="44" height="14" rx="7" fill="rgb(var(--accent) / 0.15)" />
       {/* La couleur active suit l'indicateur d'onglet */}
       <rect className="pv-tab-1" x="13" y="44" width="34" height="8" rx="4" fill="rgb(var(--accent) / 0.7)" />
-      <rect className="pv-tab-2" x="13" y="64" width="34" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
-      <rect x="13" y="80" width="34" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
-      <rect x="13" y="96" width="34" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.12)" />
+      <rect className="pv-tab-2" x="13" y="64" width="34" height="7" rx="3.5" fill="rgb(var(--orange) / 0.5)" />
+      <rect x="13" y="80" width="34" height="7" rx="3.5" fill="rgb(var(--accent) / 0.5)" />
+      <rect x="13" y="96" width="34" height="7" rx="3.5" fill="rgb(var(--coral) / 0.5)" />
       {/* En-tête */}
-      <rect x="76" y="42" width="120" height="12" rx="6" fill="rgb(var(--bordeaux) / 0.35)" />
-      <circle cx="360" cy="48" r="10" fill="rgb(var(--bordeaux) / 0.08)" />
+      <rect x="76" y="42" width="120" height="12" rx="6" fill="rgb(var(--orange) / 0.7)" />
+      <circle cx="360" cy="48" r="10" fill="rgb(var(--accent) / 0.22)" />
 
       {/* VUE 1 — tuiles KPI + barres */}
       <g className="pv-old">
         {[76, 178, 280].map((x, i) => (
           <g key={x}>
-            <rect x={x} y="68" width="92" height="46" rx="8" fill="#ffffff" stroke="rgb(var(--bordeaux) / 0.1)" />
-            <rect x={x + 12} y="80" width="38" height="6" rx="3" fill="rgb(var(--bordeaux) / 0.15)" />
+            <rect x={x} y="68" width="92" height="46" rx="8" fill="#ffffff" stroke="rgb(var(--coral) / 0.5)" />
+            <rect x={x + 12} y="80" width="38" height="6" rx="3" fill="rgb(var(--orange) / 0.5)" />
             <rect
               x={x + 12}
               y="94"
@@ -111,7 +111,7 @@ export function AppMetier() {
               rx="5"
               fill={
                 i === 0
-                  ? "rgb(var(--bordeaux) / 0.6)"
+                  ? "rgb(var(--accent) / 0.8)"
                   : i === 1
                     ? "rgb(var(--accent) / 0.8)"
                     : "rgb(var(--orange) / 0.8)"
@@ -119,7 +119,7 @@ export function AppMetier() {
             />
           </g>
         ))}
-        <rect x="76" y="128" width="296" height="84" rx="8" fill="#ffffff" stroke="rgb(var(--bordeaux) / 0.1)" />
+        <rect x="76" y="128" width="296" height="84" rx="8" fill="#ffffff" stroke="rgb(var(--coral) / 0.5)" />
         {bars.map((b) => (
           <rect
             key={b.x}
@@ -137,9 +137,9 @@ export function AppMetier() {
 
       {/* VUE 2 — la courbe se trace et grimpe */}
       <g className="pv-new">
-        <rect x="76" y="68" width="296" height="144" rx="8" fill="#ffffff" stroke="rgb(var(--bordeaux) / 0.1)" />
+        <rect x="76" y="68" width="296" height="144" rx="8" fill="#ffffff" stroke="rgb(var(--orange) / 0.5)" />
         {[100, 132, 164].map((y) => (
-          <line key={y} x1="92" y1={y} x2="356" y2={y} stroke="rgb(var(--bordeaux) / 0.06)" strokeWidth="1.5" />
+          <line key={y} x1="92" y1={y} x2="356" y2={y} stroke="rgb(var(--accent) / 0.22)" strokeWidth="1.5" />
         ))}
         {/* 1. Les 5 points des sommets apparaissent un à un… */}
         <circle className="pv-peak-1" cx="142" cy="158" r="5" fill="rgb(var(--coral))" />
@@ -168,7 +168,7 @@ export function Modernisation() {
     <>
       {/* AVANT — terne et tassé, dans la teinte la plus foncée du
           gradient DA (bordeaux) plutôt qu'un gris neutre. */}
-      <g className="pv-old" fill="rgb(var(--bordeaux))">
+      <g className="pv-old" fill="rgb(var(--accent))">
         <rect x="28" y="40" width="120" height="10" rx="1" fillOpacity="0.3" />
         <rect x="300" y="38" width="42" height="14" rx="1" fillOpacity="0.25" />
         <rect x="28" y="58" width="344" height="6" rx="1" fillOpacity="0.13" />
@@ -188,11 +188,11 @@ export function Modernisation() {
           figé, tout arrive en cascade avec un léger grossissement,
           et des micro-animations continuent à l'intérieur. */}
       <g className="pv-new">
-        <rect className="pv-in-1" x="40" y="46" width="150" height="15" rx="6" fill="rgb(var(--bordeaux) / 0.55)" />
+        <rect className="pv-in-1" x="40" y="46" width="150" height="15" rx="6" fill="rgb(var(--coral) / 0.75)" />
         <rect className="pv-in-2" x="40" y="70" width="96" height="8" rx="4" fill="rgb(var(--orange) / 0.75)" />
         <rect className="pv-in-3" x="40" y="90" width="76" height="20" rx="10" fill="rgb(var(--accent))" />
         <g className="pv-in-2">
-          <rect x="250" y="44" width="122" height="88" rx="12" fill="rgb(var(--bordeaux) / 0.07)" />
+          <rect x="250" y="44" width="122" height="88" rx="12" fill="rgb(var(--orange) / 0.22)" />
           {/* Scintillement interne */}
           <rect className="pv-dot" x="264" y="58" width="60" height="8" rx="4" fill="rgb(var(--coral) / 0.8)" />
         </g>
@@ -205,10 +205,10 @@ export function Modernisation() {
           { x: 268, color: "--accent" },
         ].map((card, i) => (
           <g key={card.x} className={`pv-in-${4 + i}`}>
-            <rect x={card.x} y="146" width="104" height="40" rx="10" fill="rgb(var(--bordeaux) / 0.07)" />
+            <rect x={card.x} y="146" width="104" height="40" rx="10" fill="rgb(var(--accent) / 0.22)" />
             <circle cx={card.x + 18} cy="160" r="5" fill={`rgb(var(${card.color}))`} />
-            <rect x={card.x + 30} y="152" width="48" height="6" rx="3" fill="rgb(var(--bordeaux) / 0.3)" />
-            <rect x={card.x + 30} y="162" width="34" height="4" rx="2" fill="rgb(var(--bordeaux) / 0.12)" />
+            <rect x={card.x + 30} y="152" width="48" height="6" rx="3" fill="rgb(var(--coral) / 0.7)" />
+            <rect x={card.x + 30} y="162" width="34" height="4" rx="2" fill="rgb(var(--orange) / 0.5)" />
             <rect
               className="pv-spark"
               x={card.x + 12}
@@ -255,10 +255,10 @@ export function Digitalisation() {
     <>
       {rows.map((y, i) => (
         <g key={y}>
-          <rect x="36" y={y} width="328" height="30" rx="8" fill="#ffffff" stroke="rgb(var(--bordeaux) / 0.1)" />
+          <rect x="36" y={y} width="328" height="30" rx="8" fill="#ffffff" stroke="rgb(var(--accent) / 0.5)" />
           <rect x="48" y={y + 9} width="12" height="12" rx="3" fill="rgb(var(--coral) / 0.5)" />
-          <rect x="72" y={y + 9} width={140 - i * 14} height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.3)" />
-          <rect x="72" y={y + 19} width={90 - i * 8} height="4" rx="2" fill="rgb(var(--bordeaux) / 0.12)" />
+          <rect x="72" y={y + 9} width={140 - i * 14} height="7" rx="3.5" fill="rgb(var(--coral) / 0.7)" />
+          <rect x="72" y={y + 19} width={90 - i * 8} height="4" rx="2" fill="rgb(var(--orange) / 0.5)" />
           {/* Cochage séquentiel — tout se décoche ensemble en fin de cycle */}
           <g className={`pv-pop-${i + 1}`}>
             <circle cx="340" cy={y + 15} r="10" fill="rgb(var(--orange) / 0.15)" />
@@ -274,7 +274,7 @@ export function Digitalisation() {
         </g>
       ))}
       {/* Progression */}
-      <rect x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--bordeaux) / 0.08)" />
+      <rect x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--accent) / 0.22)" />
       <rect className="pv-fill" x="36" y="204" width="328" height="8" rx="4" fill="rgb(var(--accent) / 0.8)" />
     </>
   );
@@ -302,7 +302,7 @@ export function Maintenance() {
           return (
             <g key={y}>
               {/* Gouttière : numéro de ligne */}
-              <rect x="24" y={y} width="14" height="7" rx="3.5" fill="rgb(var(--bordeaux) / 0.1)" />
+              <rect x="24" y={y} width="14" height="7" rx="3.5" fill="rgb(var(--coral) / 0.5)" />
               {w > 0 ? (
                 <rect
                   x="56"
@@ -310,13 +310,13 @@ export function Maintenance() {
                   width={w}
                   height="9"
                   rx="4.5"
-                  fill="rgb(var(--bordeaux) / 0.15)"
+                  fill="rgb(var(--orange) / 0.5)"
                   opacity={k % 2 ? 0.8 : 1}
                 />
               ) : (
                 /* LA ligne fautive : normale pendant le scroll,
                    clignote en rouge à l'arrêt, puis validée */
-                <rect className="pv-code" x="56" y={y} width="240" height="9" rx="4.5" fill="rgb(var(--bordeaux) / 0.15)" />
+                <rect className="pv-code" x="56" y={y} width="240" height="9" rx="4.5" fill="rgb(var(--accent) / 0.5)" />
               )}
             </g>
           );
