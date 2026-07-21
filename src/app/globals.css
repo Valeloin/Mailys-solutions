@@ -264,14 +264,31 @@ body::before {
      sombre est le bordeaux du dernier arrêt, pas du noir.
      Le liseré intérieur clair sur l'arête haute donne le relief : sur
      fond sombre, c'est la lumière qui détache, pas l'ombre. */
+  /* Le dégradé du bandeau « Parlons de votre projet », repris pour les
+     cards : orange plein → rouge, lumineux, sans bordeaux sombre en bas.
+     C'est le dégradé retenu.
+     Texte : sur du rouge plein, le BLANC passe (4,76:1) et le noir non.
+     Le texte des cards est déjà blanc — les descriptions secondaires
+     passent en blanc franc plus bas, réglé après cette règle. */
   .card {
+    /* Deux couches : un voile chaud qui assombrit le coin orange (là où
+       se pose le texte), puis le dégradé orange→rouge. Même technique
+       que le bandeau CTA. Le voile est un bordeaux très sombre, pas du
+       noir — il fonce l'orange sans le ternir, et fait passer le texte
+       blanc de 4,05 à ~5,8:1 sur ce coin. Le reste du dégradé, sans
+       texte, garde sa pleine luminosité. */
     background-image: linear-gradient(
-      145deg,
-      rgb(var(--orange) / 0.55) 0%,
-      rgb(var(--coral) / 0.42) 34%,
-      rgb(var(--accent) / 0.5) 66%,
-      rgb(var(--bordeaux) / 0.6) 100%
-    );
+        135deg,
+        rgb(var(--noir-300-rgb) / 0.32) 0%,
+        rgb(var(--noir-300-rgb) / 0.08) 42%,
+        transparent 70%
+      ),
+      linear-gradient(
+        135deg,
+        rgb(var(--orange)) 0%,
+        rgb(var(--accent)) 52%,
+        rgb(var(--accent-dark)) 100%
+      );
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.1),
       0 1px 2px rgb(0 0 0 / 0.4),
@@ -282,24 +299,40 @@ body::before {
       box-shadow 0.25s ease,
       border-color 0.25s ease;
   }
-  /* Au survol : la carte monte, le dégradé s'intensifie, un cerne corail
+  /* Sur le dégradé plein orange→rouge, le gris chaud du texte secondaire
+     devient illisible : tout le texte des cards passe en blanc, et le
+     secondaire en blanc à 82 % — au-dessus du seuil même sur l'orange le
+     plus clair. Une ombre de texte douce assure la lecture sur la partie
+     la plus lumineuse. */
+  .card,
+  .card :is(h2, h3, h4, p, span, li, strong, .text-muted, .text-foreground) {
+    color: #fff;
+  }
+  .card .text-muted {
+    color: rgb(255 255 255 / 0.86);
+  }
+  .card :is(h2, h3, h4, p, li) {
+    text-shadow: 0 1px 6px rgb(20 4 8 / 0.35);
+  }
+
+  /* Au survol : la carte monte, le dégradé s'assombrit d'un cran vers le
+     rouge (plus dense = texte encore plus sûr), et un cerne clair
      s'allume. Pas de scale — il rend le texte flou pendant la
      transition. */
   .card:hover {
     transform: translateY(-5px);
     background-image: linear-gradient(
-      145deg,
-      rgb(var(--orange) / 0.68) 0%,
-      rgb(var(--coral) / 0.54) 34%,
-      rgb(var(--accent) / 0.62) 66%,
-      rgb(var(--bordeaux) / 0.72) 100%
+      135deg,
+      rgb(var(--accent)) 0%,
+      rgb(var(--accent-dark)) 60%,
+      rgb(var(--bordeaux)) 100%
     );
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.16),
+      inset 0 1px 0 rgb(255 255 255 / 0.22),
       0 2px 4px rgb(0 0 0 / 0.45),
       0 16px 32px -14px rgb(0 0 0 / 0.55),
       0 44px 80px -36px rgb(0 0 0 / 0.68),
-      0 0 0 1px rgb(var(--coral) / 0.3);
+      0 0 0 1px rgb(255 255 255 / 0.22);
   }
 
   /* Le CTA principal respire en continu ; au survol l'animation
@@ -2020,7 +2053,11 @@ body::before {
   z-index: 100;
   display: grid;
   place-items: center;
-  background: rgb(255 255 255 / 0.88);
+  /* Voile SOMBRE. Il était blanc à 88 % — un reste du thème clair : sur
+     le site sombre, il flashait un grand rectangle blanc à chaque
+     navigation, et le logo animé s'y détachait mal. Sombre-chaud, dans
+     le ton du fond, sans étape noire. */
+  background: rgb(var(--noir-300-rgb) / 0.9);
   backdrop-filter: blur(6px);
   opacity: 0;
   pointer-events: none;
