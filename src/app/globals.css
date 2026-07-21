@@ -15,24 +15,49 @@
    (accent/10, orange/20…).
    ============================================================ */
 :root {
-  --background: #ffffff;
-  /* Tous les TEXTES du site sont noirs (demande du 2026-07-18) :
-     titres, corps et texte secondaire. --bordeaux reste réservé au
-     DÉCOR (ombres chaudes, fonds, filets) et n'habille plus aucun
-     texte — sinon les ombres perdraient leur chaleur. */
-  --foreground: #000000;
-  --surface: #fbf6f4;
-  --border: #f0e2dd;
-  --muted: #000000;
-  --accent: 225 29 42; /* rouge #E11D2A */
-  --accent-dark: 185 18 31; /* rouge foncé (survol) */
-  --bordeaux: 91 15 26; /* #5B0F1A */
-  --coral: 255 107 107; /* #FF6B6B */
-  --orange: 249 115 22; /* #F97316 */
-  /* Orange lisible pour le TEXTE sur fond clair (AA garanti, y compris
-     sur pastille orange/10 posée sur surface : 4.73:1 au pire cas).
-     L'orange pur #F97316 (3.0:1) est réservé au décor pur. */
-  --orange-text: 185 62 12; /* #B93E0C */
+  /* ============================================================
+     PALETTE — refonte v2, basée sur la charte fournie.
+     Cinq teintes officielles, en triplets RGB pour pouvoir moduler
+     l'opacité partout : rgb(var(--x) / .5).
+     ============================================================ */
+  --bordeaux: 91 15 26; /* #5B0F1A — professionnel, socle */
+  --accent: 225 29 42; /* #E11D2A — rouge, énergie */
+  --accent-dark: 185 18 31; /* survol du rouge */
+  --coral: 255 107 107; /* #FF6B6B — rouge clair, douceur */
+  --orange: 249 115 22; /* #F97316 — chaleur, accents */
+
+  /* --- Sombres CHAUDS, jamais du noir ---
+     Règle centrale de cette refonte : le noir n'entre dans AUCUN
+     dégradé. #1A1A1A est un gris neutre — mélangé aux teintes chaudes,
+     il les désature et vire au kaki (mesuré). Ces trois sombres sont
+     le bordeaux assombri : un dégradé qui descend vers eux garde son
+     ton du premier au dernier arrêt.
+     Déclarés en hex ET en triplet (le hex pour les fonds pleins, le
+     triplet pour les dégradés à opacité). */
+  --noir-100: #32080e; /* bordeaux × 0.55 — surfaces surélevées */
+  --noir-200: #200509; /* bordeaux × 0.35 — surface de base */
+  --noir-300: #16050a; /* bordeaux × 0.24 — fond le plus profond */
+  --noir-100-rgb: 50 8 14;
+  --noir-200-rgb: 32 5 9;
+  --noir-300-rgb: 22 5 10;
+
+  /* --- Rôles ---
+     Le fond est sombre-chaud : c'est la seule configuration où les
+     accents chauds restent lisibles (orange vif 6,65:1 contre 3,87:1
+     sur clair). */
+  --background: var(--noir-300);
+  --foreground: #ffffff;
+  --surface: var(--noir-200); /* cartes, panneaux */
+  --surface-haute: var(--noir-100); /* cartes survolées, éléments flottants */
+  /* Hex, comme avant : ces deux jetons sont consommés en var() direct
+     (theme.colors + `border: 1px solid var(--border)`), pas en triplet. */
+  --border: #3d262c; /* filet chaud lisible sur le sombre */
+  --muted: #d6c8cb; /* texte secondaire : blanc réchauffé, ~12:1 */
+
+  /* Orange « qu'on peut écrire ». Sur ce fond sombre, l'orange PUR
+     passe (6,65:1) — l'ancien orange foncé #B93E0C n'y tenait pas
+     (3,34:1). Le jeton garde son nom et sa fonction. */
+  --orange-text: 249 115 22; /* #F97316 */
 }
 
 html {
@@ -44,8 +69,44 @@ body {
   background: var(--background);
 }
 
+/* ============================================================
+   NAPPE DE FOND — une seule sous tout le document.
+   Fixée, en pseudo-élément, derrière tout le contenu. La couleur est
+   posée UNE fois : aucune section ne repeint son fond, donc aucune
+   couture entre sections n'est possible.
+   Le dégradé ne relie QUE des teintes de la palette (bordeaux, rouge,
+   orange). Le sombre du fond remonte par l'OPACITÉ de chaque foyer,
+   jamais par une interpolation vers le noir — c'est ce qui évite les
+   tons kaki.
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      64% 46% at 82% -4%,
+      rgb(var(--accent) / 0.26),
+      transparent 62%
+    ),
+    radial-gradient(
+      58% 42% at 4% 40%,
+      rgb(var(--orange) / 0.14),
+      transparent 64%
+    ),
+    radial-gradient(
+      62% 44% at 96% 92%,
+      rgb(var(--coral) / 0.12),
+      transparent 66%
+    ),
+    var(--noir-300);
+}
+
 ::selection {
-  background: rgb(var(--coral) / 0.25);
+  background: rgb(var(--coral) / 0.4);
+  color: #fff;
 }
 
 /* ============================================================
@@ -2243,13 +2304,12 @@ body {
 }
 
 /* ============================================================
-   FONDS DE SECTION — système unique dérivé de la DA.
-   Une seule classe par <section> ; le décor vit dans les
-   pseudo-éléments (aucun DOM ajouté, rien de masqué aux
-   moteurs). Uniquement des dégradés : pas de blur, donc pas
-   besoin d'overflow-hidden et aucun risque de débordement.
-   Rythme d'une page = alternance .sec-warm / .sec-clean ;
-   .sec-deep réservée aux sections de bascule.
+   FONDS DE SECTION — refonte v2, sur nappe sombre.
+   La couleur vit dans la nappe unique (body::before). Les sections
+   ne peignent AUCUNE base : elles ne font que moduler la nappe par
+   transparence. Aucune couture n'est donc possible entre deux
+   sections — il n'y a plus de bord opaque à rabouter.
+   Le rythme vient des liserés de lumière, pas des aplats.
    ============================================================ */
 .sec {
   position: relative;
@@ -2264,76 +2324,59 @@ body {
   pointer-events: none;
 }
 
-/* --- A · Lavis chaud + grandes taches ---
-       Dégradé crème franc traversé par deux grandes taches
-       corail (haut-gauche) et orange (bas-droite). Chaleureux,
-       aucun motif géométrique. --- */
+/* Liseré de transition : sur fond sombre, une frontière se marque par
+   la LUMIÈRE. Il s'éteint sur 200 px — la limite se sent sans se lire
+   comme un trait. La première section n'a rien au-dessus à séparer. */
+.sec::after {
+  inset: 0 0 auto 0;
+  height: 200px;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.025),
+    rgb(255 255 255 / 0.006) 45%,
+    transparent
+  );
+}
+.sec:first-of-type::after {
+  display: none;
+}
+
+/* --- La bande dense : deux foyers chauds qui renforcent la nappe.
+       Sur sombre, la chaleur s'ajoute au lieu de se poser. --- */
 .sec-warm::before {
   background:
     radial-gradient(
-      60% 70% at 8% 0%,
-      rgb(var(--coral) / 0.32),
-      transparent 62%
+      62% 72% at 8% 0%,
+      rgb(var(--accent) / 0.16),
+      transparent 68%
     ),
     radial-gradient(
-      58% 72% at 96% 100%,
-      rgb(var(--orange) / 0.28),
-      transparent 64%
-    ),
-    linear-gradient(180deg, #fff7f4 0%, #fbeae3 100%);
+      60% 74% at 96% 100%,
+      rgb(var(--orange) / 0.12),
+      transparent 70%
+    );
 }
 
-/* --- C · Claire et aérée ---
-       Fond blanc traversé par de larges lavis colorés dans les
-       angles (corail en haut à droite, orange en bas à gauche).
-       Aucun motif répété : c'est la respiration du rythme, en
-       contraste avec le crème de A et les barres de B.
-       (La trame de points a été retirée le 2026-07-18 : rejetée.) */
+/* --- La respiration : aucun lavis. C'est le sombre nu de la nappe
+       qu'on voit, là où les textes sont longs. Un voile aurait été un
+       dégradé vers le sombre, proscrit. --- */
 .sec-clean::before {
-  background:
-    radial-gradient(
-      70% 95% at 100% 0%,
-      rgb(var(--coral) / 0.3),
-      transparent 62%
-    ),
-    radial-gradient(
-      62% 85% at 0% 100%,
-      rgb(var(--orange) / 0.26),
-      transparent 64%
-    ),
-    #ffffff;
+  background: none;
 }
 
-/* --- B · Barres du logo à -22° ---
-       Les barres de la marque, en très grand, inclinées comme
-       dans le logo. Le motif le plus identitaire. Les bandes
-       sont placées sur les côtés : le centre reste libre pour
-       le texte. --- */
+/* --- Le point d'appui : la plus chargée. Le bordeaux y est le plus
+       présent, en transparence (renforcement, pas aplat). --- */
 .sec-deep::before {
-  background: linear-gradient(180deg, #fdf6f3 0%, #faeee9 100%);
-}
-.sec-deep::after {
   background:
-    linear-gradient(
-      112deg,
-      transparent 12%,
-      rgb(var(--coral) / 0.2) 12%,
-      rgb(var(--coral) / 0.2) 20%,
-      transparent 20%
+    radial-gradient(
+      82% 62% at 50% 0%,
+      rgb(var(--accent) / 0.2),
+      transparent 70%
     ),
     linear-gradient(
-      112deg,
-      transparent 24%,
-      rgb(var(--accent) / 0.16) 24%,
-      rgb(var(--accent) / 0.16) 32%,
-      transparent 32%
-    ),
-    linear-gradient(
-      112deg,
-      transparent 78%,
-      rgb(var(--orange) / 0.2) 78%,
-      rgb(var(--orange) / 0.2) 86%,
-      transparent 86%
+      180deg,
+      rgb(var(--bordeaux) / 0.42),
+      rgb(var(--bordeaux) / 0.22)
     );
 }
 
