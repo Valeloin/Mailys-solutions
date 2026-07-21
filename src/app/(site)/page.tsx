@@ -94,7 +94,7 @@ export default async function HomePage() {
                     défilante occupe déjà l'écran. */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 right-0 hidden w-[44%] items-center pr-4 lg:flex"
+                  className="pointer-events-none absolute inset-y-0 right-0 hidden w-[50%] items-center pr-2 lg:flex"
                 >
                   <HeroDevices />
                 </div>
