@@ -81,7 +81,7 @@ function MobileOnglets() {
   const pathname = usePathname();
 
   return (
-    <div className="grid grid-cols-4 gap-0.5 lg:hidden">
+    <div className="grid grid-cols-4 gap-1 lg:hidden">
       {ONGLETS_MOBILE.map((o) => {
         const actif = o.prefixe
           ? pathname.startsWith(o.href)
@@ -91,13 +91,16 @@ function MobileOnglets() {
             key={o.href}
             href={o.href}
             aria-current={actif ? "page" : undefined}
-            className={`relative flex h-9 items-center justify-center gap-1 rounded transition-colors ${
+            // Icône AU-DESSUS du libellé : côte à côte, les libellés ne
+            // tenaient pas à 375 px et se coupaient. Empilés, chaque onglet
+            // est étroit (largeur du seul libellé) et rien ne tronque.
+            className={`relative flex flex-col items-center justify-center gap-0.5 rounded pt-1 transition-colors ${
               actif ? "text-coral" : "text-white/80"
             }`}
           >
             <svg
               viewBox="0 0 24 24"
-              className="h-4 w-4 shrink-0"
+              className="h-[18px] w-[18px] shrink-0"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.9"
@@ -107,12 +110,12 @@ function MobileOnglets() {
             >
               {o.icon}
             </svg>
-            <span className="text-[10px] font-semibold">
+            <span className="text-[10px] font-semibold leading-none">
               {o.label}
             </span>
             <span
               aria-hidden="true"
-              className={`absolute inset-x-1.5 bottom-0 h-[2px] rounded-t-full transition-opacity duration-200 ${
+              className={`absolute inset-x-2.5 bottom-0 h-[2px] rounded-t-full transition-opacity duration-200 ${
                 actif ? "bg-accent opacity-100" : "opacity-0"
               }`}
             />
@@ -144,9 +147,10 @@ export default function Header() {
     >
       {/* Progression de lecture : la barre grandit avec le défilement */}
       <span aria-hidden="true" className="scroll-progress absolute inset-x-0 bottom-0 z-10 h-[3px]" />
-      {/* Header sur une seule ligne : logo compact + 4 onglets côte à côte,
-          tout rentre dans h-11 (44 px). */}
-      <div className="mx-auto grid h-11 max-w-content grid-cols-[auto_1fr] gap-1.5 items-center px-2 sm:px-4 lg:h-[4.25rem] lg:grid-cols-[1fr_auto_1fr] lg:gap-7 lg:px-6">
+      {/* Header sur une seule ligne : logo compact + 4 onglets (icône au-
+          dessus du libellé). Hauteur mobile 56 px pour loger les onglets
+          empilés sans les tasser. */}
+      <div className="mx-auto grid h-14 max-w-content grid-cols-[auto_1fr] gap-2 items-center px-2 sm:px-4 lg:h-[4.25rem] lg:grid-cols-[1fr_auto_1fr] lg:gap-7 lg:px-6">
         <Link
           href="/"
           className="origin-left scale-[0.8] sm:scale-85 lg:scale-100 justify-self-start shrink-0"
