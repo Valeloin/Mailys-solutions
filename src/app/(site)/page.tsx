@@ -51,25 +51,6 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       {/* En moins de 5 secondes : qui, quoi, pour qui, différence, contact. */}
       <section className="sec sec-warm relative overflow-hidden border-b border-border">
-        {/* Décor : barres fantômes du logo */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -bottom-28 -left-14 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-coral/[0.06] lg:block" />
-          <div className="absolute -bottom-36 left-10 hidden h-80 w-24 -rotate-[22deg] rounded-full bg-accent/[0.05] lg:block" />
-          <div className="absolute -top-16 right-[16%] hidden h-56 w-14 -rotate-[22deg] rounded-full bg-orange/[0.05] lg:block" />
-        </div>
-        {/* Décor propre au portrait : le bloc ci-dessus est réservé aux
-            grands écrans, le haut de page était donc sans relief sur
-            téléphone. Barres, halos et points dérivent lentement
-            (styles .hero-* dans globals.css). */}
-        <div aria-hidden="true" className="hero-decor lg:hidden">
-          <span className="hero-bar-1" />
-          <span className="hero-bar-2" />
-          <span className="hero-bar-3" />
-          <span className="hero-halo-1" />
-          <span className="hero-halo-2" />
-          <span className="hero-dot-1" />
-          <span className="hero-dot-2" />
-        </div>
         {/* Structure reprise du hero de la page Services : colonne
             texte + vitrine défilante, puis sommaire des 4 expertises.
             Seul le contenu texte reste celui de l'accueil. */}
