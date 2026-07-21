@@ -23,7 +23,7 @@ export default function HeroShowcase() {
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="400" height="220" fill="#ffffff" />
+      <rect width="400" height="220" fill="var(--preview-bg)" />
       <g className="pv-scene-1">
         <AppMetier />
       </g>

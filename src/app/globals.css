@@ -58,6 +58,12 @@
      passe (6,65:1) — l'ancien orange foncé #B93E0C n'y tenait pas
      (3,34:1). Le jeton garde son nom et sa fonction. */
   --orange-text: 249 115 22; /* #F97316 */
+
+  /* Fond des maquettes animées (vitrines services + hero). Un blanc
+     cassé chaud plutôt que du blanc pur : moins éclatant sur le thème
+     sombre, il fatigue moins l'œil. Les cartes internes restent en
+     blanc pur (#fff), ce qui les détache en légère profondeur. */
+  --preview-bg: #efe4e0;
 }
 
 html {

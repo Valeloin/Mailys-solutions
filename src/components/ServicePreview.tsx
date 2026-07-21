@@ -386,7 +386,7 @@ export default function ServicePreview({ slug }: { slug: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="400" height="220" fill="#ffffff" />
+      <rect width="400" height="220" fill="var(--preview-bg)" />
       <Preview />
       <Chrome {...(CHROME_PROPS[slug] ?? {})} />
     </svg>
