@@ -92,7 +92,7 @@ function MobileOnglets() {
             href={o.href}
             aria-current={actif ? "page" : undefined}
             className={`relative flex h-9 items-center justify-center gap-1 rounded transition-colors ${
-              actif ? "text-accent" : "text-muted"
+              actif ? "text-coral" : "text-white/80"
             }`}
           >
             <svg
@@ -169,7 +169,7 @@ export default function Header() {
               <div key={item.href} className="group relative">
                 <Link
                   href={item.href}
-                  className="nav-link flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground group-hover:text-foreground group-focus-within:text-foreground"
+                  className="nav-link flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.11em] text-white transition-colors hover:text-foreground group-hover:text-foreground group-focus-within:text-foreground"
                   aria-haspopup="true"
                 >
                   {item.name}
@@ -234,7 +234,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
+                className="nav-link text-[13px] font-semibold uppercase tracking-[0.11em] text-white transition-colors hover:text-foreground"
               >
                 {item.name}
               </Link>
@@ -249,7 +249,7 @@ export default function Header() {
           <span aria-hidden="true" className="h-5 w-px bg-border" />
           <Link
             href="/espace-client"
-            className="nav-link whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.11em] text-muted transition-colors hover:text-foreground"
+            className="nav-link whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.11em] text-white transition-colors hover:text-foreground"
           >
             Espace client
           </Link>

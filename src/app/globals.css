@@ -282,17 +282,19 @@ body::before {
        noir — il fonce l'orange sans le ternir, et fait passer le texte
        blanc de 4,05 à ~5,8:1 sur ce coin. Le reste du dégradé, sans
        texte, garde sa pleine luminosité. */
+    /* EXACTEMENT le dégradé du bandeau « Parlons de votre projet » :
+       orange 0 % → rouge 48 % → rouge foncé 100 %. Aucun corail — c'est
+       lui qui donnait le ton saumon. Plus, comme le bandeau, un voile
+       sombre qui remonte du bas pour garantir la lecture du texte. */
     background-image: linear-gradient(
-        135deg,
-        rgb(var(--noir-300-rgb) / 0.32) 0%,
-        rgb(var(--noir-300-rgb) / 0.08) 42%,
-        transparent 70%
+        to top,
+        rgb(var(--accent-dark) / 0.4),
+        transparent 55%
       ),
       linear-gradient(
         135deg,
         rgb(var(--orange)) 0%,
-        rgb(var(--coral)) 34%,
-        rgb(var(--accent)) 70%,
+        rgb(var(--accent)) 48%,
         rgb(var(--accent-dark)) 100%
       );
     box-shadow:
