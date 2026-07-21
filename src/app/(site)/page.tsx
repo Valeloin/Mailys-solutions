@@ -194,7 +194,7 @@ export default async function HomePage() {
               droite inverse l'ordre CSS pour poser sa vitrine côté
               centre. Les vitrines ne sont pas sur une card à dégradé :
               c'est l'animation qui porte la couleur, sur la nappe sombre. */}
-          <div className="mt-14 grid gap-x-8 gap-y-14 lg:mt-20 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
+          <div className="mt-14 grid gap-x-8 gap-y-10 lg:mt-20 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-6">
             {services.map((s, i) => {
               // Item de gauche d'une rangée (i pair) : texte puis vitrine.
               // Item de droite (i impair) : miroir — vitrine côté centre,
