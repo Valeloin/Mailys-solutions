@@ -282,22 +282,23 @@ body::before {
        noir — il fonce l'orange sans le ternir, et fait passer le texte
        blanc de 4,05 à ~5,8:1 sur ce coin. Le reste du dégradé, sans
        texte, garde sa pleine luminosité. */
-    /* LES TROIS COULEURS DU LOGO : orange, rose (corail), rouge.
-       Le dégradé les traverse toutes les trois, en diagonale :
-       orange (haut-gauche) → corail (le rose du logo) → rouge → rouge
-       foncé (bas-droite). Un voile sombre remonte du bas pour que le
-       texte blanc tienne sur la partie claire. */
+    /* Le dégradé de référence (capture) : corail/rose (haut-gauche) →
+       rouge → ORANGE (bas-droite). Les trois couleurs du logo, dans CE
+       sens — corail en haut à gauche, orange en bas à droite. Pas de
+       rouge foncé : il n'y en a pas sur la référence.
+       Voile sombre pour le texte, posé là où il se trouve (haut-gauche). */
     background-image: linear-gradient(
-        to top,
-        rgb(var(--accent-dark) / 0.45),
-        transparent 52%
+        135deg,
+        rgb(var(--noir-300-rgb) / 0.5) 0%,
+        rgb(var(--noir-300-rgb) / 0.28) 45%,
+        rgb(var(--noir-300-rgb) / 0.12) 78%,
+        transparent 100%
       ),
       linear-gradient(
         135deg,
-        rgb(var(--orange)) 0%,
-        rgb(var(--coral)) 30%,
-        rgb(var(--accent)) 62%,
-        rgb(var(--accent-dark)) 100%
+        rgb(var(--coral)) 0%,
+        rgb(var(--accent)) 45%,
+        rgb(var(--orange)) 100%
       );
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.1),
