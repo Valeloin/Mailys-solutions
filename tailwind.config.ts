@@ -20,10 +20,10 @@ const config: Config = {
         "orange-text": "rgb(var(--orange-text) / <alpha-value>)",
       },
       maxWidth: {
-        // Largeur maîtresse des sections. Élargie (72 → 88rem) pour que le
+        // Largeur maîtresse des sections. Élargie (72 → 100rem) pour que le
         // contenu respire davantage et laisse moins de marges vides sur
         // grand écran. Un seul point de réglage : agit sur tout le site.
-        content: "88rem",
+        content: "100rem",
       },
     },
   },
