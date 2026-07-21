@@ -310,14 +310,19 @@ export default function HeroDevices() {
       </g>
 
       {/* ---- Ordinateur portable ---- */}
-      {/* Pied de l'écran (col + socle), même matière que le châssis. Dessiné
-          AVANT le châssis pour que le bas de celui-ci recouvre le haut du
-          col : la jointure est nette. Dans le même SVG → même perspective,
-          le socle se lit comme un disque incliné. */}
+      {/* Pied de l'écran (col + piètement), même matière que le châssis.
+          Dessiné AVANT le châssis pour que le bas de celui-ci recouvre le
+          haut du col (jointure nette). Tout est DANS le plan de l'écran :
+          un disque de socle aurait sous-entendu un sol horizontal absent de
+          cette vue à plat — d'où un piètement plat, évasé, qui se plie à la
+          même inclinaison que l'écran. */}
       <g>
-        <path d="M151 156 h18 l5 20 h-28 z" fill="#1c0b12" stroke={RAIL} strokeWidth="1.5" strokeLinejoin="round" />
-        <ellipse cx="160" cy="180" rx="52" ry="8" fill="#1c0b12" stroke={RAIL} strokeWidth="1.5" />
-        <ellipse cx="160" cy="178" rx="52" ry="8" fill="#2a1017" />
+        {/* Col central */}
+        <path d="M153 157 h14 l4 13 h-22 z" fill="#1c0b12" stroke={RAIL} strokeWidth="1.5" strokeLinejoin="round" />
+        {/* Socle : barre évasée, arêtes adoucies */}
+        <path d="M126 169 h68 q6 0 8 5 l2 4 q1 3 -3 3 h-82 q-4 0 -3 -3 l2 -4 q2 -5 8 -5 z" fill="#231016" stroke={RAIL} strokeWidth="1.5" strokeLinejoin="round" />
+        {/* Arête supérieure éclairée du socle */}
+        <path d="M128 170 h64" stroke="#3a1a20" strokeWidth="1.5" strokeLinecap="round" />
       </g>
       <rect x="30" y="8" width="260" height="150" rx="10" fill="#16080d" stroke={RAIL} strokeWidth="2" />
       <rect x="30" y="26" width="260" height="132" fill="url(#hd-screen)" />
