@@ -310,6 +310,15 @@ export default function HeroDevices() {
       </g>
 
       {/* ---- Ordinateur portable ---- */}
+      {/* Pied de l'écran (col + socle), même matière que le châssis. Dessiné
+          AVANT le châssis pour que le bas de celui-ci recouvre le haut du
+          col : la jointure est nette. Dans le même SVG → même perspective,
+          le socle se lit comme un disque incliné. */}
+      <g>
+        <path d="M151 156 h18 l5 20 h-28 z" fill="#1c0b12" stroke={RAIL} strokeWidth="1.5" strokeLinejoin="round" />
+        <ellipse cx="160" cy="180" rx="52" ry="8" fill="#1c0b12" stroke={RAIL} strokeWidth="1.5" />
+        <ellipse cx="160" cy="178" rx="52" ry="8" fill="#2a1017" />
+      </g>
       <rect x="30" y="8" width="260" height="150" rx="10" fill="#16080d" stroke={RAIL} strokeWidth="2" />
       <rect x="30" y="26" width="260" height="132" fill="url(#hd-screen)" />
       {/* Barre de fenêtre */}
