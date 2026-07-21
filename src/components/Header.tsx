@@ -131,15 +131,15 @@ function MobileOnglets() {
 // Sur téléphone : logo + bandeau des 4 onglets (MobileTabBar).
 export default function Header() {
   return (
-    // Dégradé rouge → orange → rouge, mais ASSOMBRI : même famille que
-    // les cards, un cran plus sombre pour rester un support de
-    // navigation. Un voile sombre superposé descend la luminosité du
-    // dégradé chaud ; les libellés blancs restent nets.
+    // Le dégradé du site — corail → rouge → orange — mais ASSOMBRI : un
+    // voile sombre superposé le descend d'un cran pour que le header
+    // reste un support de navigation, pas une card, et que les libellés
+    // blancs tiennent. Même sens que les cards, en horizontal.
     <header
       className="relative sticky top-0 z-50 border-b border-border/80"
       style={{
         backgroundImage:
-          "linear-gradient(180deg, rgb(var(--noir-300-rgb) / 0.72), rgb(var(--noir-300-rgb) / 0.82)), linear-gradient(100deg, rgb(var(--accent)) 0%, rgb(var(--orange)) 50%, rgb(var(--accent)) 100%)",
+          "linear-gradient(180deg, rgb(var(--noir-300-rgb) / 0.74), rgb(var(--noir-300-rgb) / 0.84)), linear-gradient(100deg, rgb(var(--coral)) 0%, rgb(var(--accent)) 50%, rgb(var(--orange)) 100%)",
       }}
     >
       {/* Progression de lecture : la barre grandit avec le défilement */}

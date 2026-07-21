@@ -181,40 +181,35 @@ export default async function HomePage() {
           </h2>
           <p className="mt-4 max-w-2xl text-muted">{c.services.intro}</p>
 
-          {/* Rangées en alternance, structure reprise d'OHIHO : chaque
-              service occupe une ligne pleine, grande vitrine animée d'un
-              côté, texte de l'autre, le côté s'inversant à chaque ligne.
-              Ce format met la maquette au premier plan au lieu de la
-              réduire à une vignette. Les vitrines ne sont plus sur une
-              card à dégradé : c'est l'animation qui porte la couleur, sur
-              la nappe sombre. */}
-          <div className="mt-14 space-y-16 sm:space-y-20 lg:mt-20 lg:space-y-28">
+          {/* Agencement repris d'OHIHO : deux services par rangée,
+              disposés EN MIROIR — texte | vitrine ‖ vitrine | texte. Les
+              maquettes animées se rejoignent au centre, encadrées par
+              les intitulés. Chaque service est une sous-grille 2 colonnes
+              (texte étroit + vitrine large) ; l'item de droite inverse
+              l'ordre CSS pour poser sa vitrine côté centre. Les vitrines
+              ne sont pas sur une card à dégradé : c'est l'animation qui
+              porte la couleur, sur la nappe sombre. */}
+          <div className="mt-14 grid gap-x-8 gap-y-14 lg:mt-20 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
             {services.map((s, i) => {
-              // Rangée 01 : texte à gauche, vitrine à droite — comme
-              // OHIHO. La vitrine passe donc à droite (order-2) sur les
-              // rangées paires (0, 2), à gauche sur les impaires.
-              const pair = i % 2 === 0;
+              // Item de gauche d'une rangée (i pair) : texte puis vitrine.
+              // Item de droite (i impair) : miroir — vitrine côté centre,
+              // texte à l'extérieur, obtenu par l'ordre CSS. Le texte
+              // reste en PREMIER dans le DOM pour que l'empilement mobile
+              // garde le titre au-dessus de la maquette.
+              const mirror = i % 2 === 1;
               return (
                 <div
                   key={s.slug}
-                  className="reveal grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
+                  className={`reveal grid items-center gap-6 sm:gap-7 ${
+                    mirror
+                      ? "sm:grid-cols-[1fr_0.82fr]"
+                      : "sm:grid-cols-[0.82fr_1fr]"
+                  }`}
                 >
-                  {/* Vitrine animée, en grand. Ordre inversé une ligne
-                      sur deux pour le zigzag. */}
-                  <div
-                    aria-hidden="true"
-                    className={`overflow-hidden rounded-2xl border border-border shadow-[0_30px_60px_-30px_rgb(0_0_0/0.7)] ${
-                      pair ? "lg:order-2" : ""
-                    }`}
-                  >
-                    <ServicePreview slug={s.slug} />
-                  </div>
-
-                  {/* Texte : numéro + intitulé court + titre + description
-                      + lien, sur le modèle des rangées OHIHO. */}
-                  <div className={pair ? "lg:order-1" : ""}>
+                  {/* Texte : numéro + intitulé court + titre + desc + lien */}
+                  <div className={mirror ? "sm:order-2" : ""}>
                     <div className="flex items-baseline gap-3">
-                      <span className="text-3xl font-extrabold text-orange-text">
+                      <span className="text-2xl font-extrabold text-orange-text sm:text-3xl">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="h-px w-8 bg-orange/40" aria-hidden="true" />
@@ -222,7 +217,7 @@ export default async function HomePage() {
                         {SERVICE_TAGS[s.slug] ?? "Notre expertise"}
                       </span>
                     </div>
-                    <h3 className="mt-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    <h3 className="mt-3 text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                       <Link
                         href={`/services/${s.slug}`}
                         className="transition-colors hover:text-orange-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
@@ -230,12 +225,12 @@ export default async function HomePage() {
                         {s.name}
                       </Link>
                     </h3>
-                    <p className="mt-4 max-w-xl leading-relaxed text-muted">
+                    <p className="mt-3 leading-relaxed text-muted">
                       {s.heroSubtitle}
                     </p>
                     <Link
                       href={`/services/${s.slug}`}
-                      className="group/l mt-6 inline-flex items-center gap-2 text-sm font-semibold text-orange-text"
+                      className="group/l mt-5 inline-flex items-center gap-2 text-sm font-semibold text-orange-text"
                     >
                       Découvrir ce service
                       <span
@@ -245,6 +240,16 @@ export default async function HomePage() {
                         →
                       </span>
                     </Link>
+                  </div>
+
+                  {/* Vitrine animée */}
+                  <div
+                    aria-hidden="true"
+                    className={`overflow-hidden rounded-2xl border border-border shadow-[0_24px_50px_-28px_rgb(0_0_0/0.7)] ${
+                      mirror ? "sm:order-1" : ""
+                    }`}
+                  >
+                    <ServicePreview slug={s.slug} />
                   </div>
                 </div>
               );

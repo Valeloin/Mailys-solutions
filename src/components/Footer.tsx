@@ -11,7 +11,17 @@ export default async function Footer() {
     getMergedServices(),
   ]);
   return (
-    <footer className="relative border-t border-border bg-surface">
+    // Le dégradé du site — corail → rouge → orange — repris ici pour
+    // fermer la page en écho au header, mais sous un voile sombre plus
+    // dense (le footer porte beaucoup de texte, dont du gris muted) :
+    // le chaud ne fait que transparaître, la lecture reste franche.
+    <footer
+      className="relative border-t border-border"
+      style={{
+        backgroundImage:
+          "linear-gradient(180deg, rgb(var(--noir-300-rgb) / 0.86), rgb(var(--noir-300-rgb) / 0.92)), linear-gradient(100deg, rgb(var(--coral)) 0%, rgb(var(--accent)) 50%, rgb(var(--orange)) 100%)",
+      }}
+    >
       <div className="mx-auto grid max-w-content gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
           <Logo />
