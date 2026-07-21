@@ -49,7 +49,7 @@ export default async function CtaSection({
           className="group relative overflow-hidden rounded-3xl px-6 py-16 text-center shadow-[0_28px_70px_-30px_rgb(var(--accent)/0.6)] ring-1 ring-white/10 sm:px-12 sm:py-20"
           style={{
             backgroundImage:
-              "linear-gradient(135deg, rgb(var(--orange)) 0%, rgb(var(--accent)) 48%, rgb(var(--accent-dark)) 100%)",
+              "linear-gradient(135deg, rgb(var(--orange)) 0%, rgb(var(--coral)) 30%, rgb(var(--accent)) 62%, rgb(var(--accent-dark)) 100%)",
           }}
         >
           {/* ---------- Décors (calmes, dans le fond) ---------- */}

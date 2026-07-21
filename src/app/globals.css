@@ -282,19 +282,21 @@ body::before {
        noir — il fonce l'orange sans le ternir, et fait passer le texte
        blanc de 4,05 à ~5,8:1 sur ce coin. Le reste du dégradé, sans
        texte, garde sa pleine luminosité. */
-    /* EXACTEMENT le dégradé du bandeau « Parlons de votre projet » :
-       orange 0 % → rouge 48 % → rouge foncé 100 %. Aucun corail — c'est
-       lui qui donnait le ton saumon. Plus, comme le bandeau, un voile
-       sombre qui remonte du bas pour garantir la lecture du texte. */
+    /* LES TROIS COULEURS DU LOGO : orange, rose (corail), rouge.
+       Le dégradé les traverse toutes les trois, en diagonale :
+       orange (haut-gauche) → corail (le rose du logo) → rouge → rouge
+       foncé (bas-droite). Un voile sombre remonte du bas pour que le
+       texte blanc tienne sur la partie claire. */
     background-image: linear-gradient(
         to top,
-        rgb(var(--accent-dark) / 0.4),
-        transparent 55%
+        rgb(var(--accent-dark) / 0.45),
+        transparent 52%
       ),
       linear-gradient(
         135deg,
         rgb(var(--orange)) 0%,
-        rgb(var(--accent)) 48%,
+        rgb(var(--coral)) 30%,
+        rgb(var(--accent)) 62%,
         rgb(var(--accent-dark)) 100%
       );
     box-shadow:
@@ -2116,55 +2118,28 @@ body::before {
     #000 calc(100% - 6px)
   );
 }
+/* Le logo pulse ENTIER, sans se déformer : c'est l'anneau qui porte le
+   mouvement de chargement, le logo reste net et reconnaissable. */
 .pt-mark {
-  width: 44px;
-  height: auto;
-}
-.pt-bar-1,
-.pt-bar-2,
-.pt-dot-1,
-.pt-dot-2 {
-  transform-box: fill-box;
   transform-origin: center;
 }
-@keyframes pt-bar {
-  0%,
-  100% {
-    transform: rotate(-22deg) scaleY(1);
-  }
-  50% {
-    transform: rotate(-22deg) scaleY(0.62);
-  }
-}
-@keyframes pt-dot {
+@keyframes pt-pulse {
   0%,
   100% {
     transform: scale(1);
     opacity: 1;
   }
   50% {
-    transform: scale(0.55);
-    opacity: 0.5;
+    transform: scale(0.88);
+    opacity: 0.7;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
   .pt-ring {
     animation: pv-rotate 1.15s linear infinite;
   }
-  .pt-bar-1 {
-    animation: pt-bar 1.15s ease-in-out infinite;
-  }
-  .pt-bar-2 {
-    animation: pt-bar 1.15s ease-in-out infinite;
-    animation-delay: 0.28s;
-  }
-  .pt-dot-1 {
-    animation: pt-dot 1.15s ease-in-out infinite;
-    animation-delay: 0.14s;
-  }
-  .pt-dot-2 {
-    animation: pt-dot 1.15s ease-in-out infinite;
-    animation-delay: 0.42s;
+  .pt-mark {
+    animation: pt-pulse 1.5s ease-in-out infinite;
   }
 }
 
