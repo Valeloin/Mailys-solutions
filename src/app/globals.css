@@ -2460,6 +2460,146 @@ body::before {
 }
 
 /* ============================================================
+   HERO — scène « appareils » (composant HeroDevices).
+   Portée des animations mv-* de la MethodShowcase d'OHIHO,
+   recolorée Mailys. Quatre saynètes se relaient sur une horloge
+   unique de 13,44 s (mv-scene-*), chacune avec ses micro-animations
+   internes (mv-*). L'emblème apparaît à la mise en ligne (mv-brand).
+   Repli prefers-reduced-motion : seule la scène 1 reste affichée,
+   figée — les autres sont masquées par défaut ci-dessous.
+   ============================================================ */
+.mv-scene-2,
+.mv-scene-3,
+.mv-scene-4 {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Base commune aux éléments animés internes (class « mv » posée à côté
+     de la classe spécifique) : une seule horloge pour tout le monde. */
+  .mv {
+    animation-duration: 13.44s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .mv-bubble-1 { animation-name: mv-bubble-1; }
+  .mv-bubble-2 { animation-name: mv-bubble-2; }
+  .mv-bubble-3 { animation-name: mv-bubble-3; }
+  .mv-draw { stroke-dasharray: 1; animation-name: mv-draw; }
+  .mv-amount { transform-box: fill-box; transform-origin: left center; animation-name: mv-amount; }
+  .mv-code { transform-box: fill-box; transform-origin: left center; animation-name: mv-code; }
+  .mv-deploy { transform-box: fill-box; transform-origin: left center; animation-name: mv-deploy; }
+  .mv-follow { transform-box: fill-box; transform-origin: center; animation-name: mv-follow; }
+  .mv-done { stroke-dasharray: 1; animation-name: mv-done; }
+
+  /* L'emblème pulse à la mise en ligne (74 %). fill-box : sinon le scale
+     partirait du coin du SVG entier au lieu de respirer sur place. */
+  .mv-brand {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: mv-brand 13.44s ease-out infinite;
+  }
+
+  /* Visibilité des 4 saynètes, en relais sur la même horloge. */
+  .mv-scene-1,
+  .mv-scene-2,
+  .mv-scene-3,
+  .mv-scene-4 {
+    animation-duration: 13.44s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .mv-scene-1 { animation-name: mv-scene-1; }
+  .mv-scene-2 { animation-name: mv-scene-2; }
+  .mv-scene-3 { animation-name: mv-scene-3; }
+  .mv-scene-4 { animation-name: mv-scene-4; }
+}
+
+/* ---- Horloge des saynètes : chacune occupe son quart, fondus courts ---- */
+@keyframes mv-scene-1 {
+  0% { opacity: 0; }
+  2.4%, 17.5% { opacity: 1; }
+  19%, 100% { opacity: 0; }
+}
+@keyframes mv-scene-2 {
+  0%, 19% { opacity: 0; }
+  21%, 36.2% { opacity: 1; }
+  37.7%, 100% { opacity: 0; }
+}
+@keyframes mv-scene-3 {
+  0%, 37.7% { opacity: 0; }
+  39.7%, 54.8% { opacity: 1; }
+  56.3%, 100% { opacity: 0; }
+}
+@keyframes mv-scene-4 {
+  0%, 56.3% { opacity: 0; }
+  58.3%, 94% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+/* ---- Emblème : apparaît quand le site est en ligne (74 %) ---- */
+@keyframes mv-brand {
+  0%, 70% { opacity: 0; transform: scale(0.7); }
+  76% { opacity: 1; transform: scale(1.06); }
+  80%, 92% { opacity: 1; transform: scale(1); }
+  96%, 100% { opacity: 0; transform: scale(0.7); }
+}
+
+/* ---- 01 Échange : les bulles arrivent (2,4 → 17,5 %) ---- */
+@keyframes mv-bubble-1 {
+  0%, 4% { opacity: 0; transform: translateY(6px); }
+  7%, 17% { opacity: 1; transform: translateY(0); }
+  18%, 100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes mv-bubble-2 {
+  0%, 8% { opacity: 0; transform: translateY(6px); }
+  11%, 17% { opacity: 1; transform: translateY(0); }
+  18%, 100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes mv-bubble-3 {
+  0%, 12% { opacity: 0; transform: translateY(6px); }
+  15%, 17% { opacity: 1; transform: translateY(0); }
+  18%, 100% { opacity: 0; transform: translateY(0); }
+}
+
+/* ---- 02 Maquette & devis (21 → 36,2 %) ---- */
+@keyframes mv-draw {
+  0%, 22% { stroke-dashoffset: 1; }
+  30%, 36% { stroke-dashoffset: 0; }
+  37%, 100% { stroke-dashoffset: 1; }
+}
+@keyframes mv-amount {
+  0%, 30% { transform: scaleX(0); }
+  34%, 36% { transform: scaleX(1); }
+  37%, 100% { transform: scaleX(0); }
+}
+
+/* ---- 03 Développement : les lignes s'écrivent (44 → 54 %) ---- */
+@keyframes mv-code {
+  0%, 44% { transform: scaleX(0); }
+  48%, 54% { transform: scaleX(1); }
+  55%, 100% { transform: scaleX(0); }
+}
+
+/* ---- 04 Mise en ligne & suivi (58 → 94 %) ---- */
+@keyframes mv-deploy {
+  0%, 60% { transform: scaleX(0); }
+  72%, 94% { transform: scaleX(1); }
+  95%, 100% { transform: scaleX(0); }
+}
+@keyframes mv-done {
+  0%, 72% { stroke-dashoffset: 1; opacity: 0; }
+  74% { opacity: 1; }
+  80%, 94% { stroke-dashoffset: 0; opacity: 1; }
+  95%, 100% { stroke-dashoffset: 1; opacity: 0; }
+}
+@keyframes mv-follow {
+  0%, 78% { opacity: 0; transform: translateY(5px); }
+  82%, 92% { opacity: 1; transform: translateY(0); }
+  95%, 100% { opacity: 0; transform: translateY(5px); }
+}
+
+/* ============================================================
    MOBILE-FIRST : confort tactile et adaptation aux téléphones
    ------------------------------------------------------------
    Bloc transverse : il corrige au niveau global ce qui, sinon,
