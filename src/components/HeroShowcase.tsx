@@ -41,10 +41,11 @@ export default function HeroShowcase() {
       <g className="pv-trans">
         <rect x="0" y="26" width="400" height="194" fill="#ffffff" opacity="0.94" />
       </g>
-      {/* Spinner = pièce signature de la DA : le logo Mailys animé
-          (barres qui respirent, points qui pulsent) ceint d'un
-          anneau dégradé en rotation — même identité que le spinner
-          global de changement de page. */}
+      {/* Spinner = pièce signature de la DA : le logo Mailys NET, ceint
+          d'un anneau dégradé (corail → rouge → orange) en rotation —
+          même identité, et mêmes principes, que le spinner global de
+          changement de page. Le logo ne se déforme pas ; seul l'anneau
+          tourne. */}
       <g className="pv-spin-vis">
         <svg x="160" y="80" width="80" height="76" viewBox="-38 -46 208 196">
           <defs>
@@ -66,12 +67,17 @@ export default function HeroShowcase() {
               strokeDasharray="215 350"
             />
           </g>
-          {/* Le logo Mailys : barres verticales (le -22° et la
-              respiration viennent des keyframes pt-bar), points pulsants */}
-          <circle className="pt-dot-1" cx="15" cy="87" r="14" fill="rgb(var(--orange))" />
-          <rect className="pt-bar-1" x="30" y="6" width="30" height="92" rx="15" fill="rgb(var(--coral))" />
-          <rect className="pt-bar-2" x="72" y="6" width="30" height="92" rx="15" fill="rgb(var(--accent))" />
-          <circle className="pt-dot-2" cx="117" cy="17" r="14" fill="rgb(var(--orange))" />
+          {/* Le logo Mailys, NET et à sa vraie inclinaison (-22°, même
+              géométrie que le composant officiel et que HeroBrandCard).
+              L'inclinaison est portée en dur par transform=rotate, et non
+              plus par un CSS .pt-bar-* aujourd'hui supprimé — sans quoi
+              les barres retombaient à la verticale et le logo se trouvait
+              déformé. Le mouvement de chargement vient de l'anneau qui
+              tourne au-dessus ; le logo, lui, ne se déforme jamais. */}
+          <circle cx="15" cy="87" r="14" fill="rgb(var(--orange))" />
+          <rect x="30" y="6" width="30" height="92" rx="15" fill="rgb(var(--coral))" transform="rotate(-22 45 52)" />
+          <rect x="72" y="6" width="30" height="92" rx="15" fill="rgb(var(--accent))" transform="rotate(-22 87 52)" />
+          <circle cx="117" cy="17" r="14" fill="rgb(var(--orange))" />
         </svg>
       </g>
       {/* Feu d'artifice : grands rayons qui jaillissent de la coche
