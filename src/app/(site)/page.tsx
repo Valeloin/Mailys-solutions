@@ -67,10 +67,10 @@ export default async function HomePage() {
                 <div className="rise rise-1 order-1">
                   <Kicker>{c.hero.kicker}</Kicker>
                 </div>
-                <h1 className="order-2 mt-6 max-w-2xl text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground">
+                <h1 className="order-2 mt-6 max-w-md text-balance text-[clamp(1.65rem,4.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.025em] text-foreground lg:max-w-lg">
                   {c.hero.h1}
                 </h1>
-                <p className="rise rise-2 order-4 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                <p className="rise rise-2 order-4 mt-6 max-w-md text-lg leading-relaxed text-muted lg:max-w-sm">
                   <Rich text={c.hero.subtitle} />
                 </p>
                 <div className="rise rise-3 order-5 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
@@ -94,7 +94,7 @@ export default async function HomePage() {
                     défilante occupe déjà l'écran. */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 right-0 hidden w-[44%] items-center pr-4 lg:flex"
+                  className="pointer-events-none absolute inset-y-6 left-[47%] right-5 hidden items-center lg:flex"
                 >
                   <HeroDevices />
                 </div>
