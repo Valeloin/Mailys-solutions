@@ -52,7 +52,7 @@ export default async function RootLayout({
   const colorsCss = await getColorOverridesCss();
 
   return (
-    <html lang="fr" className={manrope.className}>
+    <html lang="fr" className={manrope.className} data-simple-dev="1.0.0">
       <body className="antialiased">
         {colorsCss && (
           <style id="site-colors" dangerouslySetInnerHTML={{ __html: colorsCss }} />

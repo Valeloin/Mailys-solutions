@@ -1,0 +1,167 @@
+/* Styles par défaut du moteur Simple Dev.
+   Les blocs héritent d'ici ; leur `style` propre n'ajoute que les écarts. */
+
+.sd-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.sd-header {
+  width: 100%;
+}
+
+.sd-footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sd-titre {
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.sd-texte {
+  line-height: 1.6;
+  margin: 0.25rem 0 1.25rem;
+  max-width: 62ch;
+}
+
+.sd-bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.4rem;
+  /* Pilule au dégradé de marque Mailys : corail → rouge → orange. */
+  background-image: linear-gradient(100deg, #ff6b6b 0%, #e11d2a 50%, #f97316 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px -12px rgb(225 29 42 / 0.5);
+}
+
+/* Interrupteur On/Off (switch) — pur CSS, fonctionne sans JavaScript. */
+.sd-toggle {
+  position: relative;
+  display: inline-flex;
+  width: 46px;
+  height: 26px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.sd-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sd-toggle-slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #23405c;
+  transition: background 0.2s;
+}
+.sd-toggle-slider::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+.sd-toggle input:checked + .sd-toggle-slider {
+  background: #22d3c4;
+}
+.sd-toggle input:checked + .sd-toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.sd-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Icône (SVG) : prend la couleur du bloc (currentColor) et se redimensionne. */
+.sd-icone {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  color: inherit;
+}
+.sd-icone svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Champs de formulaire (saisie) */
+.sd-champ {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+}
+.sd-champ::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+.sd-zonetexte {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.sd-groupe {
+  display: block;
+}
+
+/* Une forme (ex: le point d'une scène animée) */
+.sd-forme {
+  display: inline-block;
+  background: currentColor;
+}
+.sd-forme--cercle {
+  border-radius: 50%;
+}
+.sd-forme--carre {
+  border-radius: 6px;
+}
+
+/* Le Bloc Animation : wrapper qui applique l'animation à son contenu. */
+.sd-scene {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ---- Keyframes (le "vocabulaire" d'animations) ---- */
+@keyframes sd-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes sd-slide-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(220px); }
+}
+@keyframes sd-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-16px); }
+}
+@keyframes sd-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+
+/* Respect du confort de lecture : si le visiteur réduit les animations. */
+@media (prefers-reduced-motion: reduce) {
+  .sd-anim {
+    animation: none !important;
+  }
+}
