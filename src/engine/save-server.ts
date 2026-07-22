@@ -16,8 +16,7 @@ const MAX_AUTO = 10; // on garde les 10 derniers snapshots automatiques
 // Sur VERCEL : un jeton GitHub est fourni → le disque est en lecture seule, donc
 // on envoie le contenu directement à GitHub par son API (ça fait un commit).
 const GH_TOKEN = process.env.GITHUB_TOKEN;
-// Dépôt de CE projet (piège OHIHO : ne pas laisser le dépôt d'un autre site
-// Simple Dev). Surchargeable par variables d'env sur Vercel.
+// Dépôt de CE projet (piège OHIHO). Surchargeable par variables d'env.
 const GH_REPO = process.env.GITHUB_REPO || "Valeloin/Mailys-solutions";
 const GH_BRANCH = process.env.GITHUB_BRANCH || "main";
 const SUR_GITHUB = !!GH_TOKEN;
@@ -77,15 +76,17 @@ async function supprimerGitHub(chemin: string, message: string) {
   if (!r.ok) throw new Error("GitHub (suppression) " + r.status + " : " + (await r.text()).slice(0, 200));
 }
 
-// ---- Écriture du contenu courant (ce que le site affiche) -------------------
-export async function ecrireContenu(blocks: unknown, horodatage: string, message?: string) {
-  const texte = JSON.stringify({ page: "demo", blocks, updatedAt: horodatage }, null, 2);
+// ---- Écriture du contenu d'une PAGE (content/page-<slug>.json) ---------------
+export async function ecrireContenu(blocks: unknown, horodatage: string, message?: string, slug: string = "accueil") {
+  const nom = slug || "accueil";
+  const chemin = "content/page-" + nom + ".json";
+  const texte = JSON.stringify({ page: nom, blocks, updatedAt: horodatage }, null, 2);
   if (SUR_GITHUB) {
-    await ecrireGitHub(CHEMIN_CONTENU, texte, message || "Enregistrement graphique " + horodatage);
+    await ecrireGitHub(chemin, texte, message || "Enregistrement graphique " + horodatage);
     return;
   }
   await mkdir(DIR_CONTENU, { recursive: true });
-  await writeFile(FICHIER, texte, "utf8");
+  await writeFile(path.join(DIR_CONTENU, "page-" + nom + ".json"), texte, "utf8");
 }
 
 // Supprime le contenu → le site retombe sur les défauts du code (reset total).
@@ -167,14 +168,15 @@ export async function lireSnapshot(id: string): Promise<unknown> {
 export async function commitPush(message: string) {
   if (SUR_GITHUB) return { committed: true, pushed: true, note: "via API GitHub" };
   let committed = false;
-  let pushed = false;
+  const pushed = false; // phase de test : pas de push automatique
   let note = "";
   try {
     await pexec("git add content", { cwd: RACINE });
     await pexec('git commit -m "' + message.replace(/"/g, "'") + '"', { cwd: RACINE });
     committed = true;
-    await pexec(`git push origin ${GH_BRANCH}`, { cwd: RACINE });
-    pushed = true;
+    // Phase de test dans OHIHO : on enregistre en LOCAL sur la branche courante,
+    // sans push automatique (la branche sera poussée à la main quand ce sera prêt).
+    note = "enregistré (branche de test, local)";
   } catch (e) {
     const msg = String((e as { stderr?: string }).stderr || e);
     note = /nothing to commit/i.test(msg) ? "aucun changement" : msg.slice(0, 300);

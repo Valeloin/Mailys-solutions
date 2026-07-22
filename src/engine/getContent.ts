@@ -19,10 +19,14 @@ function blocsDepuisTexte(raw: string): Block[] | null {
   return null;
 }
 
-// Sur Vercel : lit content/demo.json DEPUIS GitHub (le disque n'est pas fiable).
-async function lireDepuisGitHub(): Promise<Block[] | null> {
+// Chemin du fichier de contenu d'une page dans le dépôt.
+export function cheminPage(slug: string): string {
+  return "content/page-" + slug + ".json";
+}
+
+async function lireDepuisGitHub(chemin: string): Promise<Block[] | null> {
   try {
-    const url = `https://api.github.com/repos/${GH_REPO}/contents/content/demo.json?ref=${GH_BRANCH}`;
+    const url = `https://api.github.com/repos/${GH_REPO}/contents/${chemin}?ref=${GH_BRANCH}`;
     const r = await fetch(url, {
       headers: {
         Authorization: `Bearer ${GH_TOKEN}`,
@@ -39,20 +43,28 @@ async function lireDepuisGitHub(): Promise<Block[] | null> {
   return null;
 }
 
-// Lit le contenu enregistré. Si rien ou cassé, on retombe sur les défauts du
-// code → le site n'est JAMAIS cassé.
-export async function getContent(): Promise<Block[]> {
-  if (GH_TOKEN) {
-    const blocs = await lireDepuisGitHub();
-    if (blocs) return blocs;
-    return pageDemo.blocks;
-  }
+async function lireDisque(chemin: string): Promise<Block[] | null> {
   try {
-    const file = path.join(process.cwd(), "content", "demo.json");
-    const blocs = blocsDepuisTexte(await readFile(file, "utf8"));
-    if (blocs) return blocs;
+    return blocsDepuisTexte(await readFile(path.join(process.cwd(), chemin), "utf8"));
   } catch {
-    /* pas de fichier / JSON invalide → défauts */
+    return null;
   }
-  return pageDemo.blocks;
+}
+
+async function lire(chemin: string): Promise<Block[] | null> {
+  return GH_TOKEN ? lireDepuisGitHub(chemin) : lireDisque(chemin);
+}
+
+// Lit le contenu d'une PAGE (slug). « accueil » = page d'accueil (avec repli sur
+// l'ancien content/demo.json puis les défauts du code → jamais cassée). Autres
+// pages : null si le fichier n'existe pas encore.
+export async function getContent(slug: string = "accueil"): Promise<Block[] | null> {
+  const nom = slug || "accueil";
+  const blocs = await lire(cheminPage(nom));
+  if (blocs) return blocs;
+  if (nom === "accueil") {
+    const ancien = await lire("content/demo.json"); // ancienne home
+    return ancien || pageDemo.blocks; // filet anti-bug sur l'accueil
+  }
+  return null; // page inexistante
 }

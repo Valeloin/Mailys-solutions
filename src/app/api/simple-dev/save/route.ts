@@ -17,18 +17,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "corps JSON invalide" }, { status: 400 });
   }
 
-  const { blocks, nom } = body as { blocks?: unknown; nom?: string };
+  const { blocks, nom, page } = body as { blocks?: unknown; nom?: string; page?: string };
   if (!Array.isArray(blocks) || blocks.length === 0) {
     return NextResponse.json({ ok: false, error: "aucun bloc à enregistrer" }, { status: 400 });
   }
+  const slug = typeof page === "string" && page.trim() ? page.trim() : "accueil";
 
   const horodatage = new Date().toISOString();
   const nomPropre = typeof nom === "string" && nom.trim() ? nom.trim() : null;
-  const message = nomPropre ? "Point : " + nomPropre : "Enregistrement graphique " + horodatage;
+  const message = (nomPropre ? "Point : " + nomPropre : "Enregistrement graphique") + " (page " + slug + ") " + horodatage;
 
   try {
     await ecrireSnapshot(blocks, nomPropre, horodatage); // sauvegarde avant tout (local)
-    await ecrireContenu(blocks, horodatage, message);
+    await ecrireContenu(blocks, horodatage, message, slug);
   } catch (e) {
     return NextResponse.json({ ok: false, error: "écriture impossible : " + String(e) }, { status: 500 });
   }
