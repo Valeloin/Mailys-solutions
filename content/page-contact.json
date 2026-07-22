@@ -13,18 +13,21 @@
           "id": "contact-h1",
           "type": "titre",
           "content": { "texte": "Parlons de votre projet", "niveau": 1 },
+          "animations": [{ "effet": "apparition-fondu", "delai": 0 }],
           "css": { "color": "#ffffff", "fontSize": "44px", "fontWeight": "800", "lineHeight": "1.1", "margin": "0 auto 1rem" }
         },
         {
           "id": "contact-intro",
           "type": "texte",
           "content": { "texte": "Application métier à créer, logiciel à moderniser, processus à digitaliser ou application WINDEV à reprendre : décrivez-nous votre situation en quelques lignes. Nous revenons vers vous rapidement avec un premier avis honnête — gratuit et sans engagement." },
+          "animations": [{ "effet": "apparition-fondu", "delai": 140 }],
           "css": { "color": "#d6c8cb", "fontSize": "18px", "maxWidth": "60ch", "margin": "0 auto 2rem" }
         },
         {
           "id": "contact-cta",
           "type": "bouton",
-          "content": { "texte": "Écrire à Mailys Solutions", "lien": "mailto:contact@mailys-solutions.fr" }
+          "content": { "texte": "Écrire à Mailys Solutions", "lien": "mailto:contact@mailys-solutions.fr" },
+          "animations": [{ "effet": "apparition-fondu", "delai": 280 }]
         }
       ]
     }

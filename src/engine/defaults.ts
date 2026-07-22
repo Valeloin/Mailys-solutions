@@ -5,6 +5,12 @@ import type { Block, Page } from "./types";
 // (le site n'est jamais cassé) et de point de départ éditable via l'extension.
 // La structure de haut niveau (sections) est VERROUILLÉE (verrou: true) :
 // insupprimable dans l'extension, mais le contenu reste éditable.
+//
+// Animations : apparitions en fondu ÉCHELONNÉES (effet « apparition-fondu »
+// du catalogue → keyframe sd-fade), pour retrouver l'entrée en cascade du
+// vrai site. Chaque bloc porte un délai croissant. Coupées automatiquement
+// si le visiteur préfère moins d'animations (media prefers-reduced-motion
+// dans engine.css).
 
 const C = {
   texte: "#ffffff",
@@ -14,18 +20,33 @@ const C = {
   orange: "#f97316",
 };
 
+// Fabrique le tableau d'animations « apparition en fondu » avec un délai (ms).
+function fondu(delai: number): Block["animations"] {
+  return [{ effet: "apparition-fondu", delai }];
+}
+
 // ---- Fabriques de blocs ----------------------------------------------------
 function titre(
   id: string,
   contenu: string,
   niveau: number,
   css?: Record<string, string>,
+  delai?: number,
 ): Block {
-  return { id, type: "titre", content: { texte: contenu, niveau }, css };
+  const b: Block = { id, type: "titre", content: { texte: contenu, niveau }, css };
+  if (delai !== undefined) b.animations = fondu(delai);
+  return b;
 }
 
-function texte(id: string, contenu: string, css?: Record<string, string>): Block {
-  return { id, type: "texte", content: { texte: contenu }, css };
+function texte(
+  id: string,
+  contenu: string,
+  css?: Record<string, string>,
+  delai?: number,
+): Block {
+  const b: Block = { id, type: "texte", content: { texte: contenu }, css };
+  if (delai !== undefined) b.animations = fondu(delai);
+  return b;
 }
 
 function bouton(
@@ -33,19 +54,28 @@ function bouton(
   contenu: string,
   lien: string,
   css?: Record<string, string>,
+  delai?: number,
 ): Block {
-  return { id, type: "bouton", content: { texte: contenu, lien }, css };
+  const b: Block = { id, type: "bouton", content: { texte: contenu, lien }, css };
+  if (delai !== undefined) b.animations = fondu(delai);
+  return b;
 }
 
 // Bouton secondaire : contour clair, fond transparent.
-function boutonOutline(id: string, contenu: string, lien: string): Block {
-  return bouton(id, contenu, lien, {
-    backgroundImage: "none",
-    background: "transparent",
-    boxShadow: "none",
-    color: C.texte,
-    border: "1px solid rgba(255,255,255,0.35)",
-  });
+function boutonOutline(id: string, contenu: string, lien: string, delai?: number): Block {
+  return bouton(
+    id,
+    contenu,
+    lien,
+    {
+      backgroundImage: "none",
+      background: "transparent",
+      boxShadow: "none",
+      color: C.texte,
+      border: "1px solid rgba(255,255,255,0.35)",
+    },
+    delai,
+  );
 }
 
 // ---- Les 4 services (contenu réel, vrais liens vers leurs pages) -----------
@@ -76,11 +106,13 @@ const SERVICES = [
   },
 ];
 
-function carteService(s: (typeof SERVICES)[number]): Block {
+function carteService(s: (typeof SERVICES)[number], i: number): Block {
   return {
     id: `svc-${s.slug}`,
     type: "groupe",
     content: { nom: s.nom },
+    // La carte entière apparaît en fondu, décalée selon sa position.
+    animations: fondu(150 + i * 120),
     css: {
       display: "flex",
       flexDirection: "column",
@@ -134,13 +166,18 @@ const hero: Block = {
   },
   mobile: { padding: "3rem 1.25rem" },
   children: [
-    texte("hero-kicker", "APPLICATIONS MÉTIERS POUR PME", {
-      color: C.coral,
-      fontSize: "13px",
-      fontWeight: "700",
-      letterSpacing: "0.18em",
-      margin: "0 auto 1rem",
-    }),
+    texte(
+      "hero-kicker",
+      "APPLICATIONS MÉTIERS POUR PME",
+      {
+        color: C.coral,
+        fontSize: "13px",
+        fontWeight: "700",
+        letterSpacing: "0.18em",
+        margin: "0 auto 1rem",
+      },
+      0,
+    ),
     titre(
       "hero-titre",
       "Développement d'applications métier sur mesure pour PME",
@@ -153,15 +190,18 @@ const hero: Block = {
         maxWidth: "20ch",
         margin: "0 auto 1rem",
       },
+      120,
     ),
     texte(
       "hero-sous-titre",
       "Remplacez les fichiers Excel, les ressaisies et les processus manuels par un logiciel conçu pour votre façon de travailler. Nous concevons, modernisons et maintenons les applications qui font tourner votre entreprise.",
       { color: C.muted, fontSize: "18px", maxWidth: "60ch", margin: "0 auto 2rem" },
+      240,
     ),
     {
       id: "hero-actions",
       type: "groupe",
+      animations: fondu(360),
       css: {
         display: "flex",
         gap: "16px",
@@ -185,13 +225,18 @@ const services: Block = {
   css: { maxWidth: "1100px", padding: "4rem 1.5rem" },
   mobile: { padding: "2.5rem 1.25rem" },
   children: [
-    texte("services-kicker", "NOS SERVICES", {
-      color: C.coral,
-      fontSize: "13px",
-      fontWeight: "700",
-      letterSpacing: "0.18em",
-      margin: "0 0 0.75rem",
-    }),
+    texte(
+      "services-kicker",
+      "NOS SERVICES",
+      {
+        color: C.coral,
+        fontSize: "13px",
+        fontWeight: "700",
+        letterSpacing: "0.18em",
+        margin: "0 0 0.75rem",
+      },
+      0,
+    ),
     titre(
       "services-titre",
       "Quatre façons de simplifier le quotidien de votre entreprise",
@@ -203,11 +248,13 @@ const services: Block = {
         maxWidth: "22ch",
         margin: "0 0 0.75rem",
       },
+      100,
     ),
     texte(
       "services-intro",
       "Que votre besoin soit de créer un outil, de sauver un logiciel vieillissant ou d'en finir avec le papier, nous partons toujours du même point : comprendre votre métier.",
       { color: C.muted, maxWidth: "60ch", margin: "0 0 2rem" },
+      200,
     ),
     {
       id: "services-grille",
