@@ -1,31 +1,42 @@
 {
   "page": "services",
+  "updatedAt": "2026-07-22T00:00:00.000Z",
   "blocks": [
     {
       "id": "svc-page-sec",
       "type": "section",
       "verrou": true,
-      "css": {
-        "maxWidth": "1100px",
-        "padding": "5rem 1.5rem",
-        "textAlign": "center"
-      },
-      "mobile": {
-        "padding": "3rem 1.25rem"
-      },
+      "css": { "maxWidth": "1100px", "padding": "5rem 1.5rem", "textAlign": "center" },
+      "mobile": { "padding": "3rem 1.25rem" },
       "children": [
         {
           "id": "svc-page-kicker",
           "type": "texte",
-          "content": {
-            "texte": "TEST SAVE DIAGNOSTIC"
-          },
-          "css": {
-            "color": "#ff6b6b"
-          }
+          "content": { "texte": "NOS EXPERTISES" },
+          "animations": [{ "effet": "apparition-fondu", "delai": 0 }],
+          "css": { "color": "#ff6b6b", "fontSize": "13px", "fontWeight": "700", "letterSpacing": "0.18em", "margin": "0 auto 1rem" }
+        },
+        {
+          "id": "svc-page-h1",
+          "type": "titre",
+          "content": { "texte": "Nos services pour digitaliser votre PME", "niveau": 1 },
+          "animations": [{ "effet": "apparition-fondu", "delai": 120 }],
+          "css": { "color": "#ffffff", "fontSize": "44px", "fontWeight": "800", "lineHeight": "1.1", "maxWidth": "20ch", "margin": "0 auto 1rem" }
+        },
+        {
+          "id": "svc-page-intro",
+          "type": "texte",
+          "content": { "texte": "Création d'applications métier sur mesure, modernisation de logiciels existants, digitalisation des processus et maintenance WINDEV / WEBDEV : quatre expertises, une seule approche — comprendre votre métier avant de développer." },
+          "animations": [{ "effet": "apparition-fondu", "delai": 240 }],
+          "css": { "color": "#d6c8cb", "fontSize": "18px", "maxWidth": "60ch", "margin": "0 auto 2rem" }
+        },
+        {
+          "id": "svc-page-cta",
+          "type": "bouton",
+          "content": { "texte": "Demander un devis gratuit", "lien": "/contact" },
+          "animations": [{ "effet": "apparition-fondu", "delai": 360 }]
         }
       ]
     }
-  ],
-  "updatedAt": "2026-07-23T21:12:24.946Z"
+  ]
 }
