@@ -130,6 +130,9 @@
             {
               "id": "hero-cta-devis",
               "type": "bouton",
+              "css": {
+                "backgroundColor": "rgb(0, 0, 0)"
+              },
               "content": {
                 "texte": "Demander un devis gratuit",
                 "lien": "/contact"
@@ -331,15 +334,8 @@
                 "borderImageWidth": "1",
                 "borderImageOutset": "0",
                 "borderImageRepeat": "stretch",
-                "backgroundImage": "initial",
-                "backgroundPositionX": "initial",
-                "backgroundPositionY": "initial",
-                "backgroundSize": "initial",
-                "backgroundRepeat": "initial",
                 "backgroundAttachment": "initial",
-                "backgroundOrigin": "initial",
-                "backgroundClip": "initial",
-                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+                "backgroundOrigin": "initial"
               },
               "content": {
                 "nom": "Développement d'application métier"
@@ -467,15 +463,9 @@
                 "borderImageWidth": "1",
                 "borderImageOutset": "0",
                 "borderImageRepeat": "stretch",
-                "backgroundImage": "initial",
-                "backgroundPositionX": "initial",
-                "backgroundPositionY": "initial",
-                "backgroundSize": "initial",
-                "backgroundRepeat": "initial",
                 "backgroundAttachment": "initial",
                 "backgroundOrigin": "initial",
-                "backgroundClip": "initial",
-                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+                "backgroundColor": "rgb(0, 0, 0)"
               },
               "content": {
                 "nom": "Modernisation d'application"
@@ -836,5 +826,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-23T20:33:53.983Z"
+  "updatedAt": "2026-07-23T21:27:06.283Z"
 }
