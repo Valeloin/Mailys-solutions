@@ -1,0 +1,840 @@
+{
+  "page": "accueil",
+  "blocks": [
+    {
+      "id": "hero",
+      "type": "section",
+      "css": {
+        "maxWidth": "1100px",
+        "paddingTop": "5rem",
+        "paddingRight": "1.5rem",
+        "paddingBottom": "5rem",
+        "paddingLeft": "1.5rem",
+        "textAlign": "center"
+      },
+      "mobile": {
+        "padding": "3rem 1.25rem"
+      },
+      "children": [
+        {
+          "id": "hero-kicker",
+          "type": "texte",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "0ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(255, 107, 107)",
+            "fontSize": "13px",
+            "fontWeight": "700",
+            "letterSpacing": "0.18em",
+            "marginTop": "0px",
+            "marginRight": "auto",
+            "marginBottom": "1rem",
+            "marginLeft": "auto"
+          },
+          "content": {
+            "texte": "APPLICATIONS MÉTIERS POUR PME"
+          }
+        },
+        {
+          "id": "hero-titre",
+          "type": "titre",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "120ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(255, 255, 255)",
+            "fontSize": "44px",
+            "fontWeight": "800",
+            "lineHeight": "1.1",
+            "maxWidth": "20ch",
+            "marginTop": "0px",
+            "marginRight": "auto",
+            "marginBottom": "1rem",
+            "marginLeft": "auto"
+          },
+          "content": {
+            "texte": "test Développement d'applications métier sur mesure pour PME",
+            "niveau": 1
+          }
+        },
+        {
+          "id": "hero-sous-titre",
+          "type": "texte",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "240ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(214, 200, 203)",
+            "fontSize": "18px",
+            "maxWidth": "60ch",
+            "marginTop": "0px",
+            "marginRight": "auto",
+            "marginBottom": "2rem",
+            "marginLeft": "auto"
+          },
+          "content": {
+            "texte": "Remplacez les fichiers Excel, les ressaisies et les processus manuels par un logiciel conçu pour votre façon de travailler. Nous concevons, modernisons et maintenons les applications qui font tourner votre entreprise."
+          }
+        },
+        {
+          "id": "hero-actions",
+          "type": "groupe",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "360ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "display": "flex",
+            "rowGap": "16px",
+            "columnGap": "16px",
+            "justifyContent": "center",
+            "flexWrap": "wrap"
+          },
+          "mobile": {
+            "flexDirection": "column",
+            "alignItems": "stretch"
+          },
+          "children": [
+            {
+              "id": "hero-cta-devis",
+              "type": "bouton",
+              "content": {
+                "texte": "Demander un devis gratuit",
+                "lien": "/contact"
+              }
+            },
+            {
+              "id": "hero-cta-services",
+              "type": "bouton",
+              "css": {
+                "backgroundImage": "initial",
+                "backgroundPositionX": "initial",
+                "backgroundPositionY": "initial",
+                "backgroundSize": "initial",
+                "backgroundRepeat": "initial",
+                "backgroundAttachment": "initial",
+                "backgroundOrigin": "initial",
+                "backgroundClip": "initial",
+                "backgroundColor": "transparent",
+                "boxShadow": "none",
+                "color": "rgb(255, 255, 255)",
+                "borderTopWidth": "1px",
+                "borderRightWidth": "1px",
+                "borderBottomWidth": "1px",
+                "borderLeftWidth": "1px",
+                "borderTopStyle": "solid",
+                "borderRightStyle": "solid",
+                "borderBottomStyle": "solid",
+                "borderLeftStyle": "solid",
+                "borderTopColor": "rgba(255, 255, 255, 0.35)",
+                "borderRightColor": "rgba(255, 255, 255, 0.35)",
+                "borderBottomColor": "rgba(255, 255, 255, 0.35)",
+                "borderLeftColor": "rgba(255, 255, 255, 0.35)",
+                "borderImageSource": "none",
+                "borderImageSlice": "100%",
+                "borderImageWidth": "1",
+                "borderImageOutset": "0",
+                "borderImageRepeat": "stretch"
+              },
+              "content": {
+                "texte": "Découvrir nos services",
+                "lien": "/services"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "type": "section",
+      "css": {
+        "maxWidth": "1100px",
+        "paddingTop": "4rem",
+        "paddingRight": "1.5rem",
+        "paddingBottom": "4rem",
+        "paddingLeft": "1.5rem"
+      },
+      "mobile": {
+        "padding": "2.5rem 1.25rem"
+      },
+      "children": [
+        {
+          "id": "services-kicker",
+          "type": "texte",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "0ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(255, 107, 107)",
+            "fontSize": "13px",
+            "fontWeight": "700",
+            "letterSpacing": "0.18em",
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0.75rem",
+            "marginLeft": "0px"
+          },
+          "content": {
+            "texte": "NOS SERVICES"
+          }
+        },
+        {
+          "id": "services-titre",
+          "type": "titre",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "100ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(255, 255, 255)",
+            "fontSize": "32px",
+            "fontWeight": "800",
+            "maxWidth": "22ch",
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0.75rem",
+            "marginLeft": "0px"
+          },
+          "content": {
+            "texte": "Quatre façons de simplifier le quotidien de votre entreprise",
+            "niveau": 2
+          }
+        },
+        {
+          "id": "services-intro",
+          "type": "texte",
+          "css": {
+            "animationDuration": "600ms",
+            "animationTimingFunction": "ease",
+            "animationDelay": "200ms",
+            "animationIterationCount": "1",
+            "animationDirection": "normal",
+            "animationFillMode": "both",
+            "animationPlayState": "running",
+            "animationName": "sd-fade",
+            "animationTimeline": "auto",
+            "animationRangeStart": "normal",
+            "animationRangeEnd": "normal",
+            "color": "rgb(214, 200, 203)",
+            "maxWidth": "60ch",
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "2rem",
+            "marginLeft": "0px"
+          },
+          "content": {
+            "texte": "Que votre besoin soit de créer un outil, de sauver un logiciel vieillissant ou d'en finir avec le papier, nous partons toujours du même point : comprendre votre métier."
+          }
+        },
+        {
+          "id": "services-grille",
+          "type": "groupe",
+          "css": {
+            "display": "grid",
+            "gridTemplateColumns": "repeat(2, minmax(0px, 1fr))",
+            "rowGap": "20px",
+            "columnGap": "20px"
+          },
+          "mobile": {
+            "gridTemplateColumns": "1fr"
+          },
+          "children": [
+            {
+              "id": "svc-developpement-application-metier",
+              "type": "groupe",
+              "css": {
+                "animationDuration": "600ms",
+                "animationTimingFunction": "ease",
+                "animationDelay": "150ms",
+                "animationIterationCount": "1",
+                "animationDirection": "normal",
+                "animationFillMode": "both",
+                "animationPlayState": "running",
+                "animationName": "sd-fade",
+                "animationTimeline": "auto",
+                "animationRangeStart": "normal",
+                "animationRangeEnd": "normal",
+                "display": "flex",
+                "flexDirection": "column",
+                "rowGap": "8px",
+                "columnGap": "8px",
+                "paddingTop": "24px",
+                "paddingRight": "24px",
+                "paddingBottom": "24px",
+                "paddingLeft": "24px",
+                "borderTopLeftRadius": "20px",
+                "borderTopRightRadius": "20px",
+                "borderBottomRightRadius": "20px",
+                "borderBottomLeftRadius": "20px",
+                "borderTopWidth": "1px",
+                "borderRightWidth": "1px",
+                "borderBottomWidth": "1px",
+                "borderLeftWidth": "1px",
+                "borderTopStyle": "solid",
+                "borderRightStyle": "solid",
+                "borderBottomStyle": "solid",
+                "borderLeftStyle": "solid",
+                "borderTopColor": "rgb(61, 38, 44)",
+                "borderRightColor": "rgb(61, 38, 44)",
+                "borderBottomColor": "rgb(61, 38, 44)",
+                "borderLeftColor": "rgb(61, 38, 44)",
+                "borderImageSource": "none",
+                "borderImageSlice": "100%",
+                "borderImageWidth": "1",
+                "borderImageOutset": "0",
+                "borderImageRepeat": "stretch",
+                "backgroundImage": "initial",
+                "backgroundPositionX": "initial",
+                "backgroundPositionY": "initial",
+                "backgroundSize": "initial",
+                "backgroundRepeat": "initial",
+                "backgroundAttachment": "initial",
+                "backgroundOrigin": "initial",
+                "backgroundClip": "initial",
+                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+              },
+              "content": {
+                "nom": "Développement d'application métier"
+              },
+              "children": [
+                {
+                  "id": "svc-tag-developpement-application-metier",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(249, 115, 22)",
+                    "fontSize": "12px",
+                    "fontWeight": "700",
+                    "letterSpacing": "0.16em",
+                    "marginTop": "0px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "SUR MESURE, POUR VOS PROCESS"
+                  }
+                },
+                {
+                  "id": "svc-nom-developpement-application-metier",
+                  "type": "titre",
+                  "css": {
+                    "color": "rgb(255, 255, 255)",
+                    "fontSize": "22px",
+                    "fontWeight": "700",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Développement d'application métier",
+                    "niveau": 3
+                  }
+                },
+                {
+                  "id": "svc-desc-developpement-application-metier",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(214, 200, 203)",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "12px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Nous développons des applications métier sur mesure qui remplacent les fichiers Excel, les ressaisies et les processus manuels par un outil simple, rapide et parfaitement adapté au fonctionnement de votre PME."
+                  }
+                },
+                {
+                  "id": "svc-cta-developpement-application-metier",
+                  "type": "bouton",
+                  "css": {
+                    "alignSelf": "flex-start",
+                    "backgroundImage": "initial",
+                    "backgroundPositionX": "initial",
+                    "backgroundPositionY": "initial",
+                    "backgroundSize": "initial",
+                    "backgroundRepeat": "initial",
+                    "backgroundAttachment": "initial",
+                    "backgroundOrigin": "initial",
+                    "backgroundClip": "initial",
+                    "backgroundColor": "transparent",
+                    "boxShadow": "none",
+                    "color": "rgb(249, 115, 22)",
+                    "paddingTop": "0px",
+                    "paddingRight": "0px",
+                    "paddingBottom": "0px",
+                    "paddingLeft": "0px",
+                    "minHeight": "auto",
+                    "fontWeight": "600"
+                  },
+                  "content": {
+                    "texte": "Découvrir ce service",
+                    "lien": "/services/developpement-application-metier"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "svc-modernisation-application",
+              "type": "groupe",
+              "css": {
+                "animationDuration": "600ms",
+                "animationTimingFunction": "ease",
+                "animationDelay": "270ms",
+                "animationIterationCount": "1",
+                "animationDirection": "normal",
+                "animationFillMode": "both",
+                "animationPlayState": "running",
+                "animationName": "sd-fade",
+                "animationTimeline": "auto",
+                "animationRangeStart": "normal",
+                "animationRangeEnd": "normal",
+                "display": "flex",
+                "flexDirection": "column",
+                "rowGap": "8px",
+                "columnGap": "8px",
+                "paddingTop": "24px",
+                "paddingRight": "24px",
+                "paddingBottom": "24px",
+                "paddingLeft": "24px",
+                "borderTopLeftRadius": "20px",
+                "borderTopRightRadius": "20px",
+                "borderBottomRightRadius": "20px",
+                "borderBottomLeftRadius": "20px",
+                "borderTopWidth": "1px",
+                "borderRightWidth": "1px",
+                "borderBottomWidth": "1px",
+                "borderLeftWidth": "1px",
+                "borderTopStyle": "solid",
+                "borderRightStyle": "solid",
+                "borderBottomStyle": "solid",
+                "borderLeftStyle": "solid",
+                "borderTopColor": "rgb(61, 38, 44)",
+                "borderRightColor": "rgb(61, 38, 44)",
+                "borderBottomColor": "rgb(61, 38, 44)",
+                "borderLeftColor": "rgb(61, 38, 44)",
+                "borderImageSource": "none",
+                "borderImageSlice": "100%",
+                "borderImageWidth": "1",
+                "borderImageOutset": "0",
+                "borderImageRepeat": "stretch",
+                "backgroundImage": "initial",
+                "backgroundPositionX": "initial",
+                "backgroundPositionY": "initial",
+                "backgroundSize": "initial",
+                "backgroundRepeat": "initial",
+                "backgroundAttachment": "initial",
+                "backgroundOrigin": "initial",
+                "backgroundClip": "initial",
+                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+              },
+              "content": {
+                "nom": "Modernisation d'application"
+              },
+              "children": [
+                {
+                  "id": "svc-tag-modernisation-application",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(249, 115, 22)",
+                    "fontSize": "12px",
+                    "fontWeight": "700",
+                    "letterSpacing": "0.16em",
+                    "marginTop": "0px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "MODERNISER SANS TOUT REFAIRE"
+                  }
+                },
+                {
+                  "id": "svc-nom-modernisation-application",
+                  "type": "titre",
+                  "css": {
+                    "color": "rgb(255, 255, 255)",
+                    "fontSize": "22px",
+                    "fontWeight": "700",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Modernisation d'application",
+                    "niveau": 3
+                  }
+                },
+                {
+                  "id": "svc-desc-modernisation-application",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(214, 200, 203)",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "12px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Votre application a fait ses preuves, mais elle vieillit : lenteurs, interface datée, technologies dépassées. Nous la modernisons sans perdre vos données ni interrompre votre activité."
+                  }
+                },
+                {
+                  "id": "svc-cta-modernisation-application",
+                  "type": "bouton",
+                  "css": {
+                    "alignSelf": "flex-start",
+                    "backgroundImage": "initial",
+                    "backgroundPositionX": "initial",
+                    "backgroundPositionY": "initial",
+                    "backgroundSize": "initial",
+                    "backgroundRepeat": "initial",
+                    "backgroundAttachment": "initial",
+                    "backgroundOrigin": "initial",
+                    "backgroundClip": "initial",
+                    "backgroundColor": "transparent",
+                    "boxShadow": "none",
+                    "color": "rgb(249, 115, 22)",
+                    "paddingTop": "0px",
+                    "paddingRight": "0px",
+                    "paddingBottom": "0px",
+                    "paddingLeft": "0px",
+                    "minHeight": "auto",
+                    "fontWeight": "600"
+                  },
+                  "content": {
+                    "texte": "Découvrir ce service",
+                    "lien": "/services/modernisation-application"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "svc-digitalisation-processus",
+              "type": "groupe",
+              "css": {
+                "animationDuration": "600ms",
+                "animationTimingFunction": "ease",
+                "animationDelay": "390ms",
+                "animationIterationCount": "1",
+                "animationDirection": "normal",
+                "animationFillMode": "both",
+                "animationPlayState": "running",
+                "animationName": "sd-fade",
+                "animationTimeline": "auto",
+                "animationRangeStart": "normal",
+                "animationRangeEnd": "normal",
+                "display": "flex",
+                "flexDirection": "column",
+                "rowGap": "8px",
+                "columnGap": "8px",
+                "paddingTop": "24px",
+                "paddingRight": "24px",
+                "paddingBottom": "24px",
+                "paddingLeft": "24px",
+                "borderTopLeftRadius": "20px",
+                "borderTopRightRadius": "20px",
+                "borderBottomRightRadius": "20px",
+                "borderBottomLeftRadius": "20px",
+                "borderTopWidth": "1px",
+                "borderRightWidth": "1px",
+                "borderBottomWidth": "1px",
+                "borderLeftWidth": "1px",
+                "borderTopStyle": "solid",
+                "borderRightStyle": "solid",
+                "borderBottomStyle": "solid",
+                "borderLeftStyle": "solid",
+                "borderTopColor": "rgb(61, 38, 44)",
+                "borderRightColor": "rgb(61, 38, 44)",
+                "borderBottomColor": "rgb(61, 38, 44)",
+                "borderLeftColor": "rgb(61, 38, 44)",
+                "borderImageSource": "none",
+                "borderImageSlice": "100%",
+                "borderImageWidth": "1",
+                "borderImageOutset": "0",
+                "borderImageRepeat": "stretch",
+                "backgroundImage": "initial",
+                "backgroundPositionX": "initial",
+                "backgroundPositionY": "initial",
+                "backgroundSize": "initial",
+                "backgroundRepeat": "initial",
+                "backgroundAttachment": "initial",
+                "backgroundOrigin": "initial",
+                "backgroundClip": "initial",
+                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+              },
+              "content": {
+                "nom": "Digitalisation des processus"
+              },
+              "children": [
+                {
+                  "id": "svc-tag-digitalisation-processus",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(249, 115, 22)",
+                    "fontSize": "12px",
+                    "fontWeight": "700",
+                    "letterSpacing": "0.16em",
+                    "marginTop": "0px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "DU PAPIER AU NUMÉRIQUE"
+                  }
+                },
+                {
+                  "id": "svc-nom-digitalisation-processus",
+                  "type": "titre",
+                  "css": {
+                    "color": "rgb(255, 255, 255)",
+                    "fontSize": "22px",
+                    "fontWeight": "700",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Digitalisation des processus",
+                    "niveau": 3
+                  }
+                },
+                {
+                  "id": "svc-desc-digitalisation-processus",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(214, 200, 203)",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "12px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Bons d'intervention papier, validations par e-mail, tableaux recopiés à la main : nous transformons vos processus manuels en circuits digitaux fluides, traçables et automatisés."
+                  }
+                },
+                {
+                  "id": "svc-cta-digitalisation-processus",
+                  "type": "bouton",
+                  "css": {
+                    "alignSelf": "flex-start",
+                    "backgroundImage": "initial",
+                    "backgroundPositionX": "initial",
+                    "backgroundPositionY": "initial",
+                    "backgroundSize": "initial",
+                    "backgroundRepeat": "initial",
+                    "backgroundAttachment": "initial",
+                    "backgroundOrigin": "initial",
+                    "backgroundClip": "initial",
+                    "backgroundColor": "transparent",
+                    "boxShadow": "none",
+                    "color": "rgb(249, 115, 22)",
+                    "paddingTop": "0px",
+                    "paddingRight": "0px",
+                    "paddingBottom": "0px",
+                    "paddingLeft": "0px",
+                    "minHeight": "auto",
+                    "fontWeight": "600"
+                  },
+                  "content": {
+                    "texte": "Découvrir ce service",
+                    "lien": "/services/digitalisation-processus"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "svc-maintenance-windev-webdev",
+              "type": "groupe",
+              "css": {
+                "animationDuration": "600ms",
+                "animationTimingFunction": "ease",
+                "animationDelay": "510ms",
+                "animationIterationCount": "1",
+                "animationDirection": "normal",
+                "animationFillMode": "both",
+                "animationPlayState": "running",
+                "animationName": "sd-fade",
+                "animationTimeline": "auto",
+                "animationRangeStart": "normal",
+                "animationRangeEnd": "normal",
+                "display": "flex",
+                "flexDirection": "column",
+                "rowGap": "8px",
+                "columnGap": "8px",
+                "paddingTop": "24px",
+                "paddingRight": "24px",
+                "paddingBottom": "24px",
+                "paddingLeft": "24px",
+                "borderTopLeftRadius": "20px",
+                "borderTopRightRadius": "20px",
+                "borderBottomRightRadius": "20px",
+                "borderBottomLeftRadius": "20px",
+                "borderTopWidth": "1px",
+                "borderRightWidth": "1px",
+                "borderBottomWidth": "1px",
+                "borderLeftWidth": "1px",
+                "borderTopStyle": "solid",
+                "borderRightStyle": "solid",
+                "borderBottomStyle": "solid",
+                "borderLeftStyle": "solid",
+                "borderTopColor": "rgb(61, 38, 44)",
+                "borderRightColor": "rgb(61, 38, 44)",
+                "borderBottomColor": "rgb(61, 38, 44)",
+                "borderLeftColor": "rgb(61, 38, 44)",
+                "borderImageSource": "none",
+                "borderImageSlice": "100%",
+                "borderImageWidth": "1",
+                "borderImageOutset": "0",
+                "borderImageRepeat": "stretch",
+                "backgroundImage": "initial",
+                "backgroundPositionX": "initial",
+                "backgroundPositionY": "initial",
+                "backgroundSize": "initial",
+                "backgroundRepeat": "initial",
+                "backgroundAttachment": "initial",
+                "backgroundOrigin": "initial",
+                "backgroundClip": "initial",
+                "backgroundColor": "rgba(50, 8, 14, 0.35)"
+              },
+              "content": {
+                "nom": "Maintenance WINDEV / WEBDEV"
+              },
+              "children": [
+                {
+                  "id": "svc-tag-maintenance-windev-webdev",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(249, 115, 22)",
+                    "fontSize": "12px",
+                    "fontWeight": "700",
+                    "letterSpacing": "0.16em",
+                    "marginTop": "0px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "VOTRE APPLI ENTRE DE BONNES MAINS"
+                  }
+                },
+                {
+                  "id": "svc-nom-maintenance-windev-webdev",
+                  "type": "titre",
+                  "css": {
+                    "color": "rgb(255, 255, 255)",
+                    "fontSize": "22px",
+                    "fontWeight": "700",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Maintenance WINDEV / WEBDEV",
+                    "niveau": 3
+                  }
+                },
+                {
+                  "id": "svc-desc-maintenance-windev-webdev",
+                  "type": "texte",
+                  "css": {
+                    "color": "rgb(214, 200, 203)",
+                    "marginTop": "4px",
+                    "marginRight": "0px",
+                    "marginBottom": "12px",
+                    "marginLeft": "0px"
+                  },
+                  "content": {
+                    "texte": "Votre application WINDEV ou WEBDEV n'a plus de développeur, ou votre prestataire ne répond plus ? Nous reprenons votre code, corrigeons, sécurisons et faisons évoluer votre application."
+                  }
+                },
+                {
+                  "id": "svc-cta-maintenance-windev-webdev",
+                  "type": "bouton",
+                  "css": {
+                    "alignSelf": "flex-start",
+                    "backgroundImage": "initial",
+                    "backgroundPositionX": "initial",
+                    "backgroundPositionY": "initial",
+                    "backgroundSize": "initial",
+                    "backgroundRepeat": "initial",
+                    "backgroundAttachment": "initial",
+                    "backgroundOrigin": "initial",
+                    "backgroundClip": "initial",
+                    "backgroundColor": "transparent",
+                    "boxShadow": "none",
+                    "color": "rgb(249, 115, 22)",
+                    "paddingTop": "0px",
+                    "paddingRight": "0px",
+                    "paddingBottom": "0px",
+                    "paddingLeft": "0px",
+                    "minHeight": "auto",
+                    "fontWeight": "600"
+                  },
+                  "content": {
+                    "texte": "Découvrir ce service",
+                    "lien": "/services/maintenance-windev-webdev"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-07-23T20:33:53.983Z"
+}
