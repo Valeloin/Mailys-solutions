@@ -70,7 +70,7 @@
             "marginLeft": "auto"
           },
           "content": {
-            "texte": "test Développement d'applications métier sur mesure pour PME",
+            "texte": "Développement d'applications métier sur mesure pour PME",
             "niveau": 1
           }
         },
@@ -464,8 +464,7 @@
                 "borderImageOutset": "0",
                 "borderImageRepeat": "stretch",
                 "backgroundAttachment": "initial",
-                "backgroundOrigin": "initial",
-                "backgroundColor": "rgb(0, 0, 0)"
+                "backgroundOrigin": "initial"
               },
               "content": {
                 "nom": "Modernisation d'application"
@@ -826,5 +825,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-23T21:27:06.283Z"
+  "updatedAt": "2026-07-23T21:27:33.689Z"
 }
