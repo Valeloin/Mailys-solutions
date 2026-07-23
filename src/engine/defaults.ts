@@ -1,4 +1,4 @@
-import type { Block, Page } from "./types";
+import type { Animation, Block, Page } from "./types";
 
 // Contenu par défaut de la vitrine Mailys, exprimé en blocs Simple Dev.
 // Vrai texte, vrais liens (aucun "#"). Sert à la fois de repli à getContent
@@ -21,8 +21,12 @@ const C = {
 };
 
 // Fabrique le tableau d'animations « apparition en fondu » avec un délai (ms).
-function fondu(delai: number): Block["animations"] {
-  return [{ effet: "apparition-fondu", delai }];
+// Par défaut au chargement ; « au-defilement » pour le contenu sous la ligne
+// de flottaison (sinon le fondu est déjà terminé quand le visiteur y arrive).
+function fondu(delai: number, declencheur?: Animation["declencheur"]): Block["animations"] {
+  const anim: Animation = { effet: "apparition-fondu", delai };
+  if (declencheur) anim.declencheur = declencheur;
+  return [anim];
 }
 
 // ---- Fabriques de blocs ----------------------------------------------------
@@ -32,9 +36,10 @@ function titre(
   niveau: number,
   css?: Record<string, string>,
   delai?: number,
+  declencheur?: Animation["declencheur"],
 ): Block {
   const b: Block = { id, type: "titre", content: { texte: contenu, niveau }, css };
-  if (delai !== undefined) b.animations = fondu(delai);
+  if (delai !== undefined) b.animations = fondu(delai, declencheur);
   return b;
 }
 
@@ -43,9 +48,10 @@ function texte(
   contenu: string,
   css?: Record<string, string>,
   delai?: number,
+  declencheur?: Animation["declencheur"],
 ): Block {
   const b: Block = { id, type: "texte", content: { texte: contenu }, css };
-  if (delai !== undefined) b.animations = fondu(delai);
+  if (delai !== undefined) b.animations = fondu(delai, declencheur);
   return b;
 }
 
@@ -55,9 +61,10 @@ function bouton(
   lien: string,
   css?: Record<string, string>,
   delai?: number,
+  declencheur?: Animation["declencheur"],
 ): Block {
   const b: Block = { id, type: "bouton", content: { texte: contenu, lien }, css };
-  if (delai !== undefined) b.animations = fondu(delai);
+  if (delai !== undefined) b.animations = fondu(delai, declencheur);
   return b;
 }
 
@@ -112,7 +119,7 @@ function carteService(s: (typeof SERVICES)[number], i: number): Block {
     type: "groupe",
     content: { nom: s.nom },
     // La carte entière apparaît en fondu, décalée selon sa position.
-    animations: fondu(150 + i * 120),
+    animations: fondu(150 + i * 120, "au-defilement"),
     css: {
       display: "flex",
       flexDirection: "column",
@@ -210,7 +217,13 @@ const hero: Block = {
       },
       mobile: { flexDirection: "column", alignItems: "stretch" },
       children: [
-        bouton("hero-cta-devis", "Demander un devis gratuit", "/contact"),
+        // Petit rebond au survol : premier bloc du site à utiliser le
+        // déclencheur « au-survol » (rendu via règle CSS `:hover`, jamais
+        // en style inline — voir RenderBlock.reglesDeclencheurs).
+        {
+          ...bouton("hero-cta-devis", "Demander un devis gratuit", "/contact"),
+          animations: [{ effet: "rebond", declencheur: "au-survol", duree: 500 }],
+        },
         boutonOutline("hero-cta-services", "Découvrir nos services", "/services"),
       ],
     },
@@ -236,6 +249,7 @@ const services: Block = {
         margin: "0 0 0.75rem",
       },
       0,
+      "au-defilement",
     ),
     titre(
       "services-titre",
@@ -249,12 +263,14 @@ const services: Block = {
         margin: "0 0 0.75rem",
       },
       100,
+      "au-defilement",
     ),
     texte(
       "services-intro",
       "Que votre besoin soit de créer un outil, de sauver un logiciel vieillissant ou d'en finir avec le papier, nous partons toujours du même point : comprendre votre métier.",
       { color: C.muted, maxWidth: "60ch", margin: "0 0 2rem" },
       200,
+      "au-defilement",
     ),
     {
       id: "services-grille",

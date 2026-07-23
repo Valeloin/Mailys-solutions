@@ -60,9 +60,26 @@ export function animationEnCss(anim: Animation): string | null {
   return `${entry.keyframe} ${duree}ms ${entry.easing} ${delai}ms ${iterations} ${direction} ${fill}`;
 }
 
-/** Empile plusieurs animations en une seule valeur CSS (elles se jouent ensemble). */
-export function animationsEnCss(anims?: Animation[]): string | undefined {
-  if (!anims || anims.length === 0) return undefined;
+function parDeclencheur(anims: Animation[] | undefined, declencheur: NonNullable<Animation["declencheur"]>): Animation[] {
+  return (anims ?? []).filter((a) => (a.declencheur ?? "au-chargement") === declencheur);
+}
+
+function empiler(anims: Animation[]): string | undefined {
   const parts = anims.map(animationEnCss).filter(Boolean) as string[];
   return parts.length ? parts.join(", ") : undefined;
+}
+
+/** Empile les animations qui se jouent AU CHARGEMENT (le défaut) en une valeur CSS. */
+export function animationsEnCss(anims?: Animation[]): string | undefined {
+  return empiler(parDeclencheur(anims, "au-chargement"));
+}
+
+/** Animations à jouer au SURVOL — appliquées via une règle `:hover`, jamais en style inline. */
+export function animationsSurvolEnCss(anims?: Animation[]): string | undefined {
+  return empiler(parDeclencheur(anims, "au-survol"));
+}
+
+/** Animations à jouer au DÉFILEMENT — déclenchées quand le bloc entre dans le viewport. */
+export function animationsDefilementEnCss(anims?: Animation[]): string | undefined {
+  return empiler(parDeclencheur(anims, "au-defilement"));
 }

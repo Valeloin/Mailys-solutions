@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Block } from "./types";
-import { animationsEnCss } from "./animations";
+import { animationsEnCss, animationsSurvolEnCss, animationsDefilementEnCss } from "./animations";
+import { ScrollReveal } from "./ScrollReveal";
 
 // Rendu d'un bloc en vrai HTML, côté serveur (bon pour le SEO).
 // Les défauts visuels sont dans engine.css ; le `style` du bloc n'ajoute que les
@@ -40,7 +41,8 @@ export function RenderBlock({ block }: { block: Block }) {
   // Les défauts du code, surchargés par le style brut enregistré (block.css).
   const base = styleDepuisBloc(block);
   const style: CSSProperties = block.css ? { ...base, ...(block.css as CSSProperties) } : base;
-  const anime = block.animations && block.animations.length > 0 ? " sd-anim" : "";
+  const enScroll = animationsDefilementEnCss(block.animations) ? " sd-scroll" : "";
+  const anime = (block.animations && block.animations.length > 0 ? " sd-anim" : "") + enScroll;
   const enfants = (block.children ?? []).map((c) => <RenderBlock key={c.id} block={c} />);
   const content = (block.content ?? {}) as Record<string, unknown>;
   const id = block.id;
@@ -141,7 +143,7 @@ export function RenderBlock({ block }: { block: Block }) {
       // Le Bloc Animation : une scène qui réserve sa place ; le mouvement se joue
       // dedans sans pousser le reste de la page (transforms = pas de reflow).
       return (
-        <div className="sd-scene sd-anim" style={style} {...dataAttrs}>
+        <div className={`sd-scene sd-anim${enScroll}`} style={style} {...dataAttrs}>
           {enfants}
         </div>
       );
@@ -208,14 +210,45 @@ function reglesMobile(blocks: Block[]): string {
   return css ? `@media (max-width: 767px){${css}}` : "";
 }
 
+// Règles pour les déclencheurs « au-survol » et « au-defilement ». Coupées
+// sous `prefers-reduced-motion` (le kill-switch général vit dans engine.css,
+// mais ces règles ont plus de spécificité que `.sd-anim` seule — on les
+// enveloppe donc explicitement pour ne jamais l'emporter sur ce réglage).
+function reglesDeclencheurs(blocks: Block[]): string {
+  let css = "";
+  const visiter = (b: Block) => {
+    const survol = animationsSurvolEnCss(b.animations);
+    if (survol) css += `[data-sd-id="${b.id}"]:hover{animation:${survol}}`;
+    const defilement = animationsDefilementEnCss(b.animations);
+    if (defilement) {
+      // Masqué tant que le bloc n'est pas entré dans le viewport (ScrollReveal
+      // ajoute .is-inview) ; visible tel quel si le JS n'a pas tourné (filet).
+      css += `[data-sd-id="${b.id}"].sd-scroll{opacity:0}`;
+      css += `[data-sd-id="${b.id}"].sd-scroll.is-inview{opacity:1;animation:${defilement}}`;
+    }
+    (b.children ?? []).forEach(visiter);
+  };
+  blocks.forEach(visiter);
+  return css ? `@media (prefers-reduced-motion: no-preference){${css}}` : "";
+}
+
+function contientDefilement(blocks: Block[]): boolean {
+  return blocks.some(
+    (b) => !!animationsDefilementEnCss(b.animations) || contientDefilement(b.children ?? []),
+  );
+}
+
 export function RenderPage({ blocks }: { blocks: Block[] }) {
   const hover = reglesHover(blocks);
   const mobile = reglesMobile(blocks);
+  const declencheurs = reglesDeclencheurs(blocks);
   return (
     <>
       {blocks.map((b) => <RenderBlock key={b.id} block={b} />)}
       {hover ? <style dangerouslySetInnerHTML={{ __html: hover }} /> : null}
       {mobile ? <style dangerouslySetInnerHTML={{ __html: mobile }} /> : null}
+      {declencheurs ? <style dangerouslySetInnerHTML={{ __html: declencheurs }} /> : null}
+      {contientDefilement(blocks) ? <ScrollReveal /> : null}
     </>
   );
 }

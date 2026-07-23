@@ -6,6 +6,11 @@
 
 ---
 
+## Session — 23 juillet 2026 · 21h00
+
+- **Simple Dev : les déclencheurs d'animation « au survol » et « au défilement » fonctionnent enfin.** Le champ `declencheur` existait dans le modèle de blocs depuis le début, mais était ignoré : toutes les animations se jouaient au chargement, y compris les cartes services sous la ligne de flottaison — leur fondu était déjà terminé avant que le visiteur ne scrolle jusqu'à elles. Le moteur applique maintenant le survol via une règle CSS `:hover` et le défilement via un `IntersectionObserver` (`src/engine/ScrollReveal.tsx`), coupés sous `prefers-reduced-motion` comme le reste.
+- Sur la vraie page d'accueil : le bandeau services (titre, intro, 4 cartes) se révèle au défilement plutôt qu'au chargement ; le bouton principal du hero a un léger rebond au survol.
+
 ## Session — 19 juillet 2026 · 22h59
 
 - **Logo et favicons officiels** : les fichiers sources fournis par le client remplacent la recréation approximative, qui portait encore la mention « à remplacer dès que le client le fournit ». Le lettrage est désormais le tracé officiel, et non du texte reconstitué en HTML. Les couleurs figées des fichiers sont rebranchées sur les variables de la DA, donc `/admin/couleurs` agit toujours sur le logo. Ajout d'une icône iOS 180×180 sur fond opaque, que le SVG seul ne couvrait pas.
