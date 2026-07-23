@@ -53,6 +53,10 @@ export function RenderBlock({ block }: { block: Block }) {
     "data-sd-lock": block.verrou ? "1" : undefined,
     "data-sd-hover": block.hover && Object.keys(block.hover).length ? JSON.stringify(block.hover) : undefined,
     "data-sd-mobile": block.mobile && Object.keys(block.mobile).length ? JSON.stringify(block.mobile) : undefined,
+    // Source de vérité des animations, pour que l'extension puisse les relire
+    // telles quelles à l'enregistrement (sinon rien ne les expose dans le DOM
+    // et serialiserBloc() les perd silencieusement à chaque sauvegarde).
+    "data-sd-anim": block.animations && block.animations.length ? JSON.stringify(block.animations) : undefined,
   } as const;
 
   switch (block.type) {
